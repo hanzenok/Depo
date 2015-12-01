@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
@@ -24,11 +25,13 @@ public class Repo
 {	
 	private final String metafile_name;
 	
-	private final String repo_name;
+	private String repo_name;
 	private String metafile_path;
 	private String folder_path;
 	private ArrayList<RepoFile> repofiles;
 	private RepoNamer rn;
+	
+	private RepoXML rx; //gestionnaire de xml
 	
 	/**
      * Constructeur principal
@@ -44,6 +47,8 @@ public class Repo
 		metafile_path = new String(folder_path + "/" + metafile_name);
 		
 		repofiles = new ArrayList<RepoFile>();
+		
+		rx = new RepoXML();
 	}
 	
 	
@@ -53,10 +58,10 @@ public class Repo
      * @param name
      * 			le nom de depôt
      */
-//	public void setName(String name)
-//	{	
-//		this.repo_name = name;
-//	}
+	public void setName(String name)
+	{	
+		this.repo_name = name;
+	}
 	
 	/**
      * Renvoi le nom d'un dêpot
@@ -74,13 +79,15 @@ public class Repo
      * précisé par folder_path
      * 
      * @return si le dossier est un depôt
+	 * @throws IOException 
+	 * @throws JDOMException 
      */
-	public boolean read(){
+	public boolean read() throws JDOMException, IOException{
 		
 		return read(folder_path);
 	}
 	
-	public boolean read(String path)
+	public boolean read(String path) throws JDOMException, IOException
 	{	
 		boolean is_repo = false; //indicateur si un dossier contient un depôt
 		
@@ -99,7 +106,9 @@ public class Repo
 				
 				//redefinir le chemin vers meta fichier
 				metafile_path = folder_path + "/" + metafile_name;
-				System.out.println(metafile_path);
+				
+				//et le nom de repo
+				setName(rx.getAttribute(metafile_path, "name"));
 				
 				is_repo = true;
 				
@@ -119,26 +128,7 @@ public class Repo
      */
 	public void create() throws FileNotFoundException, IOException
 	{	
-		File dir = new File(folder_path);
-		
-		if(!dir.exists())
-		{	
-			//création de dossier
-			dir.mkdir();
-			
-			//création de fichier metadata
-			Element root = new Element("depo");
-			Document document = new Document(root);
-			
-			Element name = new Element("name");
-			name.setText(repo_name);
-			root.addContent(name);
-			
-			//ecrire le fichier meta
-		    XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-		    sortie.output(document, new FileOutputStream(metafile_path));
-		}
-		
+		rx.createMeta(folder_path, metafile_path, repo_name);
 	}
 	
 	public void write() throws IOException
@@ -232,9 +222,9 @@ public class Repo
 		this.folder_path = path;
 	}
 	
-	public void addFile(RepoFile rf){
+	public void addFile(RepoFile repoFile){
 		
-		repofiles.add(rf);
+		repofiles.add(repoFile);
 	}
 	
 	/**
