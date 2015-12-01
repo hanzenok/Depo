@@ -41,6 +41,7 @@ public class RepoZipper
 	public void add(RepoFile rf) throws ZipException
 	{
 		add(rf.getFile());
+		add(rf.getMetaFile());
 	}
 	
 	public void restore(String destination) throws ZipException

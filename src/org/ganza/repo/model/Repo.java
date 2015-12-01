@@ -94,26 +94,27 @@ public class Repo
 		JFileChooser chooser = new JFileChooser();
 		FileSystemView view = chooser.getFileSystemView();
 		
-		File[] listOfFiles = view.getFiles(new File(path), false);
+		File[] listOfFiles = view.getFiles(new File(path), true); //que des fichiers visibles
+		
+		//vérifie si dossier contient un fichier avec les metadonnées
+		File metafile = new File(path + "/" + metafile_name);
+		if(metafile.exists())
+		{ 	
+			//redefinir le chemin vers dossier
+			setPath(path);
+			
+			//redefinir le chemin vers meta fichier
+			metafile_path = folder_path + "/" + metafile_name;
+			
+			//et le nom de repo
+			setName(rx.getAttribute(metafile_path, "name"));
+			
+			is_repo = true;
+			System.out.println("Is repo!!");
+		}
 		
 		for (File file : listOfFiles)
 		{	
-			//vérifie si dossier contient un fichier avec les metadonnées
-			if(file.getName().equals(metafile_name))
-			{ 	
-				//redefinir le chemin vers dossier
-				setPath(path);
-				
-				//redefinir le chemin vers meta fichier
-				metafile_path = folder_path + "/" + metafile_name;
-				
-				//et le nom de repo
-				setName(rx.getAttribute(metafile_path, "name"));
-				
-				is_repo = true;
-				
-			}
-
 			repofiles.add(new RepoFile(file, null));
 		}
 		

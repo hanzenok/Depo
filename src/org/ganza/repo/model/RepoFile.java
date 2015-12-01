@@ -92,7 +92,11 @@ public class RepoFile
 	{
 		if(!hasMeta())
 		{
-			rx.createMeta(folder_path + "/." + getName(), getName());
+			String meta_file_path = folder_path + "/." + getName();
+			
+			rx.createMeta(meta_file_path, getName());
+			
+			meta_file = new File(meta_file_path);
 		}
 	}
 }
