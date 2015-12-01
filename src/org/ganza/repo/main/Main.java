@@ -19,14 +19,14 @@ public class Main
 	{	
 		Repo repo = new Repo();
 		
-		repo.read("/tmp/repo_2LwK3Kc");
+		//repo.read("/tmp/repo_2LwK3Kc");
 		
 //		repo.create();
 //		repo.addFile(new RepoFile(new File("/home/gunza/Desktop/test"), null));
 //		repo.write();
 		
-		repo.save("/tmp/" + repo.getName() + ".zip");
-		//repo.load("/tmp/TestRepo.repo");
+		//repo.save("/tmp/" + repo.getName() + ".zip");
+		repo.load("/tmp/repo_2LwK3Kc.zip");
 		
 		System.out.println(repo.getPath() + ", name: " + repo.getName());
 		System.out.println("Nb files: " + repo.size() + "\n");

@@ -156,11 +156,17 @@ public class Repo
 		}
 	}
 	
-	public void load(String zipfile_path) throws ZipException
+	public void load(String zipfile_path) 
+	throws ZipException, JDOMException, IOException
 	{	
 		RepoZipper zipper = new RepoZipper(zipfile_path);
 		
-		zipper.restore("/tmp/test");
+		zipper.restore(folder_path); //desarchivage
+		
+		//changer le nom indiquée dans le ficher meta
+		rx.setAttribute(metafile_path, "name", getName());
+		
+		System.out.println("Name (" + getName() + ") from metafile: " + rx.getAttribute(metafile_path, "name"));
 	}
 	
 	
