@@ -115,7 +115,14 @@ public class Repo
 		
 		for (File file : listOfFiles)
 		{	
-			repofiles.add(new RepoFile(file, null));
+			if(is_repo)
+			{
+				File xmlfile = new File(file.getPath() + "/." + file.getName()); //fichier avec le meme nom avec le point au debut
+				
+				repofiles.add(new RepoFile(file, xmlfile));
+			}
+			else
+				repofiles.add(new RepoFile(file));
 		}
 		
 		return is_repo;
@@ -178,6 +185,8 @@ public class Repo
 		
 		//changer le nom indiquée dans le ficher meta
 		rx.setAttribute(metafile_path, "name", getName());
+		
+		read(folder_path);
 		
 		System.out.println("Name (" + getName() + ") from metafile: " + rx.getAttribute(metafile_path, "name"));
 	}

@@ -75,11 +75,12 @@ public class RepoFile
 	/**
      * Renvoi le nom d'un fichier
      * 
-     * @return le nom d'un fichier
+     * @return le nom d'un fichier sous format
+     * fichier (.fichier)
      */
 	public String toString()
 	{	
-		return getName();
+		return getName() + " (" + getMetaFile().getName() + ")";
 	}
 	
 	public boolean hasMeta()
