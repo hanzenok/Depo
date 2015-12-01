@@ -1,6 +1,7 @@
 package org.ganza.repo.model;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,6 +19,8 @@ public class RepoFile
 	private File file;
 	private File meta_file;
 	
+	private RepoXML rx; //pour gerer les fichiers xml
+	
 	/**
      * Constructeur principal
      * 
@@ -27,24 +30,35 @@ public class RepoFile
      * @param meta_file
      * 			fichier xml associé
      */
-	public RepoFile(File file, File meta_file) {
-		
+	public RepoFile(File file, File meta_file) 
+	{	
 		this.file = file;
 		this.meta_file = meta_file;
+		
+		rx = new RepoXML();
 	}
 	
-	public File getFile(){
+	public RepoFile(File file)
+	{	
+		this.file = file;
+		this.meta_file = null;
 		
+		rx = new RepoXML();
+	}
+	
+	public File getFile()
+	{	
 		return file;
 	}
 	
-	public File getMetaFile(){
-		
+	public File getMetaFile()
+	{	
 		return meta_file;
 	}
 	
-	public void copy(String path) throws IOException{
-		
+	public void copy(String path) 
+	throws IOException
+	{	
 		Files.copy(file.toPath(), Paths.get(path + "/" + file.getName()), StandardCopyOption.REPLACE_EXISTING);
 	}
 	
@@ -66,5 +80,19 @@ public class RepoFile
 	public String toString()
 	{	
 		return getName();
+	}
+	
+	public boolean hasMeta()
+	{
+		return meta_file != null;	
+	}
+	
+	public void createMeta(String folder_path) 
+	throws FileNotFoundException, IOException
+	{
+		if(!hasMeta())
+		{
+			rx.createMeta(folder_path + "/." + getName(), getName());
+		}
 	}
 }

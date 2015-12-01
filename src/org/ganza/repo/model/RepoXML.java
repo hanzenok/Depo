@@ -14,16 +14,9 @@ import org.jdom2.output.XMLOutputter;
 
 public class RepoXML 
 {
-	
-	public void createMeta(String folder_path, String metafile_path, String repo_name) throws FileNotFoundException, IOException
-	{	
-		File dir = new File(folder_path);
-		
-		if(!dir.exists())
-		{	
-			//création de dossier
-			dir.mkdir();
-			
+	public void createRepoMeta(String metafile_path, String repo_name) 
+	throws FileNotFoundException, IOException
+	{				
 			//création de fichier metadata
 			Element root = new Element("repo");
 			Document document = new Document(root);
@@ -35,7 +28,22 @@ public class RepoXML
 			//ecrire le fichier meta
 		    XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
 		    sortie.output(document, new FileOutputStream(metafile_path));
-		}
+	}
+	
+	public void createMeta(String metafile_path, String filename) 
+	throws FileNotFoundException, IOException
+	{				
+			//création de fichier metadata
+			Element root = new Element("repofile");
+			Document document = new Document(root);
+			
+			Element name = new Element("name");
+			name.setText(filename);
+			root.addContent(name);
+			
+			//ecrire le fichier meta
+		    XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+		    sortie.output(document, new FileOutputStream(metafile_path));
 	}
 	
 	public String getAttribute(String metafile_path, String element_name) 

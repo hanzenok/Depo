@@ -128,16 +128,28 @@ public class Repo
      */
 	public void create() throws FileNotFoundException, IOException
 	{	
-		rx.createMeta(folder_path, metafile_path, repo_name);
+		//creation de dossier
+		File dir = new File(folder_path);
+		if(!dir.exists()) dir.mkdir();
+		
+		rx.createRepoMeta(metafile_path, repo_name);
 	}
 	
+	//if xml associated to the file does not exist
+	//it creates it
 	public void write() throws IOException
 	{	
 		int i, n = size();
 		
 		for(i=0; i<n; i++){
 			
-			repofiles.get(i).copy(folder_path);
+			RepoFile rp = repofiles.get(i);
+			rp.copy(folder_path);
+			
+			if(!rp.hasMeta())
+			{
+				rp.createMeta(folder_path);
+			}
 		}
 	}
 	

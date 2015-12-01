@@ -21,12 +21,12 @@ public class Main
 		
 		//repo.read("/tmp/repo_2LwK3Kc");
 		
-//		repo.create();
-//		repo.addFile(new RepoFile(new File("/home/gunza/Desktop/test"), null));
-//		repo.write();
+		repo.create();
+		repo.addFile(new RepoFile(new File("/home/gunza/Desktop/test")));
+		repo.write();
 		
-		//repo.save("/tmp/" + repo.getName() + ".zip");
-		repo.load("/tmp/repo_2LwK3Kc.zip");
+		repo.save("/tmp/" + repo.getName() + ".zip");
+//		repo.load("/tmp/repo_2LwK3Kc.zip");
 		
 		System.out.println(repo.getPath() + ", name: " + repo.getName());
 		System.out.println("Nb files: " + repo.size() + "\n");
