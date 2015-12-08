@@ -43,9 +43,11 @@ public class FileDragDemo extends JPanel {
 @SuppressWarnings("serial")
 class FileListTransferHandler extends TransferHandler {
    private JList list;
+   private DefaultListModel listModel;
 
    public FileListTransferHandler(JList list) {
       this.list = list;
+      listModel = new DefaultListModel();
    }
 
    public int getSourceActions(JComponent c) {
@@ -58,6 +60,7 @@ class FileListTransferHandler extends TransferHandler {
 
    public boolean importData(TransferSupport ts) {
       try {
+    	  
          @SuppressWarnings("rawtypes")
          List data = (List) ts.getTransferable().getTransferData(
                DataFlavor.javaFileListFlavor);
@@ -65,13 +68,13 @@ class FileListTransferHandler extends TransferHandler {
             return false;
          }
 
-         DefaultListModel listModel = new DefaultListModel();
          for (Object item : data) {
             File file = (File) item;
             listModel.addElement(file);
          }
 
          list.setModel(listModel);
+        
          return true;
 
       } catch (UnsupportedFlavorException e) {
