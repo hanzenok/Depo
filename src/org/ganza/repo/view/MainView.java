@@ -3,6 +3,7 @@ package org.ganza.repo.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -25,18 +26,22 @@ import javax.swing.TransferHandler;
 import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.filechooser.FileSystemView;
 
+import org.ganza.repo.model.RepoFile;
+
 public class MainView extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+
 	protected JPanel main_panel;
-	protected JList list;
+	protected JList<File> list;
 	
 	public MainView(){
 		
-		main_panel = new JPanel(new FlowLayout());
+		main_panel = new JPanel(new BorderLayout());
 		
 		//configuration de JFrame
 		setTitle("Files");
-		setSize(300, 400);	    
+//		setSize(3000, 4000);	    
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationByPlatform(true);
 		
@@ -46,25 +51,21 @@ public class MainView extends JFrame {
 		File[] files = view.getFiles(new File("/home/gunza/workspace"), true);
 		
 		//JList conteneur de toutes les items
-		list = new JList();
+		list = new JList<File>();
 		list.setCellRenderer(new FileListCellRenderer());
-		DefaultListModel listModel = new DefaultListModel();
-		
-		Icon I;
-		JLabel label;
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		DefaultListModel<File> listModel = new DefaultListModel<File>();
 		
 		for(int i=0; i<files.length; i++){
 			
-//			I = view.getSystemIcon(files[i]);
-//			label = new JLabel(files[i].getName(), I, JLabel.CENTER);
-			
 			listModel.addElement(files[i]);
-			
 		}
 		
 		//ajout
 		list.setModel(listModel);
-		main_panel.add(new JScrollPane(list));
+		JScrollPane scroll = new JScrollPane(list);
+		scroll.setPreferredSize(new Dimension(400, 300));
+		main_panel.add(scroll, BorderLayout.CENTER);
 		setContentPane(main_panel);
 		
 		//afficher
@@ -79,43 +80,40 @@ class FileListTransferHandler extends TransferHandler {
 	  
 }
 
-class FileListCellRenderer extends DefaultListCellRenderer {
-
-    private static final long serialVersionUID = -7799441088157759804L;
+class FileListCellRenderer extends DefaultListCellRenderer
+{
+    private static final long serialVersionUID = 1L;
     private FileSystemView fileSystemView;
     private JLabel label;
-    private Color textSelectionColor = Color.BLACK;
-    private Color backgroundSelectionColor = Color.CYAN;
-    private Color textNonSelectionColor = Color.BLACK;
+    
+//    private Color textSelectionColor = Color.BLACK;
+    private Color backgroundSelectionColor = Color.GRAY;
+//    private Color textNonSelectionColor = Color.BLACK;
     private Color backgroundNonSelectionColor = Color.WHITE;
-
-    FileListCellRenderer() {
+    
+    FileListCellRenderer()
+    {
         label = new JLabel();
         label.setOpaque(true);
         fileSystemView = FileSystemView.getFileSystemView();
     }
 
     @Override
-    public Component getListCellRendererComponent(
-        JList list,
-        Object value,
-        int index,
-        boolean selected,
-        boolean expanded) {
-
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean selected, boolean expanded) 
+    {	
+    	//fichier
         File file = (File)value;
+        
+        //icon et texte
         label.setIcon(fileSystemView.getSystemIcon(file));
         label.setText(fileSystemView.getSystemDisplayName(file));
-        label.setToolTipText(file.getPath());
-
+        
         if (selected) {
             label.setBackground(backgroundSelectionColor);
-            label.setForeground(textSelectionColor);
         } else {
             label.setBackground(backgroundNonSelectionColor);
-            label.setForeground(textNonSelectionColor);
         }
-
+        
         return label;
     }
 }
