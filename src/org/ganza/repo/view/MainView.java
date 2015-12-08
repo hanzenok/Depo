@@ -1,6 +1,8 @@
 package org.ganza.repo.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -9,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -44,6 +47,7 @@ public class MainView extends JFrame {
 		
 		//JList conteneur de toutes les items
 		list = new JList();
+		list.setCellRenderer(new FileListCellRenderer());
 		DefaultListModel listModel = new DefaultListModel();
 		
 		Icon I;
@@ -73,4 +77,45 @@ class FileListTransferHandler extends TransferHandler {
 
 	private static final long serialVersionUID = 1L;
 	  
+}
+
+class FileListCellRenderer extends DefaultListCellRenderer {
+
+    private static final long serialVersionUID = -7799441088157759804L;
+    private FileSystemView fileSystemView;
+    private JLabel label;
+    private Color textSelectionColor = Color.BLACK;
+    private Color backgroundSelectionColor = Color.CYAN;
+    private Color textNonSelectionColor = Color.BLACK;
+    private Color backgroundNonSelectionColor = Color.WHITE;
+
+    FileListCellRenderer() {
+        label = new JLabel();
+        label.setOpaque(true);
+        fileSystemView = FileSystemView.getFileSystemView();
+    }
+
+    @Override
+    public Component getListCellRendererComponent(
+        JList list,
+        Object value,
+        int index,
+        boolean selected,
+        boolean expanded) {
+
+        File file = (File)value;
+        label.setIcon(fileSystemView.getSystemIcon(file));
+        label.setText(fileSystemView.getSystemDisplayName(file));
+        label.setToolTipText(file.getPath());
+
+        if (selected) {
+            label.setBackground(backgroundSelectionColor);
+            label.setForeground(textSelectionColor);
+        } else {
+            label.setBackground(backgroundNonSelectionColor);
+            label.setForeground(textNonSelectionColor);
+        }
+
+        return label;
+    }
 }
