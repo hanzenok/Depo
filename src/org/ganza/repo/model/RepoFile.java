@@ -13,7 +13,6 @@ import java.nio.file.StandardCopyOption;
  * un fichier dans un dêpot
  * @author Ganza Mykhailo
  */
-
 public class RepoFile
 {	
 	private File file;
