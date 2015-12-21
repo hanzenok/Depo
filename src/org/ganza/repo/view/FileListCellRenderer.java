@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.filechooser.FileSystemView;
 
-class FileListCellRenderer extends DefaultListCellRenderer
+public class FileListCellRenderer extends DefaultListCellRenderer
 {
     private static final long serialVersionUID = 1L;
     private FileSystemView fileSystemView;

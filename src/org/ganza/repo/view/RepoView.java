@@ -29,10 +29,11 @@ import javax.swing.TransferHandler;
 import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.filechooser.FileSystemView;
 
-import org.ganza.repo.controler.MenuController;
+import org.ganza.repo.controller.DragController;
+import org.ganza.repo.controller.MenuController;
 import org.ganza.repo.model.RepoFile;
 
-public class View extends JFrame {
+public class RepoView extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -47,7 +48,7 @@ public class View extends JFrame {
 	
 	protected JList<File> list;
 	
-	public View(){
+	public RepoView(){
 		
 		//Menu ==================================================
 		menubar = new JMenuBar();
@@ -63,7 +64,7 @@ public class View extends JFrame {
         //Panneau principal =====================================
 		main_panel = new JPanel(new BorderLayout());
 		
-		setTitle("Files");
+		setTitle("Repositoire");
 //		setSize(3000, 4000);	    
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationByPlatform(true);
@@ -71,8 +72,14 @@ public class View extends JFrame {
 		//pour choisir les fichiers
 		chooser = new JFileChooser();
 		view = chooser.getFileSystemView();
-//		File[] files = view.getFiles(new File("/home/gunza/workspace"), true);
+		list = new JList<File>();
+		list.setCellRenderer(new FileListCellRenderer());
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setDragEnabled(true);
+		list.setTransferHandler(new DragController(list));
 		
+//		File[] files = view.getFiles(new File("/home/gunza/workspace"), true);
+//		
 //		list = new JList<File>();
 //		list.setCellRenderer(new FileListCellRenderer());
 //		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -90,6 +97,9 @@ public class View extends JFrame {
 //		
 //		//ajout de toute dans le JFrame
 //		list.setModel(listModel);
+		
+		
+		
 		JScrollPane scroll = new JScrollPane(list);
 		scroll.setPreferredSize(new Dimension(400, 300));
 		main_panel.add(scroll, BorderLayout.CENTER);
