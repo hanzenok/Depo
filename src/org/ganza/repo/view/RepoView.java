@@ -77,24 +77,25 @@ public class RepoView extends JFrame {
 		list = new JList<File>();
 		list.setCellRenderer(new FileListCellRenderer());
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		list.setDragEnabled(true);
+		list.setDragEnabled(false); //par defaut
 		listModel = new DefaultListModel<File>();
-		
-		
-		File[] files = view.getFiles(new File("/home/gunza/workspace"), true);
-		
-		list = new JList<File>();
-		list.setCellRenderer(new FileListCellRenderer());
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		
-		
-		for(int i=0; i<files.length; i++){
-			
-			listModel.addElement(files[i]);
-		}
-		
-		//ajout de toute dans le JFrame
 		list.setModel(listModel);
+		
+		
+//		File[] files = view.getFiles(new File("/home/gunza/workspace"), true);
+//		
+//		list = new JList<File>();
+//		list.setCellRenderer(new FileListCellRenderer());
+//		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+//		
+//		
+//		for(int i=0; i<files.length; i++){
+//			
+//			listModel.addElement(files[i]);
+//		}
+//		
+//		//ajout de toute dans le JFrame
+//		list.setModel(listModel);
 		
 		
 		
@@ -106,6 +107,11 @@ public class RepoView extends JFrame {
 		//afficher
 		pack();
 		setVisible(true);
+	}
+	
+	public void setDragable(boolean dragable)
+	{
+		list.setDragEnabled(dragable);
 	}
 	
 	public void setDragController(DragController drag_controller)

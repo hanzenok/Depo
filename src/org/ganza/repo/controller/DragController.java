@@ -13,6 +13,7 @@ import javax.swing.TransferHandler;
 import javax.swing.TransferHandler.TransferSupport;
 
 import org.ganza.repo.model.Repo;
+import org.ganza.repo.model.RepoFile;
 
 public class DragController extends TransferHandler {
 
@@ -20,7 +21,7 @@ public class DragController extends TransferHandler {
 	
 	private Repo repo;
 	
-	private JList list;
+	private JList<File> list;
 	private DefaultListModel<File> listModel;
 	
 	public DragController(Repo repo)
@@ -28,12 +29,12 @@ public class DragController extends TransferHandler {
 		this.repo = repo;
 	}
 	
-	public void setList(JList list)
+	public void setList(JList<File> list)
 	{
 		this.list = list;
 	}
 	
-	public void setListMode(DefaultListModel listModel){
+	public void setListMode(DefaultListModel<File> listModel){
 		
 		this.listModel = listModel;
 	}
@@ -53,23 +54,27 @@ public class DragController extends TransferHandler {
 		System.out.println("Transferd BEACH!");
 		
 		try{
-	        List data = (List) ts.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+	        List<File> data = (List) ts.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
 	        
 	        if (data.size() < 1) 
 	        {
 	        	return false;
 	        }
 	        
-	        int i=0;
+	        //reccuperer le fichier
 	        for (Object item : data) 
 	        {
+	        	//fichier
 	        	File file = (File) item;
+	        	
 	        	listModel.addElement(file);
-	        	System.out.println(i++);
+	        	repo.addFile(new RepoFile(file));
 	        }
 	
 	        list.setModel(listModel);
-	         
+	        
+	        System.out.println(repo);
+	        
 	        return true;
 		}
 		catch (UnsupportedFlavorException e) {return false;} 

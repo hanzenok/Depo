@@ -21,9 +21,6 @@ public class MenuController implements ActionListener
 	{
 		this.repo_view = repo_view;
 		this.repo_view.setMenuController(this);
-		
-		drag_controller = new DragController(this.repo);
-		repo_view.setDragController(drag_controller);
 	}
 	
 	@Override
@@ -42,6 +39,11 @@ public class MenuController implements ActionListener
 			
 			//changer le titre de la fenetr
 			repo_view.setTitle(repo.getName());
+			
+			//devient dragable
+			drag_controller = new DragController(repo);
+			repo_view.setDragable(true);
+			repo_view.setDragController(drag_controller);
 		}
 	}
 

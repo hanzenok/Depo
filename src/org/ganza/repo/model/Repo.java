@@ -255,9 +255,12 @@ public class Repo
 		this.folder_path = path;
 	}
 	
-	public void addFile(RepoFile repoFile){
-		
+	public void addFile(RepoFile repoFile) 
+	throws IOException
+	{	
 		repofiles.add(repoFile);
+		repoFile.copy(folder_path);
+		repoFile.createMeta(folder_path);
 	}
 	
 	/**
