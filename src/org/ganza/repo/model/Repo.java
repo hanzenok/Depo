@@ -24,6 +24,7 @@ import net.lingala.zip4j.exception.ZipException;
 public class Repo 
 {	
 	private final String metafile_name;
+	private boolean exist; //si le dossier d'un depot a ete cree ou pas
 	
 	private String repo_name;
 	private String metafile_path;
@@ -40,6 +41,7 @@ public class Repo
 	{	
 		rn = new RepoNamer();
 		repo_name = new String(rn.generate());
+		exist = false;
 		
 		folder_path = new String("/tmp/" + repo_name);
 		
@@ -144,6 +146,8 @@ public class Repo
 		if(!dir.exists()) dir.mkdir();
 		
 		rx.createRepoMeta(metafile_path, repo_name);
+		
+		exist = true;
 	}
 	
 	//if xml associated to the file does not exist
@@ -263,6 +267,25 @@ public class Repo
 		repoFile.createMeta(folder_path);
 	}
 	
+	public void close(){
+		
+		JFileChooser chooser = new JFileChooser();
+		FileSystemView view = chooser.getFileSystemView();
+		
+		//supprimer les fichiers de dossier
+		File[] listOfFiles = view.getFiles(new File(folder_path), false); //toutes les fichiers
+		for (File file : listOfFiles)
+		{	
+			file.delete();
+		}
+		
+		//supprimer le repertoire
+		File dir = new File(folder_path);
+		dir.delete();
+		
+	
+	}
+	
 	/**
      * Renvoi le nombre
      * des fichiers dans un depôt
@@ -272,5 +295,10 @@ public class Repo
 	public int size(){
 		
 		return repofiles.size();
+	}
+	
+	public boolean exists(){
+		
+		return exist;
 	}
 }

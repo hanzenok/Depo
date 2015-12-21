@@ -16,10 +16,12 @@ public class MenuController implements ActionListener
 	private Repo repo;
 	
 	private DragController drag_controller;
+	private ExitController exit_controller;
 	
 	public MenuController(RepoView repo_view)
 	{
 		this.repo_view = repo_view;
+		
 		this.repo_view.setMenuController(this);
 	}
 	
@@ -31,11 +33,13 @@ public class MenuController implements ActionListener
 		//new menu
 		if(item_name.equals("New"))
 		{	
-			
 			//creation de nouveau repositoire
 			repo = new Repo();
 			try { repo.create(); } 
 			catch (IOException e1) { e1.printStackTrace(); }
+			
+			//initaliser le view
+			repo_view.initialize();
 			
 			//changer le titre de la fenetr
 			repo_view.setTitle(repo.getName());
@@ -44,6 +48,10 @@ public class MenuController implements ActionListener
 			drag_controller = new DragController(repo);
 			repo_view.setDragable(true);
 			repo_view.setDragController(drag_controller);
+			
+			//controlleur de sortie
+			exit_controller = new ExitController(repo);
+			this.repo_view.setExitController(exit_controller);
 		}
 	}
 

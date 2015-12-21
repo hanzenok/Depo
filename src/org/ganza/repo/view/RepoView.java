@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -30,6 +31,7 @@ import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.filechooser.FileSystemView;
 
 import org.ganza.repo.controller.DragController;
+import org.ganza.repo.controller.ExitController;
 import org.ganza.repo.controller.MenuController;
 import org.ganza.repo.model.RepoFile;
 
@@ -55,56 +57,20 @@ public class RepoView extends JFrame {
 		menubar = new JMenuBar();
         setJMenuBar(menubar);
         
-        JMenu file = new JMenu("File");
+        JMenu repo = new JMenu("Depôt");
         new_menu = new JMenuItem("New"); new_menu.setToolTipText("Créer un nouveau depôt");
         open_menu = new JMenuItem("Open"); new_menu.setToolTipText("Ouvrir un depôt existante");
-        file.add(new_menu); file.add(open_menu);
+        repo.add(new_menu); repo.add(open_menu);
        
-        menubar.add(file);
+        menubar.add(repo);
 		
         //Panneau principal =====================================
 		main_panel = new JPanel(new BorderLayout());
 		
 		setTitle("Repositoire");
-//		setSize(3000, 4000);	    
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(400, 300));
 		setLocationByPlatform(true);
 		
-		//pour choisir les fichiers
-		chooser = new JFileChooser();
-		view = chooser.getFileSystemView();
-		
-		list = new JList<File>();
-		list.setCellRenderer(new FileListCellRenderer());
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		list.setDragEnabled(false); //par defaut
-		listModel = new DefaultListModel<File>();
-		list.setModel(listModel);
-		
-		
-//		File[] files = view.getFiles(new File("/home/gunza/workspace"), true);
-//		
-//		list = new JList<File>();
-//		list.setCellRenderer(new FileListCellRenderer());
-//		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-//		
-//		
-//		for(int i=0; i<files.length; i++){
-//			
-//			listModel.addElement(files[i]);
-//		}
-//		
-//		//ajout de toute dans le JFrame
-//		list.setModel(listModel);
-		
-		
-		
-		JScrollPane scroll = new JScrollPane(list);
-		scroll.setPreferredSize(new Dimension(400, 300));
-		main_panel.add(scroll, BorderLayout.CENTER);
-		setContentPane(main_panel);
-		
-		//afficher
 		pack();
 		setVisible(true);
 	}
@@ -125,5 +91,33 @@ public class RepoView extends JFrame {
 	{
 		open_menu.addActionListener(menu_controller);
 		new_menu.addActionListener(menu_controller);
+	}
+	
+	public void setExitController(ExitController exit_controller)
+	{
+		addWindowListener(exit_controller);
+	}
+	
+	public void initialize(){
+		
+		//JList conteneur des fichiers
+		list = new JList<File>();
+		list.setCellRenderer(new FileListCellRenderer());
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setDragEnabled(false); //par defaut
+		
+		//model d'affichage
+		listModel = new DefaultListModel<File>();
+		list.setModel(listModel);
+		
+		//ajout
+		JScrollPane scroll = new JScrollPane(list);
+		scroll.setPreferredSize(new Dimension(400, 300));
+		main_panel.add(scroll, BorderLayout.CENTER);
+		setContentPane(main_panel);
+		
+		//rendre visible
+		pack();
+		setVisible(true);
 	}
 }
