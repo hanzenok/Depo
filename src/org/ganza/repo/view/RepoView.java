@@ -47,6 +47,7 @@ public class RepoView extends JFrame {
 	protected FileSystemView view;
 	
 	protected JList<File> list;
+	DefaultListModel<File> listModel;
 	
 	public RepoView(){
 		
@@ -72,31 +73,28 @@ public class RepoView extends JFrame {
 		//pour choisir les fichiers
 		chooser = new JFileChooser();
 		view = chooser.getFileSystemView();
+		
 		list = new JList<File>();
 		list.setCellRenderer(new FileListCellRenderer());
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setDragEnabled(true);
-		list.setTransferHandler(new DragController(list));
+		listModel = new DefaultListModel<File>();
 		
-//		File[] files = view.getFiles(new File("/home/gunza/workspace"), true);
-//		
-//		list = new JList<File>();
-//		list.setCellRenderer(new FileListCellRenderer());
-//		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-//		
-//		//JList conteneur de toutes les items
-//		list = new JList<File>();
-//		list.setCellRenderer(new FileListCellRenderer());
-//		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-//		DefaultListModel<File> listModel = new DefaultListModel<File>();
-//		
-//		for(int i=0; i<files.length; i++){
-//			
-//			listModel.addElement(files[i]);
-//		}
-//		
-//		//ajout de toute dans le JFrame
-//		list.setModel(listModel);
+		
+		File[] files = view.getFiles(new File("/home/gunza/workspace"), true);
+		
+		list = new JList<File>();
+		list.setCellRenderer(new FileListCellRenderer());
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		
+		
+		for(int i=0; i<files.length; i++){
+			
+			listModel.addElement(files[i]);
+		}
+		
+		//ajout de toute dans le JFrame
+		list.setModel(listModel);
 		
 		
 		
@@ -108,6 +106,13 @@ public class RepoView extends JFrame {
 		//afficher
 		pack();
 		setVisible(true);
+	}
+	
+	public void setDragController(DragController drag_controller)
+	{	
+		drag_controller.setList(list);
+		drag_controller.setListMode(listModel);
+		list.setTransferHandler(drag_controller);
 	}
 	
 	public void setMenuController(MenuController menu_controller)

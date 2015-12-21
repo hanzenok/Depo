@@ -82,12 +82,14 @@ public class Repo
 	 * @throws IOException 
 	 * @throws JDOMException 
      */
-	public boolean read() throws JDOMException, IOException{
+	public boolean read() 
+	throws JDOMException, IOException{
 		
 		return read(folder_path);
 	}
 	
-	public boolean read(String path) throws JDOMException, IOException
+	public boolean read(String path) 
+	throws JDOMException, IOException
 	{	
 		boolean is_repo = false; //indicateur si un dossier contient un depôt
 		
@@ -134,7 +136,8 @@ public class Repo
      * précisé par folder_path,
      * charge le fichier de metadata
      */
-	public void create() throws FileNotFoundException, IOException
+	public void create()
+	throws FileNotFoundException, IOException
 	{	
 		//creation de dossier
 		File dir = new File(folder_path);
@@ -145,7 +148,8 @@ public class Repo
 	
 	//if xml associated to the file does not exist
 	//it creates it
-	public void write() throws IOException
+	public void write() 
+	throws IOException
 	{	
 		int i, n = size();
 		
@@ -161,7 +165,8 @@ public class Repo
 		}
 	}
 	
-	public void save(String zipfile_path) throws ZipException
+	public void save(String zipfile_path) 
+	throws ZipException
 	{	
 		RepoZipper zipper = new RepoZipper(zipfile_path);
 		

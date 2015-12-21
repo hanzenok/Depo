@@ -10,15 +10,20 @@ import org.ganza.repo.model.Repo;
 import org.ganza.repo.view.RepoView;
 
 public class MenuController implements ActionListener
-{
+{	
+	
 	private RepoView repo_view;
 	private Repo repo;
+	
+	private DragController drag_controller;
 	
 	public MenuController(RepoView repo_view)
 	{
 		this.repo_view = repo_view;
-		
 		this.repo_view.setMenuController(this);
+		
+		drag_controller = new DragController(this.repo);
+		repo_view.setDragController(drag_controller);
 	}
 	
 	@Override
