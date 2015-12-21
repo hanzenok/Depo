@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.ganza.repo.controler.MenuController;
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
-import org.ganza.repo.view.MainView;
+import org.ganza.repo.view.View;
 import org.jdom2.JDOMException;
 
 import net.lingala.zip4j.exception.ZipException;
@@ -33,7 +34,8 @@ public class Main
 //		System.out.println("Nb files: " + repo.size() + "\n");
 //		System.out.println(repo.list());
 		
-		MainView mv = new MainView();
+		View mv = new View();
+		MenuController mc = new MenuController(mv);
 	}
 	
 }
