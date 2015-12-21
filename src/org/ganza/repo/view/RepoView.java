@@ -45,6 +45,7 @@ public class RepoView extends JFrame {
 	protected JMenuItem new_menu;
 	protected JMenuItem open_menu;
 	protected JMenuItem save_menu;
+	protected JMenuItem close_menu;
 	
 	protected JFileChooser chooser;
 	protected FileSystemView view;
@@ -54,7 +55,7 @@ public class RepoView extends JFrame {
 	
 	public RepoView(){
 		
-		//Menu ==================================================
+		//menu
 		menubar = new JMenuBar();
         setJMenuBar(menubar);
         
@@ -62,17 +63,19 @@ public class RepoView extends JFrame {
         new_menu = new JMenuItem("Nouveau"); new_menu.setToolTipText("Créer un nouveau depôt");
         save_menu = new JMenuItem("Sauvegarder"); save_menu.setToolTipText("Sauvegarder le depôt"); save_menu.setEnabled(false);
         open_menu = new JMenuItem("Ouvrir"); open_menu.setToolTipText("Ouvrir un depôt existante"); open_menu.setEnabled(false);
-        repo.add(new_menu); repo.add(save_menu); repo.add(open_menu);
+        close_menu = new JMenuItem("Fermer"); close_menu.setToolTipText("Ferm le depôt"); close_menu.setEnabled(false);
+        repo.add(new_menu); repo.add(save_menu); repo.add(open_menu); repo.add(close_menu);
        
         menubar.add(repo);
 		
-        //Panneau principal =====================================
+        //manneau principal
 		main_panel = new JPanel(new BorderLayout());
 		
-		setTitle("Repositoire");
 		setMinimumSize(new Dimension(400, 300));
 		setLocationByPlatform(true);
 		
+		//packing
+		initialize();
 		pack();
 		setVisible(true);
 	}
@@ -81,6 +84,7 @@ public class RepoView extends JFrame {
 	{
 		save_menu.setEnabled(enabled);
 		open_menu.setEnabled(enabled);
+		close_menu.setEnabled(enabled);
 	}
 	
 	public void setDragable(boolean dragable)
@@ -96,10 +100,11 @@ public class RepoView extends JFrame {
 	}
 	
 	public void setMenuController(MenuController menu_controller)
-	{
-		open_menu.addActionListener(menu_controller);
-		save_menu.addActionListener(menu_controller);
+	{	
 		new_menu.addActionListener(menu_controller);
+		save_menu.addActionListener(menu_controller);
+		open_menu.addActionListener(menu_controller);
+		close_menu.addActionListener(menu_controller);
 	}
 	
 	public void setExitController(ExitController exit_controller)
@@ -108,6 +113,8 @@ public class RepoView extends JFrame {
 	}
 	
 	public void initialize(){
+		
+		setTitle("Repository");
 		
 		main_panel = new JPanel(new BorderLayout());
 		
