@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.view.RepoView;
+import org.jdom2.JDOMException;
 
 import net.lingala.zip4j.exception.ZipException;
 
@@ -37,6 +38,10 @@ public class MenuController implements ActionListener
 		//menu "nouveau"
 		if(item_name.equals("Nouveau"))
 		{	
+			//supprimer le repo existante
+			if(repo != null && repo.exists())
+				repo.close();
+			
 			//creation de nouveau repositoire
 			repo = new Repo();
 			try { repo.create(); } 
@@ -44,7 +49,7 @@ public class MenuController implements ActionListener
 			
 			//initaliser et activer le view
 			repo_view.initialize();
-			repo_view.setReady();
+			repo_view.setReady(true);
 			
 			//changer le titre de la fenetr
 			repo_view.setTitle(repo.getName());
@@ -61,7 +66,7 @@ public class MenuController implements ActionListener
 		
 		//menu "Sauvegarder"
 		if(item_name.equals("Sauvegarder"))
-		{	System.out.println("Yoooo");
+		{	
 			if(repo.exists())
 			{
 				//dialog
@@ -79,6 +84,34 @@ public class MenuController implements ActionListener
 				    catch (ZipException e1) { e1.printStackTrace(); }
 				}
 			}
+		}
+		
+		//menu "Ouvrir"
+		if(item_name.equals("Ouvrir"))
+		{
+			//supprimer le repo existante
+			if(repo != null && repo.exists())
+				repo.close();
+			
+			//dialog
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setDialogTitle("Specify a file to save");   
+			int selection = fileChooser.showOpenDialog(repo_view);
+			
+			//fichier choisi
+			if (selection == JFileChooser.APPROVE_OPTION) 
+			{
+			    File selected_file = fileChooser.getSelectedFile();
+			    
+			    //charger le dossier
+			    try { repo.load(selected_file.getAbsolutePath()); } 
+			    catch (ZipException | JDOMException | IOException e1) { e1.printStackTrace(); }
+			}
+			
+			//reinirialiser la view et charger le contenu
+			repo_view.initialize();
+			repo_view.refresh(repo.getPath());
+			
 		}
 	}
 

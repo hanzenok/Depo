@@ -61,7 +61,7 @@ public class RepoView extends JFrame {
         JMenu repo = new JMenu("Depôt");
         new_menu = new JMenuItem("Nouveau"); new_menu.setToolTipText("Créer un nouveau depôt");
         save_menu = new JMenuItem("Sauvegarder"); save_menu.setToolTipText("Sauvegarder le depôt"); save_menu.setEnabled(false);
-        open_menu = new JMenuItem("Open"); open_menu.setToolTipText("Ouvrir un depôt existante");
+        open_menu = new JMenuItem("Ouvrir"); open_menu.setToolTipText("Ouvrir un depôt existante"); open_menu.setEnabled(false);
         repo.add(new_menu); repo.add(save_menu); repo.add(open_menu);
        
         menubar.add(repo);
@@ -77,9 +77,10 @@ public class RepoView extends JFrame {
 		setVisible(true);
 	}
 	
-	public void setReady()
+	public void setReady(boolean enabled)
 	{
-		save_menu.setEnabled(true);
+		save_menu.setEnabled(enabled);
+		open_menu.setEnabled(enabled);
 	}
 	
 	public void setDragable(boolean dragable)
@@ -108,6 +109,8 @@ public class RepoView extends JFrame {
 	
 	public void initialize(){
 		
+		main_panel = new JPanel(new BorderLayout());
+		
 		//JList conteneur des fichiers
 		list = new JList<File>();
 		list.setCellRenderer(new FileListCellRenderer());
@@ -127,5 +130,19 @@ public class RepoView extends JFrame {
 		//rendre visible
 		pack();
 		setVisible(true);
+	}
+	
+	public void refresh(String folder_path)
+	{
+		//pour choisir les fichiers
+		JFileChooser chooser = new JFileChooser();
+		FileSystemView view = chooser.getFileSystemView();
+		File[] files = view.getFiles(new File(folder_path), true);
+		
+		for(int i=0; i<files.length; i++){
+			
+			listModel.addElement(files[i]);
+		}
+		
 	}
 }

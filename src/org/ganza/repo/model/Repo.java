@@ -24,7 +24,8 @@ import net.lingala.zip4j.exception.ZipException;
 public class Repo 
 {	
 	private final String metafile_name;
-	private boolean exist; //si le dossier d'un depot a ete cree ou pas
+	private static boolean exist = false; //si le dossier d'un depot a ete cree ou pas
+	//visible
 	
 	private String repo_name;
 	private String metafile_path;
@@ -41,7 +42,6 @@ public class Repo
 	{	
 		rn = new RepoNamer();
 		repo_name = new String(rn.generate());
-		exist = false;
 		
 		folder_path = new String("/tmp/" + repo_name);
 		
@@ -114,7 +114,6 @@ public class Repo
 			setName(rx.getAttribute(metafile_path, "name"));
 			
 			is_repo = true;
-			System.out.println("Is repo!!");
 		}
 		
 		for (File file : listOfFiles)
@@ -195,9 +194,8 @@ public class Repo
 		//changer le nom indiquée dans le ficher meta
 		rx.setAttribute(metafile_path, "name", getName());
 		
+		//lecture de contenu de fichier et chargement dans la base
 		read(folder_path);
-		
-		System.out.println("Name (" + getName() + ") from metafile: " + rx.getAttribute(metafile_path, "name"));
 	}
 	
 	
