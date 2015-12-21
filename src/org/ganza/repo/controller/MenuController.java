@@ -2,12 +2,16 @@ package org.ganza.repo.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.view.RepoView;
+
+import net.lingala.zip4j.exception.ZipException;
 
 public class MenuController implements ActionListener
 {	
@@ -30,16 +34,17 @@ public class MenuController implements ActionListener
 	{
 		String item_name = ((JMenuItem)e.getSource()).getText();
 		
-		//new menu
-		if(item_name.equals("New"))
+		//menu "nouveau"
+		if(item_name.equals("Nouveau"))
 		{	
 			//creation de nouveau repositoire
 			repo = new Repo();
 			try { repo.create(); } 
 			catch (IOException e1) { e1.printStackTrace(); }
 			
-			//initaliser le view
+			//initaliser et activer le view
 			repo_view.initialize();
+			repo_view.setReady();
 			
 			//changer le titre de la fenetr
 			repo_view.setTitle(repo.getName());
@@ -52,6 +57,28 @@ public class MenuController implements ActionListener
 			//controlleur de sortie
 			exit_controller = new ExitController(repo);
 			this.repo_view.setExitController(exit_controller);
+		}
+		
+		//menu "Sauvegarder"
+		if(item_name.equals("Sauvegarder"))
+		{	System.out.println("Yoooo");
+			if(repo.exists())
+			{
+				//dialog
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setDialogTitle("Specify a file to save");   
+				int selection = fileChooser.showSaveDialog(repo_view);
+				
+				//fichier choisi
+				if (selection == JFileChooser.APPROVE_OPTION) 
+				{
+				    File selected_file = fileChooser.getSelectedFile();
+				    
+				    //sauvegarde
+				    try { repo.save(selected_file); } 
+				    catch (ZipException e1) { e1.printStackTrace(); }
+				}
+			}
 		}
 	}
 

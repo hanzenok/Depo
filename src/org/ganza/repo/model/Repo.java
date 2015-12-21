@@ -169,10 +169,10 @@ public class Repo
 		}
 	}
 	
-	public void save(String zipfile_path) 
+	public void save(File zipfile) 
 	throws ZipException
 	{	
-		RepoZipper zipper = new RepoZipper(zipfile_path);
+		RepoZipper zipper = new RepoZipper(zipfile.getAbsolutePath());
 		
 		//archivage d'un fichier meta
 		zipper.add(new File(metafile_path));

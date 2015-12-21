@@ -44,6 +44,7 @@ public class RepoView extends JFrame {
 	protected JMenuBar menubar;
 	protected JMenuItem new_menu;
 	protected JMenuItem open_menu;
+	protected JMenuItem save_menu;
 	
 	protected JFileChooser chooser;
 	protected FileSystemView view;
@@ -58,9 +59,10 @@ public class RepoView extends JFrame {
         setJMenuBar(menubar);
         
         JMenu repo = new JMenu("Depôt");
-        new_menu = new JMenuItem("New"); new_menu.setToolTipText("Créer un nouveau depôt");
-        open_menu = new JMenuItem("Open"); new_menu.setToolTipText("Ouvrir un depôt existante");
-        repo.add(new_menu); repo.add(open_menu);
+        new_menu = new JMenuItem("Nouveau"); new_menu.setToolTipText("Créer un nouveau depôt");
+        save_menu = new JMenuItem("Sauvegarder"); save_menu.setToolTipText("Sauvegarder le depôt"); save_menu.setEnabled(false);
+        open_menu = new JMenuItem("Open"); open_menu.setToolTipText("Ouvrir un depôt existante");
+        repo.add(new_menu); repo.add(save_menu); repo.add(open_menu);
        
         menubar.add(repo);
 		
@@ -73,6 +75,11 @@ public class RepoView extends JFrame {
 		
 		pack();
 		setVisible(true);
+	}
+	
+	public void setReady()
+	{
+		save_menu.setEnabled(true);
 	}
 	
 	public void setDragable(boolean dragable)
@@ -90,6 +97,7 @@ public class RepoView extends JFrame {
 	public void setMenuController(MenuController menu_controller)
 	{
 		open_menu.addActionListener(menu_controller);
+		save_menu.addActionListener(menu_controller);
 		new_menu.addActionListener(menu_controller);
 	}
 	
