@@ -33,6 +33,7 @@ import javax.swing.filechooser.FileSystemView;
 import org.ganza.repo.controller.DragController;
 import org.ganza.repo.controller.ExitController;
 import org.ganza.repo.controller.MenuController;
+import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
 
 public class RepoView extends JFrame {
@@ -139,16 +140,13 @@ public class RepoView extends JFrame {
 		setVisible(true);
 	}
 	
-	public void refresh(String folder_path)
+	public void refresh(Repo repo)
 	{
-		//pour choisir les fichiers
-		JFileChooser chooser = new JFileChooser();
-		FileSystemView view = chooser.getFileSystemView();
-		File[] files = view.getFiles(new File(folder_path), true);
+		int i, n = repo.size();
 		
-		for(int i=0; i<files.length; i++){
+		for(i=0; i<n; i++){
 			
-			listModel.addElement(files[i]);
+			listModel.addElement(repo.getRFile(i));
 		}
 		
 	}

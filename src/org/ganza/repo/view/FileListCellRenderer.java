@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.filechooser.FileSystemView;
 
+import org.ganza.repo.model.RepoFile;
+
 public class FileListCellRenderer extends DefaultListCellRenderer
 {
     private static final long serialVersionUID = 1L;
@@ -31,11 +33,11 @@ public class FileListCellRenderer extends DefaultListCellRenderer
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean selected, boolean expanded) 
     {	
     	//fichier
-        File file = (File)value;
+        RepoFile repofile = (RepoFile)value;
         
         //icon et texte
-        label.setIcon(fileSystemView.getSystemIcon(file));
-        label.setText(fileSystemView.getSystemDisplayName(file));
+        label.setIcon(fileSystemView.getSystemIcon(repofile.getFile()));
+        label.setText(fileSystemView.getSystemDisplayName(repofile.getFile()));
         
         if (selected) {
             label.setBackground(backgroundSelectionColor);

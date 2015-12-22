@@ -54,7 +54,7 @@ public class DragController extends TransferHandler {
 		System.out.println("Transferd BEACH!");
 		
 		try{
-	        List<RepoFile> data = (List) ts.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+	        List<RepoFile> data = ((List<RepoFile>) ts.getTransferable().getTransferData(DataFlavor.javaFileListFlavor));
 	        
 	        if (data.size() < 1) 
 	        {
@@ -70,12 +70,10 @@ public class DragController extends TransferHandler {
 	        	
 	        	//ajout
 	        	listModel.addElement(repofile);
-	        	repo.addFile(repofile);
+	        	repo.addRFile(repofile);
 	        }
 	
 	        list.setModel(listModel);
-	        
-	        System.out.println(repo);
 	        
 	        return true;
 		}

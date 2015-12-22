@@ -110,7 +110,8 @@ public class MenuController implements ActionListener
 			
 			//reinirialiser la view et charger le contenu
 			repo_view.initialize();
-			repo_view.refresh(repo.getPath());
+			repo_view.refresh(repo);
+			repo_view.setTitle(repo.getName());
 		}
 		
 		//menu "Fermer"

@@ -195,7 +195,7 @@ public class Repo
 		rx.setAttribute(metafile_path, "name", getName());
 		
 		//lecture de contenu de fichier et chargement dans la base
-		read(folder_path);
+		read();
 	}
 	
 	
@@ -257,12 +257,17 @@ public class Repo
 		this.folder_path = path;
 	}
 	
-	public void addFile(RepoFile repoFile) 
+	public void addRFile(RepoFile repoFile) 
 	throws IOException
 	{	
 		repofiles.add(repoFile);
 		repoFile.copy(folder_path);
 		repoFile.createMeta(folder_path);
+	}
+	
+	public RepoFile getRFile(int index)
+	{
+		return repofiles.get(index);
 	}
 	
 	public void close(){
