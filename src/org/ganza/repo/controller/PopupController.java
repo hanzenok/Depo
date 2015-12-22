@@ -25,11 +25,26 @@ public class PopupController implements ActionListener
 		String item_name = ((JMenuItem)e.getSource()).getText();
 		
 		System.out.println(item_name);
-		
-//		//menu ""
-//		if(item_name.equals("Nouveau"))
+//		
+//		//popup menu "Reinsegner XML"
+//		if(item_name.equals("Reinsegner XML"))
 //		{
 //			
+//		}
+//		
+//		//popup menu "Modifier XML"
+//		if(item_name.equals("Modifier XML"))
+//		{
+//			
+//		}
+//		
+//		//popup menu "Supprimer"
+//		if(item_name.equals("Supprimer"))
+//		{
+//			repo.removeRFile(1);
+//			
+//			repo_view.initialize();
+//			repo_view.refresh(repo);
 //		}
 		
 	}

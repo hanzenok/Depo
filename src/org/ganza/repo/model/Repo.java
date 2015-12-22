@@ -271,6 +271,14 @@ public class Repo
 		return repofiles.get(index);
 	}
 	
+	public void removeRFile(int index)
+	{
+		repofiles.get(index).getFile().delete();
+		repofiles.get(index).getMetaFile().delete();
+		
+		repofiles.remove(index);
+	}
+	
 	public void close(){
 		
 		JFileChooser chooser = new JFileChooser();
