@@ -99,4 +99,10 @@ public class RepoFile
 			meta_file = new File(meta_file_path);
 		}
 	}
+	
+	public void delete()
+	{
+		file.delete();
+		meta_file.delete();
+	}
 }

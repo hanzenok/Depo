@@ -281,23 +281,18 @@ public class Repo
 	
 	public void close(){
 		
-		JFileChooser chooser = new JFileChooser();
-		FileSystemView view = chooser.getFileSystemView();
-		
-		//supprimer les fichiers de dossier
-		File[] listOfFiles = view.getFiles(new File(folder_path), false); //toutes les fichiers
-		for (File file : listOfFiles)
-		{	
-			file.delete();
+		//supprimer les fichiers et retirer de la liste
+		for (RepoFile rf : repofiles)
+		{
+			rf.delete();
 		}
 		
 		//supprimer le repertoire
 		File dir = new File(folder_path);
 		dir.delete();
 		
-		//vider la liste
-		
-	
+		//supprimer la liste
+		repofiles.removeAll(repofiles);
 	}
 	
 	/**
