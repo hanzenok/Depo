@@ -40,6 +40,9 @@ public class FileListCellRenderer extends DefaultListCellRenderer
         label.setText(fileSystemView.getSystemDisplayName(repofile.getFile()));
         
         if (selected) {
+        	
+        	//Desktop.getDesktop().open(new File("path/to/file"));
+        	
             label.setBackground(backgroundSelectionColor);
         } else {
             label.setBackground(backgroundNonSelectionColor);

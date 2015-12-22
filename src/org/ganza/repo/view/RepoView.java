@@ -7,6 +7,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +29,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.TransferHandler;
 import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.filechooser.FileSystemView;
 
+import org.ganza.repo.controller.ClickController;
 import org.ganza.repo.controller.DragController;
 import org.ganza.repo.controller.ExitController;
 import org.ganza.repo.controller.MenuController;
@@ -60,14 +65,16 @@ public class RepoView extends JFrame {
 		menubar = new JMenuBar();
         setJMenuBar(menubar);
         
-        JMenu repo = new JMenu("Depôt");
+        JMenu repo_menu = new JMenu("Depôt");
         new_menu = new JMenuItem("Nouveau"); new_menu.setToolTipText("Créer un nouveau depôt");
-        save_menu = new JMenuItem("Sauvegarder"); save_menu.setToolTipText("Sauvegarder le depôt"); save_menu.setEnabled(false);
-        open_menu = new JMenuItem("Ouvrir"); open_menu.setToolTipText("Ouvrir un depôt existante"); open_menu.setEnabled(false);
-        close_menu = new JMenuItem("Fermer"); close_menu.setToolTipText("Ferm le depôt"); close_menu.setEnabled(false);
-        repo.add(new_menu); repo.add(save_menu); repo.add(open_menu); repo.add(close_menu);
+        save_menu = new JMenuItem("Sauvegarder"); save_menu.setToolTipText("Sauvegarder le depôt");
+        open_menu = new JMenuItem("Ouvrir"); open_menu.setToolTipText("Ouvrir un depôt existante");
+        close_menu = new JMenuItem("Fermer"); close_menu.setToolTipText("Ferm le depôt"); 
+        repo_menu.add(new_menu); repo_menu.add(new JSeparator()); 
+        repo_menu.add(save_menu); repo_menu.add(open_menu); 
+        repo_menu.add(new JSeparator()); repo_menu.add(close_menu);
        
-        menubar.add(repo);
+        menubar.add(repo_menu);
 		
         //manneau principal
 		main_panel = new JPanel(new BorderLayout());
@@ -75,8 +82,11 @@ public class RepoView extends JFrame {
 		setMinimumSize(new Dimension(400, 300));
 		setLocationByPlatform(true);
 		
-		//packing
+		//preparation
 		initialize();
+		setReady(false);
+		
+		//packing
 		pack();
 		setVisible(true);
 	}
@@ -113,6 +123,12 @@ public class RepoView extends JFrame {
 		addWindowListener(exit_controller);
 	}
 	
+	public void setClickController(ClickController click_controller)
+	{	
+		click_controller.setList(list);
+		list.addMouseListener(click_controller);
+	}
+	
 	public void initialize(){
 		
 		setTitle("Repository");
@@ -124,6 +140,16 @@ public class RepoView extends JFrame {
 		list.setCellRenderer(new FileListCellRenderer());
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setDragEnabled(false); //par defaut
+		
+//		MouseAdapter mouseListener = new MouseAdapter() {
+//		    public void mouseClicked(MouseEvent e) {
+//		        if (e.getClickCount() == 2) {
+//		            int index = list.locationToIndex(e.getPoint());
+//		            System.out.println("Double clicked on Item " + index);
+//		         }
+//		    }
+//		};
+//		list.addMouseListener(mouseListener);
 		
 		//model d'affichage
 		listModel = new DefaultListModel<RepoFile>();
