@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JList;
+import javax.swing.SwingUtilities;
 
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
@@ -18,7 +19,6 @@ public class ClickController extends MouseAdapter
 	
 	public ClickController(Repo repo)
 	{
-		System.out.println("We're here!");
 		this.repo = repo;
 	}
 	
@@ -40,5 +40,13 @@ public class ClickController extends MouseAdapter
     		try { Desktop.getDesktop().open(file); } 
     		catch (IOException e1) { e1.printStackTrace();}
          }
+    	
+    	//click droit
+        if ( SwingUtilities.isRightMouseButton(e) )
+        {
+        	int index = list.locationToIndex(e.getPoint());
+        	
+        	System.out.println("Right click on: " + index);
+        }
     }
 }
