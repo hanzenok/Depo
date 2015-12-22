@@ -23,6 +23,7 @@ public class MenuController implements ActionListener
 	private DragController drag_controller;
 	private ClickController click_controller;
 	private ExitController exit_controller;
+	private PopupController popup_controller;
 	
 	public MenuController(RepoView repo_view)
 	{
@@ -56,7 +57,7 @@ public class MenuController implements ActionListener
 			repo_view.setTitle(repo.getName());
 			
 			//reinitialiser les controlleurs
-			init_controllers();
+			setup_controllers();
 			
 			System.out.println(repo.getPath());
 		}
@@ -111,7 +112,7 @@ public class MenuController implements ActionListener
 			repo_view.setTitle(repo.getName());
 			
 			//reinitialiser les controlleurs
-			init_controllers();
+			setup_controllers();
 		}
 		
 		//menu "Fermer"
@@ -127,7 +128,7 @@ public class MenuController implements ActionListener
 		}
 	}
 	
-	public void init_controllers()
+	public void setup_controllers()
 	{
 		//controlleur de drag&drop
 		drag_controller = new DragController(repo);
@@ -135,12 +136,16 @@ public class MenuController implements ActionListener
 		repo_view.setDragController(drag_controller);
 		
 		//controlleur de click
-		click_controller = new ClickController(repo);
+		click_controller = new ClickController(repo, repo_view);
 		repo_view.setClickController(click_controller);
 		
 		//controlleur de sortie
 		exit_controller = new ExitController(repo);
-		this.repo_view.setExitController(exit_controller);
+		repo_view.setExitController(exit_controller);
+		
+		//controlleur de popup
+		popup_controller = new PopupController(repo, repo_view);
+		repo_view.setPopupMenuController(popup_controller);
 	}
 
 }

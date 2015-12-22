@@ -11,15 +11,18 @@ import javax.swing.SwingUtilities;
 
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
+import org.ganza.repo.view.RepoView;
 
 public class ClickController extends MouseAdapter
 {	
 	private JList<RepoFile> list;
 	private Repo repo;
+	private RepoView repo_view;
 	
-	public ClickController(Repo repo)
+	public ClickController(Repo repo, RepoView repo_view)
 	{
 		this.repo = repo;
+		this.repo_view = repo_view;
 	}
 	
 	public void setList(JList<RepoFile> list)
@@ -45,8 +48,10 @@ public class ClickController extends MouseAdapter
         if ( SwingUtilities.isRightMouseButton(e) )
         {
         	int index = list.locationToIndex(e.getPoint());
+            list.setSelectedIndex(index);
         	
-        	System.out.println("Right click on: " + index);
+            repo_view.showPopup(e);
+//        	repo_view.popup_menu.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 }
