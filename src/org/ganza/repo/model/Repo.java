@@ -295,6 +295,8 @@ public class Repo
 		File dir = new File(folder_path);
 		dir.delete();
 		
+		//vider la liste
+		
 	
 	}
 	

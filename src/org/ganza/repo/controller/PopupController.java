@@ -29,13 +29,13 @@ public class PopupController implements ActionListener
 //		//popup menu "Reinsegner XML"
 //		if(item_name.equals("Reinsegner XML"))
 //		{
-//			
+//			return;
 //		}
-//		
+//		               
 //		//popup menu "Modifier XML"
 //		if(item_name.equals("Modifier XML"))
 //		{
-//			
+//			return;
 //		}
 //		
 //		//popup menu "Supprimer"
@@ -45,6 +45,8 @@ public class PopupController implements ActionListener
 //			
 //			repo_view.initialize();
 //			repo_view.refresh(repo);
+		
+		//	return;
 //		}
 		
 	}

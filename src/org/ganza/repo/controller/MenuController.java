@@ -16,7 +16,6 @@ import net.lingala.zip4j.exception.ZipException;
 
 public class MenuController implements ActionListener
 {	
-	
 	private RepoView repo_view;
 	private Repo repo;
 	
@@ -30,6 +29,12 @@ public class MenuController implements ActionListener
 		this.repo_view = repo_view;
 		
 		this.repo_view.setMenuController(this);
+		
+		popup_controller = new PopupController(repo, repo_view);
+		repo_view.setPopupController(popup_controller);
+		
+		exit_controller = new ExitController(repo);
+		repo_view.setExitController(exit_controller);
 	}
 	
 	@Override
@@ -40,6 +45,8 @@ public class MenuController implements ActionListener
 		//menu "nouveau"
 		if(item_name.equals("Nouveau"))
 		{	
+			System.out.println("Nouveau");
+			
 			//supprimer le repo existante
 			if(repo != null && repo.exists())
 				repo.close();
@@ -60,6 +67,8 @@ public class MenuController implements ActionListener
 			setup_controllers();
 			
 			System.out.println(repo.getPath());
+			
+			return;
 		}
 		
 		//menu "Sauvegarder"
@@ -69,7 +78,7 @@ public class MenuController implements ActionListener
 			{
 				//dialog
 				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setDialogTitle("Specify a file to save");   
+				fileChooser.setDialogTitle("Choisisez le fichier à sauvegarder");   
 				int selection = fileChooser.showSaveDialog(repo_view);
 				
 				//fichier choisi
@@ -82,15 +91,19 @@ public class MenuController implements ActionListener
 				    catch (ZipException e1) { e1.printStackTrace(); }
 				}
 			}
+			
+			return;
 		}
 		
 		//menu "Ouvrir"
 		if(item_name.equals("Ouvrir"))
 		{
 			//supprimer le repo existante
-			if(repo != null && repo.exists())
+			if(repo != null && repo.exists()){
+				System.out.println("REpo exists");
 				repo.close();
-			
+			}System.out.println("Size: " + repo.size());
+				
 			//dialog
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Specify a file to save");   
@@ -113,6 +126,8 @@ public class MenuController implements ActionListener
 			
 			//reinitialiser les controlleurs
 			setup_controllers();
+			
+			return;
 		}
 		
 		//menu "Fermer"
@@ -125,6 +140,8 @@ public class MenuController implements ActionListener
 			//et reinitialiser le view
 			repo_view.initialize();
 			repo_view.setReady(false);
+			
+			return;
 		}
 	}
 	
@@ -140,12 +157,12 @@ public class MenuController implements ActionListener
 		repo_view.setClickController(click_controller);
 		
 		//controlleur de sortie
-		exit_controller = new ExitController(repo);
-		repo_view.setExitController(exit_controller);
+//		exit_controller = new ExitController(repo);
+//		repo_view.setExitController(exit_controller);
 		
 		//controlleur de popup
-		popup_controller = new PopupController(repo, repo_view);
-		repo_view.setPopupMenuController(popup_controller);
+//		popup_controller = new PopupController(repo, repo_view);
+//		repo_view.setPopupController(popup_controller);
 	}
 
 }

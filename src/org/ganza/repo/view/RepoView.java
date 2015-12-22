@@ -122,6 +122,7 @@ public class RepoView extends JFrame {
 	{	
 		drag_controller.setList(list);
 		drag_controller.setListMode(listModel);
+		
 		list.setTransferHandler(drag_controller);
 	}
 	
@@ -131,10 +132,12 @@ public class RepoView extends JFrame {
 		save_menu.addActionListener(menu_controller);
 		open_menu.addActionListener(menu_controller);
 		close_menu.addActionListener(menu_controller);
+		
+		System.out.println("menu listeners: " + open_menu.getActionListeners().length);
 	}
 	
 	public void setExitController(ExitController exit_controller)
-	{
+	{	
 		addWindowListener(exit_controller);
 	}
 	
@@ -144,11 +147,15 @@ public class RepoView extends JFrame {
 		list.addMouseListener(click_controller);
 	}
 	
-	public void setPopupMenuController(PopupController popup_controller)
-	{
+	public void setPopupController(PopupController popup_controller)
+	{	
+		//if(showxml_menu.getActionListeners().length >= 1) return;
+		
 		showxml_menu.addActionListener(popup_controller);
 		editxml_menu.addActionListener(popup_controller);
 		delete_menu.addActionListener(popup_controller);
+		
+		System.out.println("popup listeners: " + showxml_menu.getActionListeners().length);
 	}
 	
 	public void initialize(){

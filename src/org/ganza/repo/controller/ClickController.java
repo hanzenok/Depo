@@ -32,6 +32,18 @@ public class ClickController extends MouseAdapter
 	
     public void mouseClicked(MouseEvent e) 
     {   
+    	//click droit
+        if ( SwingUtilities.isRightMouseButton(e) )
+        {
+        	System.out.println("Double?");
+        	int index = list.locationToIndex(e.getPoint());
+            list.setSelectedIndex(index);
+        	
+            repo_view.showPopup(e);
+            
+            return;
+        }
+    	
     	//double click
     	if (e.getClickCount() == 2) 
     	{	
@@ -42,16 +54,9 @@ public class ClickController extends MouseAdapter
     		File file = repo.getRFile(index).getFile();    		
     		try { Desktop.getDesktop().open(file); } 
     		catch (IOException e1) { e1.printStackTrace();}
+    		
+    		return;
          }
     	
-    	//click droit
-        if ( SwingUtilities.isRightMouseButton(e) )
-        {
-        	int index = list.locationToIndex(e.getPoint());
-            list.setSelectedIndex(index);
-        	
-            repo_view.showPopup(e);
-//        	repo_view.popup_menu.show(e.getComponent(), e.getX(), e.getY());
-        }
     }
 }
