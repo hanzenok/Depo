@@ -23,13 +23,13 @@ import net.lingala.zip4j.exception.ZipException;
  */
 public class Repo 
 {	
+	private String repo_name;
 	private final String metafile_name;
 	private static boolean exist = false; //si le dossier d'un depot a ete cree ou pas
-	//visible
-	
-	private String repo_name;
 	private String metafile_path;
 	private String folder_path;
+	private String tmp_path; //dossier temporel de systeme
+	
 	private ArrayList<RepoFile> repofiles;
 	private RepoNamer rn;
 	
@@ -43,10 +43,11 @@ public class Repo
 		rn = new RepoNamer();
 		repo_name = new String(rn.generate());
 		
-		folder_path = new String("/tmp/" + repo_name);
+		tmp_path = System.getProperty("java.io.tmpdir");
+		folder_path = new String(tmp_path + File.separator + repo_name);
 		
 		metafile_name = new String(".repo_meta.xml");
-		metafile_path = new String(folder_path + "/" + metafile_name);
+		metafile_path = new String(folder_path + File.separator + metafile_name);
 		
 		repofiles = new ArrayList<RepoFile>();
 		
@@ -101,14 +102,14 @@ public class Repo
 		File[] listOfFiles = view.getFiles(new File(path), true); //que des fichiers visibles
 		
 		//vérifie si dossier contient un fichier avec les metadonnées
-		File metafile = new File(path + "/" + metafile_name);
+		File metafile = new File(path + File.separator + metafile_name);
 		if(metafile.exists())
 		{ 	
 			//redefinir le chemin vers dossier
 			setPath(path);
 			
 			//redefinir le chemin vers meta fichier
-			metafile_path = folder_path + "/" + metafile_name;
+			metafile_path = folder_path + File.separator + metafile_name;
 			
 			//et le nom de repo
 			setName(rx.getAttribute(metafile_path, "name"));
@@ -120,7 +121,7 @@ public class Repo
 		{	
 			if(is_repo)
 			{
-				File xmlfile = new File(file.getPath() + "/." + file.getName()); //fichier avec le meme nom avec le point au debut
+				File xmlfile = new File(file.getPath() + File.separator + "." + file.getName()); //fichier avec le meme nom avec le point au debut
 				
 				repofiles.add(new RepoFile(file, xmlfile));
 			}

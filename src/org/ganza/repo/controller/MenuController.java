@@ -57,6 +57,8 @@ public class MenuController implements ActionListener
 			
 			//reinitialiser les controlleurs
 			init_controllers();
+			
+			System.out.println(repo.getPath());
 		}
 		
 		//menu "Sauvegarder"
