@@ -51,7 +51,7 @@ public class RepoView extends JFrame {
 	protected FileSystemView view;
 	
 	protected JList<File> list;
-	DefaultListModel<File> listModel;
+	protected DefaultListModel<File> listModel;
 	
 	public RepoView(){
 		
