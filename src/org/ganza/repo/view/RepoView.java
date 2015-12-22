@@ -50,8 +50,8 @@ public class RepoView extends JFrame {
 	protected JFileChooser chooser;
 	protected FileSystemView view;
 	
-	protected JList<File> list;
-	protected DefaultListModel<File> listModel;
+	protected JList<RepoFile> list;
+	protected DefaultListModel<RepoFile> listModel;
 	
 	public RepoView(){
 		
@@ -119,13 +119,13 @@ public class RepoView extends JFrame {
 		main_panel = new JPanel(new BorderLayout());
 		
 		//JList conteneur des fichiers
-		list = new JList<File>();
+		list = new JList<RepoFile>();
 		list.setCellRenderer(new FileListCellRenderer());
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setDragEnabled(false); //par defaut
 		
 		//model d'affichage
-		listModel = new DefaultListModel<File>();
+		listModel = new DefaultListModel<RepoFile>();
 		list.setModel(listModel);
 		
 		//ajout

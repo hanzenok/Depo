@@ -21,20 +21,20 @@ public class DragController extends TransferHandler {
 	
 	private Repo repo;
 	
-	private JList<File> list;
-	private DefaultListModel<File> listModel;
+	private JList<RepoFile> list;
+	private DefaultListModel<RepoFile> listModel;
 	
 	public DragController(Repo repo)
 	{
 		this.repo = repo;
 	}
 	
-	public void setList(JList<File> list)
+	public void setList(JList<RepoFile> list)
 	{
 		this.list = list;
 	}
 	
-	public void setListMode(DefaultListModel<File> listModel){
+	public void setListMode(DefaultListModel<RepoFile> listModel){
 		
 		this.listModel = listModel;
 	}
@@ -54,7 +54,7 @@ public class DragController extends TransferHandler {
 		System.out.println("Transferd BEACH!");
 		
 		try{
-	        List<File> data = (List) ts.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+	        List<RepoFile> data = (List) ts.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
 	        
 	        if (data.size() < 1) 
 	        {
@@ -66,9 +66,11 @@ public class DragController extends TransferHandler {
 	        {
 	        	//fichier
 	        	File file = (File) item;
+	        	RepoFile repofile = new RepoFile(file);
 	        	
-	        	listModel.addElement(file);
-	        	repo.addFile(new RepoFile(file));
+	        	//ajout
+	        	listModel.addElement(repofile);
+	        	repo.addFile(repofile);
 	        }
 	
 	        list.setModel(listModel);
