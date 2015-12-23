@@ -45,8 +45,6 @@ public class MenuController implements ActionListener
 		//menu "nouveau"
 		if(item_name.equals("Nouveau"))
 		{	
-			System.out.println("Nouveau");
-			
 			//supprimer le repo existante
 			if(repo != null && repo.exists())
 				repo.close();

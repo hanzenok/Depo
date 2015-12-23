@@ -1,7 +1,10 @@
 package org.ganza.repo.controller;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JMenuItem;
 
@@ -45,6 +48,13 @@ public class PopupController implements ActionListener
 		//popup menu "Modifier XML"
 		if(item_name.equals("Modifier XML"))
 		{
+    		//reccuperer le fichier xml
+    		File xml_file = repo.getRFile(click_controller.getIndex()).getMetaFile();
+    		
+    		//ouvrir dans la systeme
+    		try { Desktop.getDesktop().open(xml_file); } 
+    		catch (IOException e1) { e1.printStackTrace();}
+			
 			return;
 		}
 		
