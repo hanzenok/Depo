@@ -18,13 +18,14 @@ public class ClickController extends MouseAdapter
 	private JList<RepoFile> list;
 	private Repo repo;
 	private RepoView repo_view;
-	private PopupController popup_controller;
+	private int index;//index de l'element de JList choisi
 	
-	public ClickController(Repo repo, RepoView repo_view, PopupController popup_controller)
+	public ClickController(Repo repo, RepoView repo_view)
 	{
 		this.repo = repo;
 		this.repo_view = repo_view;
-		this.popup_controller = popup_controller;
+		
+		index = -1;
 	}
 	
 	public void setList(JList<RepoFile> list)
@@ -32,16 +33,20 @@ public class ClickController extends MouseAdapter
 		this.list = list;
 	}
 	
+	public int getIndex()
+	{
+		return index;
+	}
+	
     public void mouseClicked(MouseEvent e) 
     {   
     	//click droit
         if ( SwingUtilities.isRightMouseButton(e) )
         {
-        	int index = list.locationToIndex(e.getPoint());
+        	index = list.locationToIndex(e.getPoint());
             list.setSelectedIndex(index);
         	
             //dire a controleur de popup quel element de list a ete choisi
-            popup_controller.setIndex(index);
             repo_view.showPopup(e);
           
             return;
@@ -51,7 +56,7 @@ public class ClickController extends MouseAdapter
     	if (e.getClickCount() == 2) 
     	{	
     		//reccuperation de l'indexe
-    		int index = list.locationToIndex(e.getPoint());
+    		index = list.locationToIndex(e.getPoint());
             
     		//ouvrir le fichier dans systeme
     		File file = repo.getRFile(index).getFile();    		

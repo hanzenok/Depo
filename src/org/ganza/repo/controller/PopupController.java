@@ -12,12 +12,13 @@ public class PopupController implements ActionListener
 {
 	private Repo repo;
 	private RepoView repo_view;
-	private int index; //index d'un element de JList choisi
+	private ClickController click_controller;
 	
 	public PopupController(Repo repo, RepoView repo_view)
 	{
 		this.repo = repo;
 		this.repo_view = repo_view;
+		
 	}
 	
 	public void setRepo(Repo repo)
@@ -25,9 +26,9 @@ public class PopupController implements ActionListener
 		this.repo = repo;
 	}
 	
-	public void setIndex(int index)
+	public void setClickController(ClickController click_controller)
 	{
-		this.index = index;
+		this.click_controller = click_controller;
 	}
 	
 	@Override
@@ -50,11 +51,17 @@ public class PopupController implements ActionListener
 		//popup menu "Supprimer"
 		if(item_name.equals("Supprimer"))
 		{
-			repo.removeRFile(index);
+			//supprimer le fichier
+			repo.removeRFile(click_controller.getIndex());
 			
+			//reinitilaiser la vue
 			repo_view.initialize();
 			repo_view.refresh(repo);
 			repo_view.setTitle(repo.getName());
+			
+			//reinitialiser le contrlleur de click
+			//car le JList a ete modifiee
+			repo_view.setClickController(click_controller);
 			
 			return;
 		}
