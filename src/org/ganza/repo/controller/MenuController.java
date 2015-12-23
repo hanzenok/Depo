@@ -99,14 +99,12 @@ public class MenuController implements ActionListener
 		if(item_name.equals("Ouvrir"))
 		{
 			//supprimer le repo existante
-			if(repo != null && repo.exists()){
-				System.out.println("REpo exists");
+			if(repo != null && repo.exists())
 				repo.close();
-			}System.out.println("Size: " + repo.size());
 				
 			//dialog
 			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setDialogTitle("Specify a file to save");   
+			fileChooser.setDialogTitle("Choisisez un depôt à ouvrir");   
 			int selection = fileChooser.showOpenDialog(repo_view);
 			
 			//fichier choisi
@@ -157,12 +155,11 @@ public class MenuController implements ActionListener
 		repo_view.setClickController(click_controller);
 		
 		//controlleur de sortie
-//		exit_controller = new ExitController(repo);
-//		repo_view.setExitController(exit_controller);
+		exit_controller.setRepo(repo);
 		
 		//controlleur de popup
-//		popup_controller = new PopupController(repo, repo_view);
-//		repo_view.setPopupController(popup_controller);
+		popup_controller.setRepo(repo);
+
 	}
 
 }

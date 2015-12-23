@@ -19,35 +19,38 @@ public class PopupController implements ActionListener
 		this.repo_view = repo_view;
 	}
 	
+	public void setRepo(Repo repo)
+	{
+		this.repo = repo;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		String item_name = ((JMenuItem)e.getSource()).getText();
 		
-		System.out.println(item_name);
-//		
-//		//popup menu "Reinsegner XML"
-//		if(item_name.equals("Reinsegner XML"))
-//		{
-//			return;
-//		}
-//		               
-//		//popup menu "Modifier XML"
-//		if(item_name.equals("Modifier XML"))
-//		{
-//			return;
-//		}
-//		
-//		//popup menu "Supprimer"
-//		if(item_name.equals("Supprimer"))
-//		{
-//			repo.removeRFile(1);
-//			
-//			repo_view.initialize();
-//			repo_view.refresh(repo);
+		//popup menu "Reinsegner XML"
+		if(item_name.equals("Reinsegner XML"))
+		{
+			return;
+		}
+		               
+		//popup menu "Modifier XML"
+		if(item_name.equals("Modifier XML"))
+		{
+			return;
+		}
 		
-		//	return;
-//		}
+		//popup menu "Supprimer"
+		if(item_name.equals("Supprimer"))
+		{
+			repo.removeRFile(1);
+			
+			repo_view.initialize();
+			repo_view.refresh(repo);
+		
+			return;
+		}
 		
 	}
 

@@ -35,7 +35,6 @@ public class ClickController extends MouseAdapter
     	//click droit
         if ( SwingUtilities.isRightMouseButton(e) )
         {
-        	System.out.println("Double?");
         	int index = list.locationToIndex(e.getPoint());
             list.setSelectedIndex(index);
         	

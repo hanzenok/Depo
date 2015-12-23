@@ -273,8 +273,7 @@ public class Repo
 	
 	public void removeRFile(int index)
 	{
-		repofiles.get(index).getFile().delete();
-		repofiles.get(index).getMetaFile().delete();
+		repofiles.get(index).delete();
 		
 		repofiles.remove(index);
 	}
