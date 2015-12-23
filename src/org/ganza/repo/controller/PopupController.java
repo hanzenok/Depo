@@ -9,7 +9,10 @@ import java.io.IOException;
 import javax.swing.JMenuItem;
 
 import org.ganza.repo.model.Repo;
+import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.RepoView;
+import org.jdom2.JDOMException;
+import org.ganza.repo.view.EditorView;
 
 public class PopupController implements ActionListener
 {
@@ -42,7 +45,13 @@ public class PopupController implements ActionListener
 		//popup menu "Reinsegner XML"
 		if(item_name.equals("Reinsegner XML"))
 		{	
-			RepoView rv = new RepoView();
+			RepoFile repo_file = repo.getRFile(click_controller.getIndex());
+			
+			EditorView editor_view = new EditorView();
+			EditorController edit_controller = new EditorController(repo_file, editor_view);
+			
+			try { editor_view.show(repo_file.getAttributes()); } 
+			catch (JDOMException | IOException e1) { e1.printStackTrace(); }
 			
 			return;
 		}
