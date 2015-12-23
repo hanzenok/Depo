@@ -96,4 +96,9 @@ public class EditorView extends JFrame{
 	{
 		editor.setText(value);
 	}
+	
+	public String getValue()
+	{
+		return editor.getText();
+	}
 }

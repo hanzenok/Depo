@@ -17,12 +17,17 @@ public class EditorController implements ActionListener,ListSelectionListener{
 	
 	private RepoFile repo_file;
 	private EditorView editor_view;
+	
 	private JList<String> list;
+	
+	private int index; //index d'un element de JList choisi
 	
 	public EditorController(RepoFile repo_file, EditorView editor_view)
 	{
 		this.repo_file = repo_file;
 		this.editor_view = editor_view;
+		
+		index = -1;
 	}	
 
 	public void setList(JList<String> list)
@@ -32,7 +37,17 @@ public class EditorController implements ActionListener,ListSelectionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		String element = list.getSelectedValue();
+		String value = editor_view.getValue();
+		
+		try {
+			repo_file.setAttributeValue(element, value);
+		} catch (JDOMException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 	}
 
@@ -43,8 +58,12 @@ public class EditorController implements ActionListener,ListSelectionListener{
         
         
 		try {
-			//reccuperer le valeur de l'attribut chosisi
-			String value = repo_file.getAttributeValue(list.getSelectedIndex());
+			
+			//reccuperer l'index d'element de liste choisi
+			index = list.getSelectedIndex();
+			
+			//son valeur
+			String value = repo_file.getAttributeValue(index);
 			
 			//l'afficher
 			editor_view.showValue(value);

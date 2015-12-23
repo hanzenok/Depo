@@ -135,6 +135,12 @@ public class RepoFile
 		meta_file.delete();
 	}
 	
+	public void setAttributeValue(String element_name, String value) 
+	throws JDOMException, IOException
+	{
+		rx.setAttributeValue(element_name, value);
+	}
+	
 	public String[] getAttributes() 
 	throws JDOMException, IOException
 	{
