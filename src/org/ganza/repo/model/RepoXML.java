@@ -110,7 +110,6 @@ public class RepoXML
 		for(Element el: list)
 		{	
 			attributes[i++] = el.getName();
-			System.out.println(el.getName());
 		}
 		
 		return attributes;
