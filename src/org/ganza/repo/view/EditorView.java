@@ -2,6 +2,8 @@ package org.ganza.repo.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -26,7 +28,7 @@ public class EditorView extends JFrame{
 	public EditorView()
 	{
         //manneau principal
-		main_panel = new JPanel(new BorderLayout());
+		main_panel = new JPanel(new GridBagLayout());
 		
 		setTitle("Edition des balises XML");
 		setMinimumSize(new Dimension(250, 150));
@@ -44,22 +46,29 @@ public class EditorView extends JFrame{
 	
 	public void show(String[] attributes)
 	{
-		list = new JList(attributes);
+		GridBagConstraints c = new GridBagConstraints();
 		
-		//labele
+		//label
+		c.gridx = 0; c.gridy = 0; c.gridwidth = 2;
+		c.weightx = 100; c.fill = GridBagConstraints.HORIZONTAL;
 		JLabel attr_label = new JLabel("Attributes:");
-		main_panel.add(attr_label, BorderLayout.NORTH);
+		main_panel.add(attr_label, c);
 		
 		//list
-		main_panel.add(new JScrollPane(list), BorderLayout.WEST);
+		c.gridx = 0; c.gridy = 1; c.gridwidth = 1; c.weightx = 2;
+		list = new JList(attributes);
+		main_panel.add(new JScrollPane(list), c);
 		
 		//textatea
+		c.gridx = 1; c.gridy = 1; c.weightx = 3;
+		c.fill = GridBagConstraints.BOTH;
 		JTextArea editor = new JTextArea(5,7);
-		main_panel.add(new JScrollPane(editor), BorderLayout.EAST);
+		main_panel.add(new JScrollPane(editor), c);
 		
 		//bouton
+		c.gridx = 0; c.gridy = 2; c.gridwidth = 2; c.weightx = 100;
 		JButton button = new JButton("Sauvegarder");
-		main_panel.add(button, BorderLayout.SOUTH);
+		main_panel.add(button, c);
 		
 		//ajout
 		setContentPane(main_panel);
