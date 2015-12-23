@@ -41,13 +41,8 @@ public class EditorController implements ActionListener,ListSelectionListener{
 		String element = list.getSelectedValue();
 		String value = editor_view.getValue();
 		
-		try {
-			repo_file.setAttributeValue(element, value);
-		} catch (JDOMException | IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
+		try { repo_file.setAttributeValue(element, value); } 
+		catch (JDOMException | IOException e1) { e1.printStackTrace(); }
 		
 	}
 
@@ -69,9 +64,6 @@ public class EditorController implements ActionListener,ListSelectionListener{
 			editor_view.showValue(value);
 		} 
 		catch (JDOMException | IOException e) { e.printStackTrace(); }
-		
-
-		
 	}
 	
 	
