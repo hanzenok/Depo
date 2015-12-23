@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.jdom2.JDOMException;
+
 
 /**
  * RepoFile répresent 
@@ -33,16 +35,12 @@ public class RepoFile
 	{	
 		this.file = file;
 		this.meta_file = meta_file;
-		
-		rx = new RepoXML();
 	}
 	
 	public RepoFile(File transfer_file)
 	{	
 		this.file = transfer_file;
 		this.meta_file = null;
-		
-		rx = new RepoXML();
 	}
 	
 	public File getFile()
@@ -92,21 +90,41 @@ public class RepoFile
 	}
 	
 	public void createMeta(String folder_path) 
-	throws FileNotFoundException, IOException
+	throws FileNotFoundException, IOException, JDOMException
 	{
 		if(!hasMeta())
 		{
+			//creer un fichier meta standart
 			String meta_file_path = folder_path + File.separator + "." + getName() + ".xml";
-			
-			rx.createMeta(meta_file_path, getName());
-			
+			rx = new RepoXML(meta_file_path);
+			rx.createMeta(getName());
 			meta_file = new File(meta_file_path);
+			
+			//y ajouter un attribut en fonction de type de fichier
+			String type = Files.probeContentType(Paths.get(file.getAbsolutePath())).split("/")[0];
+			rx.addAttribute("type", type);
+			rx.addAttribute("author", "unknown");
+			
+			if(type.equals("image"))
+			{
+				rx.addAttribute("where", "unknown");
+				rx.addAttribute("when", "unkown");
+				
+				return;
+			}
+			
+			if(type.equals("audio"))
+			{
+				rx.addAttribute("genre", "unknown");
+			}
+			
+			
 		}
 	}
 	
 	public void delete()
 	{
-		System.out.println("File: " + file.getPath() + ": " + file.delete());
-		System.out.println("MetaFile: " + meta_file.getPath() + ": " + meta_file.delete());
+		file.delete();
+		meta_file.delete();
 	}
 }

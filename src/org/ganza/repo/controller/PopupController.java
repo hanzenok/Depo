@@ -41,7 +41,9 @@ public class PopupController implements ActionListener
 		
 		//popup menu "Reinsegner XML"
 		if(item_name.equals("Reinsegner XML"))
-		{
+		{	
+			RepoView rv = new RepoView();
+			
 			return;
 		}
 		               

@@ -14,7 +14,14 @@ import org.jdom2.output.XMLOutputter;
 
 public class RepoXML 
 {
-	public void createRepoMeta(String metafile_path, String repo_name) 
+	String metafile_path;
+	
+	public RepoXML(String metafile_path)
+	{
+		this.metafile_path = metafile_path;
+	}
+	
+	public void createRepoMeta(String repo_name) 
 	throws FileNotFoundException, IOException
 	{				
 			//création de fichier metadata
@@ -30,7 +37,7 @@ public class RepoXML
 		    sortie.output(document, new FileOutputStream(metafile_path));
 	}
 	
-	public void createMeta(String metafile_path, String filename) 
+	public void createMeta(String filename) 
 	throws FileNotFoundException, IOException
 	{				
 			//création de fichier metadata
@@ -42,32 +49,45 @@ public class RepoXML
 			root.addContent(name);
 			
 			//ecrire le fichier meta
-		    XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-		    sortie.output(document, new FileOutputStream(metafile_path));
+		    XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
+		    out.output(document, new FileOutputStream(metafile_path));
 	}
 	
-	public String getAttribute(String metafile_path, String element_name) 
+	public String getAttribute(String element_name) 
 	throws JDOMException, IOException
 	{
 		SAXBuilder sxb = new SAXBuilder();
-		
 		Document document = sxb.build(new File(metafile_path));
+		Element root = document.getRootElement();
 		
-		Element racine = document.getRootElement();
-		
-		return racine.getChild("name").getText();
+		return root.getChild(element_name).getText();
 	}
 	
-	public void setAttribute(String metafile_path, String element_name, String attribute) 
+	public void setAttribute(String element_name, String attribute) 
 	throws JDOMException, IOException
 	{
 		SAXBuilder sxb = new SAXBuilder();
-		
 		Document document = sxb.build(new File(metafile_path));
+		Element root = document.getRootElement();
 		
-		Element racine = document.getRootElement();
+		root.getChild(element_name).setText(attribute);
 		
-		racine.getChild(element_name).setText(attribute);
+		//reecrire le fichier meta
+	    XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+	    sortie.output(document, new FileOutputStream(metafile_path));
+	}
+	
+	public void addAttribute(String element_name, String attribute) 
+	throws JDOMException, IOException
+	{
+		SAXBuilder sxb = new SAXBuilder();
+		Document document = sxb.build(new File(metafile_path));
+		Element root = document.getRootElement();
+		
+		//ajout d'un nouveu element
+		Element elm = new Element(element_name);
+		elm.setText(attribute);
+		root.addContent(elm);
 		
 		//reecrire le fichier meta
 	    XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());

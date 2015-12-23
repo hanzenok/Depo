@@ -51,7 +51,7 @@ public class Repo
 		
 		repofiles = new ArrayList<RepoFile>();
 		
-		rx = new RepoXML();
+		rx = new RepoXML(metafile_path);
 	}
 	
 	
@@ -112,7 +112,7 @@ public class Repo
 			metafile_path = folder_path + File.separator + metafile_name;
 			
 			//et le nom de repo
-			setName(rx.getAttribute(metafile_path, "name"));
+			setName(rx.getAttribute("name"));
 			
 			is_repo = true;
 		}
@@ -145,7 +145,7 @@ public class Repo
 		File dir = new File(folder_path);
 		if(!dir.exists()) dir.mkdir();
 		
-		rx.createRepoMeta(metafile_path, repo_name);
+		rx.createRepoMeta(repo_name);
 		
 		exist = true;
 	}
@@ -153,7 +153,7 @@ public class Repo
 	//if xml associated to the file does not exist
 	//it creates it
 	public void write() 
-	throws IOException
+	throws IOException, JDOMException
 	{	
 		int i, n = size();
 		
@@ -193,7 +193,7 @@ public class Repo
 		zipper.restore(folder_path); //desarchivage
 		
 		//changer le nom indiquée dans le ficher meta
-		rx.setAttribute(metafile_path, "name", getName());
+		rx.setAttribute("name", getName());
 		
 		//lecture de contenu de fichier et chargement dans la base
 		read();
@@ -259,7 +259,7 @@ public class Repo
 	}
 	
 	public void addRFile(RepoFile repoFile) 
-	throws IOException
+	throws IOException, JDOMException
 	{	
 		repofiles.add(repoFile);
 		repoFile.transfer(folder_path);

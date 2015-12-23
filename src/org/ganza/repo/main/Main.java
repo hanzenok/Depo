@@ -19,20 +19,6 @@ public class Main
 	public static void main(String[] args) 
 	throws ZipException, FileNotFoundException, IOException, JDOMException
 	{	
-//		Repo repo = new Repo();
-		
-		//repo.read("/tmp/repo_0pgszh2");
-		
-//		repo.create();
-//		repo.addFile(new RepoFile(new File("/home/gunza/Desktop/test")));
-//		repo.write();
-		
-		//repo.save("/tmp/" + repo.getName() + ".zip");
-//		repo.load("/tmp/repo_0pgszh2.zip");
-//		
-//		System.out.println(repo.getPath() + ", name: " + repo.getName());
-//		System.out.println("Nb files: " + repo.size() + "\n");
-//		System.out.println(repo.list());
 		
 		RepoView repo_view = new RepoView();
 		MenuController mc = new MenuController(repo_view);

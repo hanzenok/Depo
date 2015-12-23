@@ -14,6 +14,7 @@ import javax.swing.TransferHandler.TransferSupport;
 
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
+import org.jdom2.JDOMException;
 
 public class DragController extends TransferHandler {
 
@@ -51,8 +52,6 @@ public class DragController extends TransferHandler {
 
 	public boolean importData(TransferSupport ts) {
 		
-		System.out.println("Transferd BEACH!");
-		
 		try{
 	        List<RepoFile> data = ((List<RepoFile>) ts.getTransferable().getTransferData(DataFlavor.javaFileListFlavor));
 	        
@@ -78,6 +77,7 @@ public class DragController extends TransferHandler {
 	        return true;
 		}
 		catch (UnsupportedFlavorException e) {return false;} 
-		catch (IOException e) {return false;}
+		catch (IOException e) {return false;} 
+		catch (JDOMException e) {return false;}
 	}
 }
