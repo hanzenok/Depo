@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -53,7 +54,7 @@ public class RepoXML
 		    out.output(document, new FileOutputStream(metafile_path));
 	}
 	
-	public String getAttribute(String element_name) 
+	public String getAttributeValue(String element_name) 
 	throws JDOMException, IOException
 	{
 		SAXBuilder sxb = new SAXBuilder();
@@ -63,21 +64,21 @@ public class RepoXML
 		return root.getChild(element_name).getText();
 	}
 	
-	public void setAttribute(String element_name, String attribute) 
+	public void setAttributeValue(String element_name, String value) 
 	throws JDOMException, IOException
 	{
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = sxb.build(new File(metafile_path));
 		Element root = document.getRootElement();
 		
-		root.getChild(element_name).setText(attribute);
+		root.getChild(element_name).setText(value);
 		
 		//reecrire le fichier meta
 	    XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
 	    sortie.output(document, new FileOutputStream(metafile_path));
 	}
 	
-	public void addAttribute(String element_name, String attribute) 
+	public void addAttribute(String element_name, String value) 
 	throws JDOMException, IOException
 	{
 		SAXBuilder sxb = new SAXBuilder();
@@ -86,11 +87,32 @@ public class RepoXML
 		
 		//ajout d'un nouveu element
 		Element elm = new Element(element_name);
-		elm.setText(attribute);
+		elm.setText(value);
 		root.addContent(elm);
 		
 		//reecrire le fichier meta
 	    XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
 	    sortie.output(document, new FileOutputStream(metafile_path));
+	}
+	
+	public String[] getAttributes()
+	throws JDOMException, IOException
+	{
+		SAXBuilder sxb = new SAXBuilder();
+		Document document = sxb.build(new File(metafile_path));
+		Element root = document.getRootElement();
+		
+		//reccuperer les toutes les elements
+		List<Element> list = root.getChildren();
+		int i=0, n = list.size();
+		String[] attributes = new String[n];
+		
+		for(Element el: list)
+		{	
+			attributes[i++] = el.getName();
+			System.out.println(el.getName());
+		}
+		
+		return attributes;
 	}
 }

@@ -112,7 +112,7 @@ public class Repo
 			metafile_path = folder_path + File.separator + metafile_name;
 			
 			//et le nom de repo
-			setName(rx.getAttribute("name"));
+			setName(rx.getAttributeValue("name"));
 			
 			is_repo = true;
 		}
@@ -146,7 +146,7 @@ public class Repo
 		if(!dir.exists()) dir.mkdir();
 		
 		rx.createRepoMeta(repo_name);
-		
+
 		exist = true;
 	}
 	
@@ -193,7 +193,7 @@ public class Repo
 		zipper.restore(folder_path); //desarchivage
 		
 		//changer le nom indiquée dans le ficher meta
-		rx.setAttribute("name", getName());
+		rx.setAttributeValue("name", getName());
 		
 		//lecture de contenu de fichier et chargement dans la base
 		read();
@@ -264,6 +264,8 @@ public class Repo
 		repofiles.add(repoFile);
 		repoFile.transfer(folder_path);
 		repoFile.createMeta(folder_path);
+		
+		repoFile.getAttributes();
 	}
 	
 	public RepoFile getRFile(int index)

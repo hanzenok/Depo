@@ -116,8 +116,9 @@ public class RepoFile
 			if(type.equals("audio"))
 			{
 				rx.addAttribute("genre", "unknown");
+				
+				return;
 			}
-			
 			
 		}
 	}
@@ -126,5 +127,11 @@ public class RepoFile
 	{
 		file.delete();
 		meta_file.delete();
+	}
+	
+	public String[] getAttributes() 
+	throws JDOMException, IOException
+	{
+		return rx.getAttributes();
 	}
 }

@@ -21,7 +21,9 @@ public class ExitController extends WindowAdapter{
 	
     public void windowClosing(WindowEvent e) {
         
-    	if(repo.exists()) repo.close();
+    	if(repo != null && repo.exists()) 
+    		
+    		repo.close();
 
     }
 }
