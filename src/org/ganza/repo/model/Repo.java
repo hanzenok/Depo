@@ -121,7 +121,7 @@ public class Repo
 		{	
 			if(is_repo)
 			{
-				File xmlfile = new File(file.getParentFile().getPath() + File.separator + "." + file.getName()); //fichier avec le meme nom avec le point au debut
+				File xmlfile = new File(file.getParentFile().getPath() + File.separator + "." + file.getName() + ".xml"); //fichier avec le meme nom avec le point au debut
 
 				repofiles.add(new RepoFile(file, xmlfile));
 			}

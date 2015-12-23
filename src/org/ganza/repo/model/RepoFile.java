@@ -92,7 +92,7 @@ public class RepoFile
 	{
 		if(!hasMeta())
 		{
-			String meta_file_path = folder_path + File.separator + "." + getName();
+			String meta_file_path = folder_path + File.separator + "." + getName() + ".xml";
 			
 			rx.createMeta(meta_file_path, getName());
 			
