@@ -21,10 +21,10 @@ public class Main
 	throws ZipException, FileNotFoundException, IOException, JDOMException
 	{	
 		
-//		RepoView repo_view = new RepoView();
-//		MenuController mc = new MenuController(repo_view);
+		RepoView repo_view = new RepoView();
+		MenuController mc = new MenuController(repo_view);
 		
-		EditorView rv = new EditorView();
+//		EditorView rv = new EditorView();
 	}
 	
 }

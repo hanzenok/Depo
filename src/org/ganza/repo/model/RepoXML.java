@@ -17,7 +17,14 @@ public class RepoXML
 {
 	String metafile_path;
 	
+	public RepoXML(){}
+	
 	public RepoXML(String metafile_path)
+	{
+		this.metafile_path = metafile_path;
+	}
+	
+	public void setMetafilePath(String metafile_path)
 	{
 		this.metafile_path = metafile_path;
 	}
@@ -64,6 +71,21 @@ public class RepoXML
 		return root.getChild(element_name).getText();
 	}
 	
+	public String getAttributeValue(int index)
+	throws JDOMException, IOException
+	{
+		SAXBuilder sxb = new SAXBuilder();
+		Document document = sxb.build(new File(metafile_path));
+		Element root = document.getRootElement();
+		
+		//reccuperer les toutes les elements
+		List<Element> list = root.getChildren();
+		
+		if(index < 0 || index > list.size()) return null;
+		
+		return list.get(index).getText();
+	}
+	
 	public void setAttributeValue(String element_name, String value) 
 	throws JDOMException, IOException
 	{
@@ -100,6 +122,7 @@ public class RepoXML
 	{
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = sxb.build(new File(metafile_path));
+		System.out.println(metafile_path);
 		Element root = document.getRootElement();
 		
 		//reccuperer les toutes les elements

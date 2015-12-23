@@ -35,12 +35,16 @@ public class RepoFile
 	{	
 		this.file = file;
 		this.meta_file = meta_file;
+		
+		rx = new RepoXML(this.meta_file.getAbsolutePath());
 	}
 	
 	public RepoFile(File transfer_file)
 	{	
 		this.file = transfer_file;
 		this.meta_file = null;
+		
+		rx = new RepoXML();
 	}
 	
 	public File getFile()
@@ -96,8 +100,10 @@ public class RepoFile
 		{
 			//creer un fichier meta standart
 			String meta_file_path = folder_path + File.separator + "." + getName() + ".xml";
-			rx = new RepoXML(meta_file_path);
+			
+			rx.setMetafilePath(meta_file_path);
 			rx.createMeta(getName());
+			
 			meta_file = new File(meta_file_path);
 			
 			//y ajouter un attribut en fonction de type de fichier
@@ -133,5 +139,11 @@ public class RepoFile
 	throws JDOMException, IOException
 	{
 		return rx.getAttributes();
+	}
+	
+	public String getAttributeValue(int index) 
+	throws JDOMException, IOException
+	{
+		return rx.getAttributeValue(index);
 	}
 }

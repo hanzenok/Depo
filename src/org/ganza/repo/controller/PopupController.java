@@ -24,7 +24,6 @@ public class PopupController implements ActionListener
 	{
 		this.repo = repo;
 		this.repo_view = repo_view;
-		
 	}
 	
 	public void setRepo(Repo repo)
@@ -48,10 +47,12 @@ public class PopupController implements ActionListener
 			RepoFile repo_file = repo.getRFile(click_controller.getIndex());
 			
 			EditorView editor_view = new EditorView();
-			EditorController edit_controller = new EditorController(repo_file, editor_view);
+			EditorController editor_controller = new EditorController(repo_file, editor_view);
 			
 			try { editor_view.show(repo_file.getAttributes()); } 
 			catch (JDOMException | IOException e1) { e1.printStackTrace(); }
+			
+			editor_view.setEditorController(editor_controller);
 			
 			return;
 		}
