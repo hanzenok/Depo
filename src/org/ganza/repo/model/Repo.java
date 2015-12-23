@@ -160,7 +160,7 @@ public class Repo
 		for(i=0; i<n; i++){
 			
 			RepoFile rp = repofiles.get(i);
-			rp.copy(folder_path);
+			rp.transfer(folder_path);
 			
 			if(!rp.hasMeta())
 			{
@@ -262,7 +262,7 @@ public class Repo
 	throws IOException
 	{	
 		repofiles.add(repoFile);
-		repoFile.copy(folder_path);
+		repoFile.transfer(folder_path);
 		repoFile.createMeta(folder_path);
 	}
 	

@@ -37,9 +37,9 @@ public class RepoFile
 		rx = new RepoXML();
 	}
 	
-	public RepoFile(File file)
+	public RepoFile(File transfer_file)
 	{	
-		this.file = file;
+		this.file = transfer_file;
 		this.meta_file = null;
 		
 		rx = new RepoXML();
@@ -55,10 +55,14 @@ public class RepoFile
 		return meta_file;
 	}
 	
-	public void copy(String path) 
+	public void transfer(String path) 
 	throws IOException
 	{	
+		//copier
 		Files.copy(file.toPath(), Paths.get(path + File.separator + file.getName()), StandardCopyOption.REPLACE_EXISTING);
+		
+		//pointer RepoFile vers le fichier dans le dossier
+		file = new File(path + File.separator + file.getName());
 	}
 	
 	/**
@@ -102,7 +106,7 @@ public class RepoFile
 	
 	public void delete()
 	{
-		file.delete();
-		meta_file.delete();
+		System.out.println("File: " + file.getPath() + ": " + file.delete());
+		System.out.println("MetaFile: " + meta_file.getPath() + ": " + meta_file.delete());
 	}
 }
