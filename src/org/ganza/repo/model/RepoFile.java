@@ -58,7 +58,7 @@ public class RepoFile
 	public void copy(String path) 
 	throws IOException
 	{	
-		Files.copy(file.toPath(), Paths.get(path + "/" + file.getName()), StandardCopyOption.REPLACE_EXISTING);
+		Files.copy(file.toPath(), Paths.get(path + File.separator + file.getName()), StandardCopyOption.REPLACE_EXISTING);
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class RepoFile
 	{
 		if(!hasMeta())
 		{
-			String meta_file_path = folder_path + "/." + getName();
+			String meta_file_path = folder_path + File.separator + "." + getName();
 			
 			rx.createMeta(meta_file_path, getName());
 			

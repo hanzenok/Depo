@@ -121,8 +121,8 @@ public class Repo
 		{	
 			if(is_repo)
 			{
-				File xmlfile = new File(file.getPath() + File.separator + "." + file.getName()); //fichier avec le meme nom avec le point au debut
-				
+				File xmlfile = new File(file.getParentFile().getPath() + File.separator + "." + file.getName()); //fichier avec le meme nom avec le point au debut
+
 				repofiles.add(new RepoFile(file, xmlfile));
 			}
 			else
@@ -286,11 +286,15 @@ public class Repo
 			rf.delete();
 		}
 		
+		//supprimer le ficher meta de depot
+		File file = new File(metafile_path);
+		file.delete();
+		
 		//supprimer le repertoire
 		File dir = new File(folder_path);
 		dir.delete();
 		
-		//supprimer la liste
+		//supprimer le liste
 		repofiles.removeAll(repofiles);
 	}
 	

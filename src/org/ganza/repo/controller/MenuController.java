@@ -151,7 +151,7 @@ public class MenuController implements ActionListener
 		repo_view.setDragController(drag_controller);
 		
 		//controlleur de click
-		click_controller = new ClickController(repo, repo_view);
+		click_controller = new ClickController(repo, repo_view, popup_controller);
 		repo_view.setClickController(click_controller);
 		
 		//controlleur de sortie

@@ -12,6 +12,7 @@ public class PopupController implements ActionListener
 {
 	private Repo repo;
 	private RepoView repo_view;
+	private int index; //index d'un element de JList choisi
 	
 	public PopupController(Repo repo, RepoView repo_view)
 	{
@@ -22,6 +23,11 @@ public class PopupController implements ActionListener
 	public void setRepo(Repo repo)
 	{
 		this.repo = repo;
+	}
+	
+	public void setIndex(int index)
+	{
+		this.index = index;
 	}
 	
 	@Override
@@ -44,11 +50,12 @@ public class PopupController implements ActionListener
 		//popup menu "Supprimer"
 		if(item_name.equals("Supprimer"))
 		{
-			repo.removeRFile(1);
+			repo.removeRFile(index);
 			
 			repo_view.initialize();
 			repo_view.refresh(repo);
-		
+			repo_view.setTitle(repo.getName());
+			
 			return;
 		}
 		

@@ -18,11 +18,13 @@ public class ClickController extends MouseAdapter
 	private JList<RepoFile> list;
 	private Repo repo;
 	private RepoView repo_view;
+	private PopupController popup_controller;
 	
-	public ClickController(Repo repo, RepoView repo_view)
+	public ClickController(Repo repo, RepoView repo_view, PopupController popup_controller)
 	{
 		this.repo = repo;
 		this.repo_view = repo_view;
+		this.popup_controller = popup_controller;
 	}
 	
 	public void setList(JList<RepoFile> list)
@@ -38,8 +40,10 @@ public class ClickController extends MouseAdapter
         	int index = list.locationToIndex(e.getPoint());
             list.setSelectedIndex(index);
         	
+            //dire a controleur de popup quel element de list a ete choisi
+            popup_controller.setIndex(index);
             repo_view.showPopup(e);
-            
+          
             return;
         }
     	
