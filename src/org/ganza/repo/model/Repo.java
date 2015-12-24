@@ -35,6 +35,9 @@ public class Repo
 	
 	private RepoXML rx; //gestionnaire de xml
 	
+	private ArrayList<String> accepted_files;
+	private boolean accept_all_files;
+	
 	/**
      * Constructeur principal
      */
@@ -52,6 +55,11 @@ public class Repo
 		repofiles = new ArrayList<RepoFile>();
 		
 		rx = new RepoXML(metafile_path);
+		
+		accepted_files = new ArrayList<String>();
+		accepted_files.add("pdf");
+		accepted_files.add("mp3");
+		accept_all_files = true;
 	}
 	
 	
@@ -258,28 +266,30 @@ public class Repo
 		this.folder_path = path;
 	}
 	
-	public void addRFile(RepoFile repoFile) 
+	public void addRFile(RepoFile repo_file) 
 	throws IOException, JDOMException
 	{	
-		repofiles.add(repoFile);
-		repoFile.transfer(folder_path);
-		repoFile.createMeta(folder_path);
+		//ajouter dans la liste
+		repofiles.add(repo_file);
 		
-		repoFile.getAttributes();
+		//copier
+		repo_file.transfer(folder_path);
 		
-		System.out.println("Extension:" + repoFile.getExtenstion());
+		//generer fichier meta
+		repo_file.createMeta(folder_path);
+		
+		System.out.println("Extension:" + repo_file.getExtenstion());
 	}
 	
-	public RepoFile getRFile(int index)
-	{
-		return repofiles.get(index);
-	}
+//	public RepoFile getRFile(int index)
+//	{
+//		return repofiles.get(index);
+//	}
 	
 	public void removeRFile(int index)
 	{
 		repofiles.get(index).delete();
-		
-		repofiles.remove(index);
+		repofiles.remove(index);	
 	}
 	
 	public void close(){
@@ -316,5 +326,24 @@ public class Repo
 	public boolean exists(){
 		
 		return exist;
+	}
+	
+	public ArrayList<RepoFile> getRFiles()
+	{
+		if(accept_all_files) return repofiles;
+		
+		ArrayList<RepoFile> accepted = new ArrayList<RepoFile>();
+		
+		return accepted;
+	}
+	
+	public boolean isAccepted(RepoFile repo_file)
+	{
+		String extension = repo_file.getExtenstion();
+		
+		if(accepted_files.contains(extension))
+			return true;
+		
+		return false;
 	}
 }

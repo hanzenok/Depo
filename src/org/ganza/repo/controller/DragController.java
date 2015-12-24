@@ -4,6 +4,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -75,12 +76,13 @@ public class DragController extends TransferHandler {
 	{	
 		//list model
 		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
+		ArrayList<RepoFile> repofiles = repo.getRFiles();
 		
 		//chargement
-		int i, n = repo.size();
+		int i, n = repofiles.size();
 		for(i=0; i<n; i++){
 			
-			listModel.addElement(repo.getRFile(i));
+			listModel.addElement(repofiles.get(i));
 		}
 		
 		//attribution

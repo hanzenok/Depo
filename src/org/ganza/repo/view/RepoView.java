@@ -194,15 +194,15 @@ public class RepoView extends JFrame {
 		list.setModel(this.listModel);
 	}
 	
-	public void refresh(Repo repo)
-	{	
-		int i, n = repo.size();
-		
-		for(i=0; i<n; i++){
-			
-			listModel.addElement(repo.getRFile(i));
-		}
-	}
+//	public void refresh(Repo repo)
+//	{	
+//		int i, n = repo.size();
+//		
+//		for(i=0; i<n; i++){
+//			
+//			listModel.addElement(repo.getRFile(i));
+//		}
+//	}
 	
 	public void showPopup(MouseEvent e)
 	{

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JMenuItem;
@@ -45,7 +46,7 @@ public class PopupController implements ActionListener
 		//popup menu "Reinsegner XML"
 		if(item_name.equals("Reinsegner XML"))
 		{	
-			RepoFile repo_file = repo.getRFile(click_controller.getIndex());
+			RepoFile repo_file = repo.getRFiles().get(click_controller.getIndex());
 			
 			EditorView editor_view = new EditorView();
 			EditorController editor_controller = new EditorController(repo_file, editor_view);
@@ -62,7 +63,7 @@ public class PopupController implements ActionListener
 		if(item_name.equals("Modifier XML"))
 		{
     		//reccuperer le fichier xml
-    		File xml_file = repo.getRFile(click_controller.getIndex()).getMetaFile();
+    		File xml_file = repo.getRFiles().get(click_controller.getIndex()).getMetaFile();
     		
     		//ouvrir dans la systeme
     		try { Desktop.getDesktop().open(xml_file); } 
@@ -94,12 +95,13 @@ public class PopupController implements ActionListener
 	{	
 		//list model
 		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
+		ArrayList<RepoFile> repofiles = repo.getRFiles();
 		
 		//chargement
-		int i, n = repo.size();
+		int i, n = repofiles.size();
 		for(i=0; i<n; i++){
 			
-			listModel.addElement(repo.getRFile(i));
+			listModel.addElement(repofiles.get(i));
 		}
 		
 		//attribution

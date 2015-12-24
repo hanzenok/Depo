@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -176,12 +177,13 @@ public class MenuController implements ActionListener
 	{	
 		//list model
 		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
+		ArrayList<RepoFile> repofiles = repo.getRFiles();
 		
 		//chargement
-		int i, n = repo.size();
+		int i, n = repofiles.size(); System.out.println("Size: " + n);
 		for(i=0; i<n; i++){
 			
-			listModel.addElement(repo.getRFile(i));
+			listModel.addElement(repofiles.get(i));
 		}
 		
 		//attribution

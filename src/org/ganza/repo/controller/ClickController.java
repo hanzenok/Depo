@@ -59,7 +59,7 @@ public class ClickController extends MouseAdapter
     		index = list.locationToIndex(e.getPoint());
             
     		//ouvrir le fichier dans systeme
-    		File file = repo.getRFile(index).getFile();    		
+    		File file = repo.getRFiles().get(index).getFile();    		
     		try { Desktop.getDesktop().open(file); } 
     		catch (IOException e1) { e1.printStackTrace();}
     		
