@@ -126,10 +126,7 @@ public class RepoView extends JFrame {
 	}
 	
 	public void setDragController(DragController drag_controller)
-	{	
-		drag_controller.setList(list);
-		drag_controller.setListModel(listModel);
-		
+	{			
 		list.setTransferHandler(drag_controller);
 	}
 	
@@ -166,7 +163,14 @@ public class RepoView extends JFrame {
 		
 		main_panel = new JPanel(new BorderLayout());
 		
-		resetList();
+		list = new JList<RepoFile>();
+		list.setCellRenderer(new FileListCellRenderer());
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setDragEnabled(true); //par defaut
+		
+		//model d'affichage
+		listModel = new DefaultListModel<RepoFile>();
+		list.setModel(listModel);
 		
 		//ajout
 		JScrollPane scroll = new JScrollPane(list);
@@ -177,18 +181,6 @@ public class RepoView extends JFrame {
 		//rendre visible
 		pack();
 		setVisible(true);
-	}
-	
-	public void resetList(){
-		
-		list = new JList<RepoFile>();
-		list.setCellRenderer(new FileListCellRenderer());
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		list.setDragEnabled(true); //par defaut
-		
-		//model d'affichage
-		listModel = new DefaultListModel<RepoFile>();
-		list.setModel(listModel);
 	}
 	
 	public DefaultListModel<RepoFile> getListModel()

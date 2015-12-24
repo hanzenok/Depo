@@ -119,7 +119,7 @@ public class MenuController implements ActionListener
 			
 				//reinirialiser la view et charger le contenu
 				repo_view.initialize();
-				repo_view.refresh(repo);
+				refreshRepoView();
 				repo_view.setTitle(repo.getName());
 				
 				//reinitialiser les controlleurs
@@ -170,6 +170,22 @@ public class MenuController implements ActionListener
 		popup_controller.setRepo(repo);
 		popup_controller.setClickController(click_controller);
 
+	}
+	
+	public void refreshRepoView()
+	{	
+		//list model
+		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
+		
+		//chargement
+		int i, n = repo.size();
+		for(i=0; i<n; i++){
+			
+			listModel.addElement(repo.getRFile(i));
+		}
+		
+		//attribution
+		repo_view.setListModel(listModel);
 	}
 
 }

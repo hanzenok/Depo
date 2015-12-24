@@ -23,18 +23,6 @@ public class DragController extends TransferHandler {
 	
 	private Repo repo;
 	private RepoView repo_view;
-	private JList<RepoFile> list;
-	private DefaultListModel<RepoFile> listModel;
-	
-	public void setList(JList<RepoFile> list)
-	{
-		this.list = list;
-	}
-	
-	public void setListModel(DefaultListModel<RepoFile> listModel)
-	{
-		this.listModel = listModel;
-	}
 	
 	public DragController(Repo repo, RepoView repo_view)
 	{
@@ -70,12 +58,11 @@ public class DragController extends TransferHandler {
 	        	RepoFile repofile = new RepoFile(file);
 	        	
 	        	//ajout
-	        	//listModel.addElement(repofile);
 	        	repo.addRFile(repofile);
 	        }
 	        
+	        //reinitialisaiton de la vue
 	        refreshRepoView();
-	        //list.setModel(listModel);
 	        
 	        return true;
 		}

@@ -79,7 +79,7 @@ public class PopupController implements ActionListener
 			
 			//reinitilaiser la vue
 			repo_view.initialize();
-			repo_view.refresh(repo);
+			refreshRepoView();
 			repo_view.setTitle(repo.getName());
 			
 			//reinitialiser le contrlleur de click
@@ -88,6 +88,22 @@ public class PopupController implements ActionListener
 			
 			return;
 		}
+	}
+	
+	public void refreshRepoView()
+	{	
+		//list model
+		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
+		
+		//chargement
+		int i, n = repo.size();
+		for(i=0; i<n; i++){
+			
+			listModel.addElement(repo.getRFile(i));
+		}
+		
+		//attribution
+		repo_view.setListModel(listModel);
 	}
 
 }
