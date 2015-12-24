@@ -125,6 +125,7 @@ public class MenuController extends RepoController implements ActionListener
 				repo_view.initialize();
 				refreshRepoView(repo, repo_view);
 				repo_view.setTitle(repo.getName());
+				repo_view.setReady(true);
 				
 				//reinitialiser les controlleurs
 				setup_controllers();
