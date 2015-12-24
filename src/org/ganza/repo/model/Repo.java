@@ -266,6 +266,8 @@ public class Repo
 		repoFile.createMeta(folder_path);
 		
 		repoFile.getAttributes();
+		
+		System.out.println("Extension:" + repoFile.getExtenstion());
 	}
 	
 	public RepoFile getRFile(int index)

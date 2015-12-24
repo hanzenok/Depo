@@ -152,4 +152,17 @@ public class RepoFile
 	{
 		return rx.getAttributeValue(index);
 	}
+	
+	public String getExtenstion()
+	{	
+		String name = file.getName();
+		String extension = "";
+
+		int i = name.lastIndexOf('.');
+		if (i >= 0) {
+		    extension = name.substring(i+1);
+		}
+		
+		return extension;
+	}
 }
