@@ -15,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+import org.ganza.repo.controller.FilterController;
+
 public class FilterView extends JFrame{
 
 	private static final long serialVersionUID = -7411493893110513171L;
@@ -44,8 +46,10 @@ public class FilterView extends JFrame{
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void show(ArrayList<String> extensions)
-	{
+	{	
 		GridBagConstraints c = new GridBagConstraints();
+		
+		main_panel = new JPanel(new GridBagLayout());
 		
 		//label extensions
 		c.gridx = 0; c.gridy = 0;
@@ -86,5 +90,34 @@ public class FilterView extends JFrame{
 		//rendre visible
 		pack();
 		setVisible(true);
+	}
+	
+	public void setFilterController(FilterController filter_controller)
+	{
+		filter_controller.setList(list);
+		
+		button_add.addActionListener(filter_controller);
+		button_delete.addActionListener(filter_controller);
+		allow.addActionListener(filter_controller);
+	}
+	
+	public boolean editorEmpty(){
+		
+		return editor.getText().length() == 0;
+	}
+	
+	public String getEditor()
+	{
+		return editor.getText();
+	}	
+	
+	public void setEditor(String str)
+	{
+		editor.setText(str);
+	}
+	
+	public void setCheckBox(boolean state)
+	{
+		allow.setSelected(state);
 	}
 }

@@ -59,7 +59,8 @@ public class Repo
 		accepted_files = new ArrayList<String>();
 		accepted_files.add("pdf");
 		accepted_files.add("mp3");
-		accept_all_files = false;
+		accepted_files.add("jpg");
+		accept_all_files = true;
 	}
 	
 	
@@ -299,8 +300,7 @@ public class Repo
 				break;
 			}
 			
-			i++;
-				
+			i++;		
 		}
 		
 		//suppression
@@ -371,13 +371,30 @@ public class Repo
 		return false;
 	}
 	
-	public void acceptAll(boolean accept)
+	public void setAcceptance(boolean state)
 	{
-		accept_all_files = accept;
+		accept_all_files = state;
+	}
+	
+	public boolean getAcceptance()
+	{
+		return accept_all_files;
 	}
 	
 	public ArrayList<String> getAcceptedExtensions()
 	{
 		return accepted_files;
+	}
+	
+	public void removeExtension(int index)
+	{
+		accepted_files.remove(index);
+	}
+	
+	public void addExtension(String extension)
+	{
+		if(!accepted_files.contains(extension))
+			
+			accepted_files.add(extension);
 	}
 }

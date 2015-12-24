@@ -51,7 +51,6 @@ public class EditorController implements ActionListener,ListSelectionListener{
 	{	
         if (le.getValueIsAdjusting()) return;
         
-        
 		try {
 			
 			//reccuperer l'index d'element de liste choisi

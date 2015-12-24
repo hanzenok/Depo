@@ -147,9 +147,12 @@ public class MenuController implements ActionListener
 		//menu "Appliquer" filtre
 		if(item_name.equals("Appliquer"))
 		{
-			System.out.println("sdf");
-			
 			FilterView filter_view = new FilterView();
+			
+			FilterController filter_controller = new FilterController(repo, repo_view, filter_view);
+			filter_view.show(repo.getAcceptedExtensions());
+			
+			filter_view.setFilterController(filter_controller);
 		}
 	}
 	
