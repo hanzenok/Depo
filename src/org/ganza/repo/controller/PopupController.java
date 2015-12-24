@@ -16,7 +16,7 @@ import org.ganza.repo.view.RepoView;
 import org.jdom2.JDOMException;
 import org.ganza.repo.view.EditorView;
 
-public class PopupController implements ActionListener
+public class PopupController extends RepoController implements ActionListener
 {
 	private Repo repo;
 	private RepoView repo_view;
@@ -80,7 +80,7 @@ public class PopupController implements ActionListener
 			
 			//reinitilaiser la vue
 			repo_view.initialize();
-			refreshRepoView();
+			refreshRepoView(repo, repo_view);
 			repo_view.setTitle(repo.getName());
 			
 			//reinitialiser le contrlleur de click
@@ -89,23 +89,6 @@ public class PopupController implements ActionListener
 			
 			return;
 		}
-	}
-	
-	public void refreshRepoView()
-	{	
-		//list model
-		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
-		ArrayList<RepoFile> repofiles = repo.getRFiles();
-		
-		//chargement
-		int i, n = repofiles.size();
-		for(i=0; i<n; i++){
-			
-			listModel.addElement(repofiles.get(i));
-		}
-		
-		//attribution
-		repo_view.setListModel(listModel);
 	}
 
 }

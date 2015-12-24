@@ -14,7 +14,7 @@ import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.FilterView;
 import org.ganza.repo.view.RepoView;
 
-public class FilterController implements ActionListener{
+public class FilterController extends RepoController implements ActionListener{
 	
 	private Repo repo;
 	private RepoView repo_view;
@@ -50,7 +50,7 @@ public class FilterController implements ActionListener{
 			filter_view.show(repo.getAcceptedExtensions());
 			
 			//appliquer les changements
-			refreshRepoView();
+			refreshRepoView(repo, repo_view);
 			return;
 		}
 		
@@ -65,7 +65,7 @@ public class FilterController implements ActionListener{
 			filter_view.setEditor("");
 			
 			//appliquer les changements
-			refreshRepoView();
+			refreshRepoView(repo, repo_view);
 			return;
 		}
 		
@@ -77,26 +77,9 @@ public class FilterController implements ActionListener{
 			repo.setAcceptance(state);
 			
 			//appliquer les changements
-			refreshRepoView();
+			refreshRepoView(repo, repo_view);
 			return;
 		}
-	}
-	
-	public void refreshRepoView()
-	{	
-		//list model
-		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
-		ArrayList<RepoFile> repofiles = repo.getRFiles();
-		
-		//chargement
-		int i, n = repofiles.size(); System.out.println("Size: " + n);
-		for(i=0; i<n; i++){
-			
-			listModel.addElement(repofiles.get(i));
-		}
-		
-		//attribution
-		repo_view.setListModel(listModel);
 	}
 
 }

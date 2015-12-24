@@ -74,18 +74,9 @@ public class DragController extends TransferHandler {
 	
 	public void refreshRepoView()
 	{	
-		//list model
-		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
-		ArrayList<RepoFile> repofiles = repo.getRFiles();
-		
-		//chargement
-		int i, n = repofiles.size();
-		for(i=0; i<n; i++){
-			
-			listModel.addElement(repofiles.get(i));
-		}
-		
-		//attribution
-		repo_view.setListModel(listModel);
+		//normalement DragController doir heriter le RepoController
+		//mais il ne peux pas
+		RepoController repo_controller = new RepoController();
+		repo_controller.refreshRepoView(repo, repo_view);
 	}
 }

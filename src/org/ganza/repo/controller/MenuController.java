@@ -18,7 +18,7 @@ import org.jdom2.JDOMException;
 
 import net.lingala.zip4j.exception.ZipException;
 
-public class MenuController implements ActionListener
+public class MenuController extends RepoController implements ActionListener
 {	
 	private RepoView repo_view;
 	private Repo repo;
@@ -120,7 +120,7 @@ public class MenuController implements ActionListener
 			
 				//reinirialiser la view et charger le contenu
 				repo_view.initialize();
-				refreshRepoView();
+				refreshRepoView(repo, repo_view);
 				repo_view.setTitle(repo.getName());
 				
 				//reinitialiser les controlleurs
@@ -174,23 +174,6 @@ public class MenuController implements ActionListener
 		popup_controller.setRepo(repo);
 		popup_controller.setClickController(click_controller);
 
-	}
-	
-	public void refreshRepoView()
-	{	
-		//list model
-		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
-		ArrayList<RepoFile> repofiles = repo.getRFiles();
-		
-		//chargement
-		int i, n = repofiles.size(); System.out.println("Size: " + n);
-		for(i=0; i<n; i++){
-			
-			listModel.addElement(repofiles.get(i));
-		}
-		
-		//attribution
-		repo_view.setListModel(listModel);
 	}
 
 }
