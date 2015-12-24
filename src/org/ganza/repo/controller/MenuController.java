@@ -119,7 +119,7 @@ public class MenuController implements ActionListener
 			
 				//reinirialiser la view et charger le contenu
 				repo_view.initialize();
-				refreshRepoView();
+				repo_view.refresh(repo);
 				repo_view.setTitle(repo.getName());
 				
 				//reinitialiser les controlleurs
@@ -155,7 +155,7 @@ public class MenuController implements ActionListener
 	public void setup_controllers()
 	{
 		//controlleur de drag&drop
-		drag_controller = new DragController(repo);
+		drag_controller = new DragController(repo, repo_view);
 		repo_view.setDragable(true);
 		repo_view.setDragController(drag_controller);
 		
@@ -170,18 +170,6 @@ public class MenuController implements ActionListener
 		popup_controller.setRepo(repo);
 		popup_controller.setClickController(click_controller);
 
-	}
-	
-	public void refreshRepoView()
-	{
-		DefaultListModel<RepoFile> listModel = repo_view.getListModel();
-		
-		int i, n = repo.size();
-		
-		for(i=0; i<n; i++){
-			
-			listModel.addElement(repo.getRFile(i));
-		}
 	}
 
 }

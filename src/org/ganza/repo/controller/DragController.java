@@ -22,6 +22,7 @@ public class DragController extends TransferHandler {
 	private static final long serialVersionUID = 1L;
 	
 	private Repo repo;
+	private RepoView repo_view;
 	private JList<RepoFile> list;
 	private DefaultListModel<RepoFile> listModel;
 	
@@ -35,9 +36,10 @@ public class DragController extends TransferHandler {
 		this.listModel = listModel;
 	}
 	
-	public DragController(Repo repo)
+	public DragController(Repo repo, RepoView repo_view)
 	{
 		this.repo = repo;
+		this.repo_view = repo_view;
 	}
 
 	public int getSourceActions(JComponent c) 
@@ -68,11 +70,12 @@ public class DragController extends TransferHandler {
 	        	RepoFile repofile = new RepoFile(file);
 	        	
 	        	//ajout
-	        	listModel.addElement(repofile);
+	        	//listModel.addElement(repofile);
 	        	repo.addRFile(repofile);
 	        }
-	
-	        list.setModel(listModel);
+	        
+	        refreshRepoView();
+	        //list.setModel(listModel);
 	        
 	        return true;
 		}
@@ -81,17 +84,19 @@ public class DragController extends TransferHandler {
 		catch (JDOMException e) {return false;}
 	}
 	
-//	public void refreshRepoView()
-//	{	
-//		repo_view.resetList();
-//		
-//		DefaultListModel<RepoFile> listModel = repo_view.getListModel();
-//		
-//		int i, n = repo.size();
-//		
-//		for(i=0; i<n; i++){
-//			
-//			listModel.addElement(repo.getRFile(i));
-//		}
-//	}
+	public void refreshRepoView()
+	{	
+		//list model
+		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
+		
+		//chargement
+		int i, n = repo.size();
+		for(i=0; i<n; i++){
+			
+			listModel.addElement(repo.getRFile(i));
+		}
+		
+		//attribution
+		repo_view.setListModel(listModel);
+	}
 }

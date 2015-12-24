@@ -196,6 +196,12 @@ public class RepoView extends JFrame {
 		return listModel;
 	}
 	
+	public void setListModel(DefaultListModel<RepoFile> listModel)
+	{
+		this.listModel = listModel;
+		list.setModel(this.listModel);
+	}
+	
 	public void refresh(Repo repo)
 	{	
 		int i, n = repo.size();
