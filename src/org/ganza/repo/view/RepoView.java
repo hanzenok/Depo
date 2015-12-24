@@ -54,6 +54,7 @@ public class RepoView extends JFrame {
 	private JMenuItem open_menu;
 	private JMenuItem save_menu;
 	private JMenuItem close_menu;
+	private JMenuItem addfilter_menu;
 	
 	private JPopupMenu popup_menu;
 	private JMenuItem showxml_menu;
@@ -79,9 +80,14 @@ public class RepoView extends JFrame {
         repo_menu.add(new_menu); repo_menu.add(new JSeparator()); 
         repo_menu.add(save_menu); repo_menu.add(open_menu); 
         repo_menu.add(new JSeparator()); repo_menu.add(close_menu);
-       
-        menubar.add(repo_menu);
+        
+        JMenu filter_menu = new JMenu("Filtre");
+        addfilter_menu = new JMenuItem("Appliquer"); addfilter_menu.setToolTipText("Ajouter des filtres");
+        filter_menu.add(addfilter_menu);
+        
+        menubar.add(repo_menu); menubar.add(filter_menu);
 		
+        
         //menu popup
         popup_menu = new JPopupMenu();
         showxml_menu = new JMenuItem("Reinsegner XML"); showxml_menu.setToolTipText("Reinsegner les balises de fihcier xml");
@@ -111,6 +117,7 @@ public class RepoView extends JFrame {
 		save_menu.setEnabled(enabled);
 		open_menu.setEnabled(enabled);
 		close_menu.setEnabled(enabled);
+		addfilter_menu.setEnabled(enabled);
 	}
 	
 	public void setDragable(boolean dragable)
@@ -132,6 +139,7 @@ public class RepoView extends JFrame {
 		save_menu.addActionListener(menu_controller);
 		open_menu.addActionListener(menu_controller);
 		close_menu.addActionListener(menu_controller);
+		addfilter_menu.addActionListener(menu_controller);
 	}
 	
 	public void setExitController(ExitController exit_controller)

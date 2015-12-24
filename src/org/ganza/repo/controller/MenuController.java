@@ -113,15 +113,15 @@ public class MenuController implements ActionListener
 			    //charger le dossier
 			    try { repo.load(selected_file.getAbsolutePath()); } 
 			    catch (ZipException | JDOMException | IOException e1) { e1.printStackTrace(); }
+			
+				//reinirialiser la view et charger le contenu
+				repo_view.initialize();
+				repo_view.refresh(repo);
+				repo_view.setTitle(repo.getName());
+				
+				//reinitialiser les controlleurs
+				setup_controllers();
 			}
-			
-			//reinirialiser la view et charger le contenu
-			repo_view.initialize();
-			repo_view.refresh(repo);
-			repo_view.setTitle(repo.getName());
-			
-			//reinitialiser les controlleurs
-			setup_controllers();
 			
 			return;
 		}
@@ -138,6 +138,12 @@ public class MenuController implements ActionListener
 			repo_view.setReady(false);
 			
 			return;
+		}
+		
+		//menu "Appliquer" filtre
+		if(item_name.equals("Appliquer"))
+		{
+			System.out.println("sdf");
 		}
 	}
 	
