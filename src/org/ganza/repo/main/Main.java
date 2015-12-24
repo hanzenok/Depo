@@ -3,11 +3,13 @@ package org.ganza.repo.main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.ganza.repo.controller.MenuController;
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.EditorView;
+import org.ganza.repo.view.FilterView;
 import org.ganza.repo.view.RepoView;
 import org.jdom2.JDOMException;
 
@@ -21,10 +23,18 @@ public class Main
 	throws ZipException, FileNotFoundException, IOException, JDOMException
 	{	
 		
-		RepoView repo_view = new RepoView();
-		MenuController mc = new MenuController(repo_view);
+//		RepoView repo_view = new RepoView();
+//		MenuController mc = new MenuController(repo_view);
 		
 //		EditorView rv = new EditorView();
+		
+		ArrayList<String> extensions = new ArrayList<String>(); 
+		extensions.add("xml"); extensions.add("pdf");
+		
+		FilterView fv = new FilterView();
+		fv.show(extensions);
+		
+		
 	}
 	
 }

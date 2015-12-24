@@ -37,6 +37,10 @@ public class EditorView extends JFrame{
 		setTitle("Edition des balises XML");
 		setMinimumSize(new Dimension(250, 150));
 		setLocationByPlatform(true);
+		
+		editor = new JTextArea();
+		editor.setLineWrap(true);
+		button = new JButton("Sauvegarder");
 	}
 	
 	public void setEditorController(EditorController editor_controller)
@@ -61,27 +65,23 @@ public class EditorView extends JFrame{
 		main_panel.add(attr_label, c);
 		
 		//label value
-		c.gridx = 1; c.gridy = 0; c.gridwidth = 1;
-		c.weightx = 4; 
-		JLabel attr_value = new JLabel("Valeur:");
-		main_panel.add(attr_value, c);
+		c.gridx = 1; c.gridy = 0; c.weightx = 3; 
+		JLabel value_label = new JLabel("Valeur:");
+		main_panel.add(value_label, c);
 		
 		//list
-		c.gridx = 0; c.gridy = 1; c.gridwidth = 1; c.weightx = 2;
+		c.gridx = 0; c.gridy = 1; c.weightx = 2;
 		list = new JList<String>(attributes); 
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		main_panel.add(new JScrollPane(list), c);
 		
 		//textatea
-		c.gridx = 1; c.gridy = 1; c.weightx = 4;
+		c.gridx = 1; c.gridy = 1; c.weightx = 3;
 		c.fill = GridBagConstraints.BOTH;
-		editor = new JTextArea(5,7);
-		editor.setLineWrap(true);
 		main_panel.add(new JScrollPane(editor), c);
 		
 		//bouton
 		c.gridx = 0; c.gridy = 2; c.gridwidth = 2; c.weightx = 100;
-		button = new JButton("Sauvegarder");
 		main_panel.add(button, c);
 		
 		//ajout
