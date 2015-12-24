@@ -101,4 +101,9 @@ public class EditorView extends JFrame{
 	{
 		return editor.getText();
 	}
+	
+	public void setEditorEditable(boolean state)
+	{
+		editor.setEditable(state);
+	}
 }

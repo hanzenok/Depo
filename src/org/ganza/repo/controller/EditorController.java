@@ -61,6 +61,9 @@ public class EditorController implements ActionListener,ListSelectionListener{
 			
 			//l'afficher
 			editor_view.showValue(value);
+			
+			//desactiver l'editor si il s'agit de l'attribut de nom
+			editor_view.setEditorEditable(!list.getSelectedValue().equals("name"));
 		} 
 		catch (JDOMException | IOException e) { e.printStackTrace(); }
 	}
