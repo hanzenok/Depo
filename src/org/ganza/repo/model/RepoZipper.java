@@ -3,6 +3,7 @@ package org.ganza.repo.model;
 import java.io.File;
 
 import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.FileHeader;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 import net.lingala.zip4j.core.ZipFile;
@@ -47,6 +48,13 @@ public class RepoZipper
 	public void restore(String destination) throws ZipException
 	{
 		zipfile.extractAll(destination);
+	}
+	
+	public void extractFile(String destination, String filename) throws ZipException
+	{
+		System.out.println("FilaName: " + filename + ", Dest: " + destination);
+		
+		zipfile.extractFile(filename, destination);
 	}
 	
 }

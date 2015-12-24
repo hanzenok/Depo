@@ -61,7 +61,6 @@ public class RepoView extends JFrame {
 	private JMenuItem editxml_menu;
 	private JMenuItem delete_menu;
 	
-	
 	private JList<RepoFile> list;
 	private DefaultListModel<RepoFile> listModel;
 	
@@ -115,7 +114,6 @@ public class RepoView extends JFrame {
 	public void setReady(boolean enabled)
 	{
 		save_menu.setEnabled(enabled);
-		open_menu.setEnabled(enabled);
 		close_menu.setEnabled(enabled);
 		addfilter_menu.setEnabled(enabled);
 	}

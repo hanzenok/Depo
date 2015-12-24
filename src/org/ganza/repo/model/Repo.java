@@ -114,14 +114,14 @@ public class Repo
 		File metafile = new File(path + File.separator + metafile_name);
 		if(metafile.exists())
 		{ 	
-			//redefinir le chemin vers dossier
-			setPath(path);
-			
-			//redefinir le chemin vers meta fichier
-			metafile_path = folder_path + File.separator + metafile_name;
-			
-			//et le nom de repo
-			setName(rx.getAttributeValue("name"));
+//			//redefinir le chemin vers dossier
+//			setPath(path);
+//			
+//			//redefinir le chemin vers meta fichier
+//			metafile_path = folder_path + File.separator + metafile_name;
+//			
+//			//et le nom de repo
+//			setName(rx.getAttributeValue("name"));
 			
 			is_repo = true;
 		}
@@ -197,15 +197,42 @@ public class Repo
 	public void load(String zipfile_path) 
 	throws ZipException, JDOMException, IOException
 	{	
+		//zippeur
 		RepoZipper zipper = new RepoZipper(zipfile_path);
 		
-		zipper.restore(folder_path); //desarchivage
+		//extraire un seul fichier meta de depot
+		zipper.extractFile(tmp_path, metafile_name); //desarchivage
 		
-		//changer le nom indiquée dans le ficher meta
-		rx.setAttributeValue("name", getName());
+		//repointer le rx vers cet fichier
+		rx.setMetafilePath(tmp_path + File.separator + metafile_name);
 		
-		//lecture de contenu de fichier et chargement dans la base
+		//reccuperer le nom de depot
+		String reponame = rx.getAttributeValue("name");
+		
+		//supprimer le fichier
+		File tmp = new File(tmp_path + File.separator + metafile_name);
+		tmp.delete();
+		
+		//changer le nom et path de depot
+		setName(reponame);
+		setPath(tmp_path + File.separator + reponame); //modifie le folder_path et metafile_path
+		
+		//creer un nouveau dossier pour nouveau depot
+		File dir = new File(folder_path);
+		if(!dir.exists()) dir.mkdir();
+		
+		//repointer le rx ver metafile dans nouveau dosier
+		rx.setMetafilePath(metafile_path);
+		
+		//zippeur
+		zipper = new RepoZipper(zipfile_path);
+		
+		//dezziper le contenu dans nouveau dossier
+		zipper.restore(folder_path);
+		
+		//lecture de contenu de nouveau dossier et chargement dans la base
 		read();
+		
 	}
 	
 	
@@ -264,7 +291,8 @@ public class Repo
      */
 	public void setPath(String path){
 		
-		this.folder_path = path;
+		folder_path = path;
+		metafile_path = new String(folder_path + File.separator + metafile_name);
 	}
 	
 	public void addRFile(RepoFile repo_file) 

@@ -49,7 +49,7 @@ public class MenuController extends RepoController implements ActionListener
 		//menu "nouveau"
 		if(item_name.equals("Nouveau"))
 		{	
-			//supprimer le repo existante
+			//supprimer un depot existante
 			if(repo != null && repo.exists())
 				repo.close();
 			
@@ -100,9 +100,12 @@ public class MenuController extends RepoController implements ActionListener
 		//menu "Ouvrir"
 		if(item_name.equals("Ouvrir"))
 		{
-			//supprimer le repo existante
+			//supprimer un depot existante
 			if(repo != null && repo.exists())
 				repo.close();
+			
+			//creer un nouveau depot
+			repo = new Repo();
 				
 			//dialog
 			JFileChooser fileChooser = new JFileChooser();
