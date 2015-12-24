@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JMenuItem;
 
 import org.ganza.repo.model.Repo;
@@ -78,7 +79,7 @@ public class PopupController implements ActionListener
 			
 			//reinitilaiser la vue
 			repo_view.initialize();
-			repo_view.refresh(repo);
+			refreshRepoView();
 			repo_view.setTitle(repo.getName());
 			
 			//reinitialiser le contrlleur de click
@@ -87,7 +88,18 @@ public class PopupController implements ActionListener
 			
 			return;
 		}
+	}
+	
+	public void refreshRepoView()
+	{
+		DefaultListModel<RepoFile> listModel = repo_view.getListModel();
 		
+		int i, n = repo.size();
+		
+		for(i=0; i<n; i++){
+			
+			listModel.addElement(repo.getRFile(i));
+		}
 	}
 
 }

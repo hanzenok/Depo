@@ -31,7 +31,7 @@ public class EditorView extends JFrame{
 	
 	public EditorView()
 	{
-        //manneau principal
+        //pnneau principal
 		main_panel = new JPanel(new GridBagLayout());
 		
 		setTitle("Edition des balises XML");

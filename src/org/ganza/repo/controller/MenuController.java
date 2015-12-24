@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 
 import org.ganza.repo.model.Repo;
+import org.ganza.repo.model.RepoFile;
+import org.ganza.repo.view.FilterView;
 import org.ganza.repo.view.RepoView;
 import org.jdom2.JDOMException;
 
@@ -116,7 +119,7 @@ public class MenuController implements ActionListener
 			
 				//reinirialiser la view et charger le contenu
 				repo_view.initialize();
-				repo_view.refresh(repo);
+				refreshRepoView();
 				repo_view.setTitle(repo.getName());
 				
 				//reinitialiser les controlleurs
@@ -144,6 +147,8 @@ public class MenuController implements ActionListener
 		if(item_name.equals("Appliquer"))
 		{
 			System.out.println("sdf");
+			
+			FilterView filter_view = new FilterView();
 		}
 	}
 	
@@ -165,6 +170,18 @@ public class MenuController implements ActionListener
 		popup_controller.setRepo(repo);
 		popup_controller.setClickController(click_controller);
 
+	}
+	
+	public void refreshRepoView()
+	{
+		DefaultListModel<RepoFile> listModel = repo_view.getListModel();
+		
+		int i, n = repo.size();
+		
+		for(i=0; i<n; i++){
+			
+			listModel.addElement(repo.getRFile(i));
+		}
 	}
 
 }

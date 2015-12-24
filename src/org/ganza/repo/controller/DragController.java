@@ -68,16 +68,28 @@ public class DragController extends TransferHandler {
 	        	RepoFile repofile = new RepoFile(file);
 	        	
 	        	//ajout
-	        	listModel.addElement(repofile);
 	        	repo.addRFile(repofile);
 	        }
 	
-	        list.setModel(listModel);
+	        //list.setModel(listModel);
+	        refreshRepoView();
 	        
 	        return true;
 		}
 		catch (UnsupportedFlavorException e) {return false;} 
 		catch (IOException e) {return false;} 
 		catch (JDOMException e) {return false;}
+	}
+	
+	public void refreshRepoView()
+	{
+		DefaultListModel<RepoFile> listModel = repo_view.getListModel();
+		
+		int i, n = repo.size();
+		
+		for(i=0; i<n; i++){
+			
+			listModel.addElement(repo.getRFile(i));
+		}
 	}
 }
