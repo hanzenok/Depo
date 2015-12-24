@@ -59,7 +59,7 @@ public class Repo
 		accepted_files = new ArrayList<String>();
 		accepted_files.add("pdf");
 		accepted_files.add("mp3");
-		accept_all_files = true;
+		accept_all_files = false;
 	}
 	
 	
@@ -286,8 +286,24 @@ public class Repo
 //		return repofiles.get(index);
 //	}
 	
-	public void removeRFile(int index)
-	{
+	public void removeRFile(String filename)
+	{	
+		//recherche
+		int i = 0;
+		int index = -1;
+		for(RepoFile repo_file : repofiles)
+		{
+			if(repo_file.getName().equals(filename))
+			{
+				index = i;
+				break;
+			}
+			
+			i++;
+				
+		}
+		
+		//suppression
 		repofiles.get(index).delete();
 		repofiles.remove(index);	
 	}
@@ -332,7 +348,15 @@ public class Repo
 	{
 		if(accept_all_files) return repofiles;
 		
+		//filtrer les fichiers
 		ArrayList<RepoFile> accepted = new ArrayList<RepoFile>();
+		for(RepoFile repo_file : repofiles)
+		{
+			if(isAccepted(repo_file)){
+				
+				accepted.add(repo_file);
+			}
+		}
 		
 		return accepted;
 	}
@@ -345,5 +369,15 @@ public class Repo
 			return true;
 		
 		return false;
+	}
+	
+	public void acceptAll(boolean accept)
+	{
+		accept_all_files = accept;
+	}
+	
+	public ArrayList<String> getAcceptedExtensions()
+	{
+		return accepted_files;
 	}
 }

@@ -38,6 +38,11 @@ public class ClickController extends MouseAdapter
 		return index;
 	}
 	
+	public String getFileName()
+	{
+		return list.getSelectedValue().getName();
+	}
+	
     public void mouseClicked(MouseEvent e) 
     {   
     	//click droit

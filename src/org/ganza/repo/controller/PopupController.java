@@ -76,7 +76,7 @@ public class PopupController implements ActionListener
 		if(item_name.equals("Supprimer"))
 		{
 			//supprimer le fichier
-			repo.removeRFile(click_controller.getIndex());
+			repo.removeRFile(click_controller.getFileName());
 			
 			//reinitilaiser la vue
 			repo_view.initialize();
