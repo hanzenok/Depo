@@ -155,9 +155,9 @@ public class RepoView extends JFrame {
 		delete_menu.addActionListener(popup_controller);
 	}
 	
-	public void initialize(){
+	public void initialize(String title){
 		
-		setTitle("Repository");
+		setTitle(title);
 		
 		main_panel = new JPanel(new BorderLayout());
 		
@@ -181,6 +181,11 @@ public class RepoView extends JFrame {
 		setVisible(true);
 	}
 	
+	public void initialize()
+	{
+		initialize("Depôt");
+	}
+	
 	public DefaultListModel<RepoFile> getListModel()
 	{
 		return listModel;
@@ -192,15 +197,6 @@ public class RepoView extends JFrame {
 		list.setModel(this.listModel);
 	}
 	
-//	public void refresh(Repo repo)
-//	{	
-//		int i, n = repo.size();
-//		
-//		for(i=0; i<n; i++){
-//			
-//			listModel.addElement(repo.getRFile(i));
-//		}
-//	}
 	
 	public void showPopup(MouseEvent e)
 	{

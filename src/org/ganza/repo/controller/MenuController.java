@@ -59,11 +59,8 @@ public class MenuController extends RepoController implements ActionListener
 			catch (IOException e1) { e1.printStackTrace(); }
 			
 			//initaliser et activer le view
-			repo_view.initialize();
+			repo_view.initialize(repo.getName());
 			repo_view.setReady(true);
-			
-			//changer le titre de la fenetr
-			repo_view.setTitle(repo.getName());
 			
 			//reinitialiser les controlleurs
 			setup_controllers();
@@ -122,9 +119,8 @@ public class MenuController extends RepoController implements ActionListener
 			    catch (ZipException | JDOMException | IOException e1) { e1.printStackTrace(); }
 			
 				//reinirialiser la view et charger le contenu
-				repo_view.initialize();
+				repo_view.initialize(repo.getName());
 				refreshRepoView(repo, repo_view);
-				repo_view.setTitle(repo.getName());
 				repo_view.setReady(true);
 				
 				//reinitialiser les controlleurs

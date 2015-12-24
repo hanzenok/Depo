@@ -51,9 +51,7 @@ public class RepoZipper
 	}
 	
 	public void extractFile(String destination, String filename) throws ZipException
-	{
-		System.out.println("FilaName: " + filename + ", Dest: " + destination);
-		
+	{	
 		zipfile.extractFile(filename, destination);
 	}
 	

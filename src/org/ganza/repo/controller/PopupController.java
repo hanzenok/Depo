@@ -79,9 +79,8 @@ public class PopupController extends RepoController implements ActionListener
 			repo.removeRFile(click_controller.getFileName());
 			
 			//reinitilaiser la vue
-			repo_view.initialize();
+			repo_view.initialize(repo.getName());
 			refreshRepoView(repo, repo_view);
-			repo_view.setTitle(repo.getName());
 			
 			//reinitialiser le contrlleur de click
 			//car le JList a ete modifiee
