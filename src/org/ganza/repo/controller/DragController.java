@@ -14,6 +14,7 @@ import javax.swing.TransferHandler.TransferSupport;
 
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
+import org.ganza.repo.view.RepoView;
 import org.jdom2.JDOMException;
 
 public class DragController extends TransferHandler {
@@ -21,23 +22,12 @@ public class DragController extends TransferHandler {
 	private static final long serialVersionUID = 1L;
 	
 	private Repo repo;
+	private RepoView repo_view;
 	
-	private JList<RepoFile> list;
-	private DefaultListModel<RepoFile> listModel;
-	
-	public DragController(Repo repo)
+	public DragController(Repo repo, RepoView repo_view)
 	{
 		this.repo = repo;
-	}
-	
-	public void setList(JList<RepoFile> list)
-	{
-		this.list = list;
-	}
-	
-	public void setListMode(DefaultListModel<RepoFile> listModel){
-		
-		this.listModel = listModel;
+		this.repo_view = repo_view;
 	}
 
 	public int getSourceActions(JComponent c) 
@@ -82,7 +72,9 @@ public class DragController extends TransferHandler {
 	}
 	
 	public void refreshRepoView()
-	{
+	{	
+		repo_view.resetList();
+		
 		DefaultListModel<RepoFile> listModel = repo_view.getListModel();
 		
 		int i, n = repo.size();

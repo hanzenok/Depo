@@ -155,7 +155,7 @@ public class MenuController implements ActionListener
 	public void setup_controllers()
 	{
 		//controlleur de drag&drop
-		drag_controller = new DragController(repo);
+		drag_controller = new DragController(repo, repo_view);
 		repo_view.setDragable(true);
 		repo_view.setDragController(drag_controller);
 		
