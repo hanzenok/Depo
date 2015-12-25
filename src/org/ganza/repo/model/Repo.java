@@ -526,7 +526,7 @@ public class Repo
 		
 		for(RepoFile repo_file : repo_files)
 		{
-			repo_file.setAttributeValue("name", author);
+			repo_file.setAttributeValue("author", author);
 		}
 	}
 

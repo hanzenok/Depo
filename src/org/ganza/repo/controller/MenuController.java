@@ -130,8 +130,9 @@ public class MenuController extends RepoController implements ActionListener
 				
 				//reinitialiser les controlleurs
 				setup_controllers();
-				
 			}
+			
+			String str = new String("Imagine Dragons - Radioactive.mp3");
 			
 			return;
 		}

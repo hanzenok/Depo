@@ -10,9 +10,9 @@ public class RepoFileComparator implements Comparator<RepoFile>{
 		String name1 = arg0.getName();
 		String name2 = arg1.getName();
 		
-		if(name1.equals(name2))
-			
-			return 0;
+//		return name1.compareTo(name2);
+		
+		if(name1.equals(name2)) return 0;
 		
 		return -1;
 	}

@@ -57,7 +57,6 @@ public class PopupController extends RepoController implements ActionListener
 			try { repo_file = repo.getRFiles().get(click_controller.getIndex()); } 
 			catch (JDOMException | IOException e2) { e2.printStackTrace(); }
 			
-			
 			EditorView editor_view = new EditorView();
 			EditorController editor_controller = new EditorController(repo_file, editor_view);
 			
