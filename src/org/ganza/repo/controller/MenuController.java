@@ -210,6 +210,7 @@ public class MenuController extends RepoController implements ActionListener
 		//controlleur de popup
 		popup_controller.setRepo(repo);
 		popup_controller.setClickController(click_controller);
+		popup_controller.setDragController(drag_controller);
 
 	}
 

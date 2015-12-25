@@ -20,7 +20,9 @@ public class PopupController extends RepoController implements ActionListener
 {
 	private Repo repo;
 	private RepoView repo_view;
+	
 	private ClickController click_controller;
+	private DragController drag_controller;
 	
 	public PopupController(Repo repo, RepoView repo_view)
 	{
@@ -36,6 +38,11 @@ public class PopupController extends RepoController implements ActionListener
 	public void setClickController(ClickController click_controller)
 	{
 		this.click_controller = click_controller;
+	}
+	
+	public void setDragController(DragController drag_controller)
+	{
+		this.drag_controller = drag_controller;
 	}
 	
 	@Override
@@ -91,9 +98,10 @@ public class PopupController extends RepoController implements ActionListener
 			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
 			
-			//reinitialiser le contrlleur de click
+			//reinitialiser les contrlleurs
 			//car le JList a ete modifiee
 			repo_view.setClickController(click_controller);
+			repo_view.setDragController(drag_controller);
 			
 			return;
 		}
