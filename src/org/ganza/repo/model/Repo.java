@@ -504,4 +504,22 @@ public class Repo
 	{
 		request = null;
 	}
+	
+	public void setAuthor(String author) 
+	throws JDOMException, IOException
+	{	
+		if(author == null) return;
+		
+		//on applique la methode getRFiles() et on ne 
+		//travaille par directement avec la liste repofiles
+		//car la methode retourne la liste filtree et 
+		//avec les RepoFile's recherchee
+		ArrayList<RepoFile> repo_files = getRFiles();
+		
+		for(RepoFile repo_file : repo_files)
+		{
+			repo_file.setAttributeValue("name", author);
+		}
+	}
+
 }

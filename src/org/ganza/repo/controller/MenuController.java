@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
@@ -155,6 +156,8 @@ public class MenuController extends RepoController implements ActionListener
 			filter_view.show(repo.getAcceptedExtensions());
 			
 			filter_view.setFilterController(filter_controller);
+			
+			return;
 		}
 		
 		//menu "Lancer" recherche
@@ -167,12 +170,26 @@ public class MenuController extends RepoController implements ActionListener
 			catch (JDOMException | IOException e1) {e1.printStackTrace();}
 			
 			search_view.setSearchController(search_controller);
+			
+			return;
 		}
 		
 		//menu "Annuler" recherche
+		if(item_name.equals("Annuler"))
 		{
 			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
+			
+			return;
+		}
+		
+		//menu "Définir l'auteur"
+		if(item_name.equals("Définir l'auteur"))
+		{
+			String author = JOptionPane.showInputDialog(repo_view, "Auteur: ", "Définir l'auteur", JOptionPane.QUESTION_MESSAGE);
+			
+			try { repo.setAuthor(author); } 
+			catch (JDOMException | IOException e1) {e1.printStackTrace();}
 		}
 	}
 	

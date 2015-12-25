@@ -57,6 +57,7 @@ public class RepoView extends JFrame {
 	private JMenuItem addfilter_menu;
 	private JMenuItem launch_menu;
 	private JMenuItem cancel_menu;
+	private JMenuItem author_menu;
 	
 	private JPopupMenu popup_menu;
 	private JMenuItem showxml_menu;
@@ -91,8 +92,12 @@ public class RepoView extends JFrame {
         cancel_menu = new JMenuItem("Annuler"); cancel_menu.setToolTipText("Annuler la recherche");
         search_menu.add(launch_menu); search_menu.addSeparator(); search_menu.add(cancel_menu);
         
+        JMenu treatment_menu = new JMenu("Traitement");
+        author_menu = new JMenuItem("Définir l'auteur"); author_menu.setToolTipText("Définir un auteur pour les fichiers visibles");
+        treatment_menu.add(author_menu);
+        
         menubar.add(repo_menu); menubar.add(filter_menu);
-        menubar.add(search_menu);
+        menubar.add(search_menu); menubar.add(treatment_menu);
         
         //menu popup
         popup_menu = new JPopupMenu();
@@ -125,6 +130,7 @@ public class RepoView extends JFrame {
 		addfilter_menu.setEnabled(enabled);
 		launch_menu.setEnabled(enabled);
 		cancel_menu.setEnabled(enabled);
+		author_menu.setEnabled(enabled);
 	}
 	
 	public void setDragable(boolean dragable)
@@ -146,6 +152,7 @@ public class RepoView extends JFrame {
 		addfilter_menu.addActionListener(menu_controller);
 		launch_menu.addActionListener(menu_controller);
 		cancel_menu.addActionListener(menu_controller);
+		author_menu.addActionListener(menu_controller);
 	}
 	
 	public void setExitController(ExitController exit_controller)
