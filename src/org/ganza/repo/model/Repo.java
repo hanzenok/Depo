@@ -31,12 +31,14 @@ public class Repo
 	private String tmp_path; //dossier temporel de systeme
 	
 	private ArrayList<RepoFile> repofiles;
-	private RepoNamer rn;
+	private RepoNamer rn; //generateur de nom aleatoire
 	
 	private RepoXML rx; //gestionnaire de xml
 	
 	private ArrayList<String> accepted_files;
 	private boolean accept_all_files;
+	
+	private RepoSearchRequest request; //represente la requete de recherche
 	
 	/**
      * Constructeur principal
@@ -57,10 +59,12 @@ public class Repo
 		rx = new RepoXML(metafile_path);
 		
 		accepted_files = new ArrayList<String>();
-		accepted_files.add("pdf");
-		accepted_files.add("mp3");
-		accepted_files.add("jpg");
+//		accepted_files.add("pdf");
+//		accepted_files.add("mp3");
+//		accepted_files.add("jpg");
 		accept_all_files = true;
+		
+		request = null;
 	}
 	
 	
@@ -361,13 +365,43 @@ public class Repo
 		return exist;
 	}
 	
-	public ArrayList<RepoFile> getRFiles()
+	public ArrayList<RepoFile> getRFiles() 
+	throws JDOMException, IOException
 	{
-		if(accept_all_files) return repofiles;
+		ArrayList<RepoFile> repo_files = new ArrayList<RepoFile>();
+		
+		//RECHERCHE=======================
+		//si pas de recherche demndee
+		if(request == null)
+			repo_files = repofiles;
+		
+		//recherche
+		else
+		{
+			for(RepoFile repo_file : repofiles)
+			{
+				ArrayList<String> repofile_attributes = repo_file.getAttributes();
+				
+				for(String attribute : request.attributes)
+				{
+					//recherche de l'attribut
+					int index = repofile_attributes.indexOf(attribute);
+					if(index == -1) continue;
+					
+					//recherce de mot cle
+					if(repo_file.getAttributeValue(index).contains(request.target));
+						repo_files.add(repo_file);
+				}
+			}
+		}
+		
+		//FILTRAGE===========================
+		//pas de filtre
+		if(accept_all_files) return repo_files;
 		
 		//filtrer les fichiers
 		ArrayList<RepoFile> accepted = new ArrayList<RepoFile>();
-		for(RepoFile repo_file : repofiles)
+		for(RepoFile repo_file : repo_files)
 		{
 			if(isAccepted(repo_file)){
 				
@@ -443,5 +477,10 @@ public class Repo
 		}
 		
 		return repo_attributes;
+	}
+	
+	public void setRequest(String target, ArrayList<String> attributes)
+	{
+		request = new RepoSearchRequest(target, attributes);
 	}
 }
