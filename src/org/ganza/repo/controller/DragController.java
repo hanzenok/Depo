@@ -78,6 +78,7 @@ public class DragController extends TransferHandler {
 		//normalement DragController doir heriter le RepoController
 		//mais il ne peux pas
 		RepoController repo_controller = new RepoController();
+		repo.setNoSearching();
 		repo_controller.refreshRepoView(repo, repo_view);
 	}
 }

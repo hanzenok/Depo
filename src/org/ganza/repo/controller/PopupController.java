@@ -88,6 +88,7 @@ public class PopupController extends RepoController implements ActionListener
 			
 			//reinitilaiser la vue
 			repo_view.initialize(repo.getName());
+			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
 			
 			//reinitialiser le contrlleur de click

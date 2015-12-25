@@ -50,7 +50,9 @@ public class FilterController extends RepoController implements ActionListener{
 			filter_view.show(repo.getAcceptedExtensions());
 			
 			//appliquer les changements
+			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
+			
 			return;
 		}
 		
@@ -65,7 +67,9 @@ public class FilterController extends RepoController implements ActionListener{
 			filter_view.setEditor("");
 			
 			//appliquer les changements
+			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
+			
 			return;
 		}
 		
@@ -77,7 +81,9 @@ public class FilterController extends RepoController implements ActionListener{
 			repo.setAcceptance(checked);
 			
 			//appliquer les changements
+			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
+			
 			return;
 		}
 	}

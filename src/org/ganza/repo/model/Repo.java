@@ -410,9 +410,6 @@ public class Repo
 						repo_files.add(repo_file);
 				}
 			}
-			
-			//desactiver la request
-			request = null;
 		}
 		
 		//FILTRAGE===========================
@@ -498,8 +495,13 @@ public class Repo
 		return repo_attributes;
 	}
 	
-	public void setRequest(String target, ArrayList<String> attributes)
+	public void setSearchRequest(String target, ArrayList<String> attributes)
 	{
 		request = new RepoSearchRequest(target, attributes);
+	}
+	
+	public void setNoSearching()
+	{
+		request = null;
 	}
 }

@@ -66,8 +66,6 @@ public class MenuController extends RepoController implements ActionListener
 			//reinitialiser les controlleurs
 			setup_controllers();
 			
-			System.out.println(repo.getPath());
-			
 			return;
 		}
 		
@@ -121,18 +119,14 @@ public class MenuController extends RepoController implements ActionListener
 			
 				//reinirialiser la view et charger le contenu
 				repo_view.initialize(repo.getName());
-				refreshRepoView(repo, repo_view);
 				repo_view.setReady(true);
+				repo.setNoSearching();
+				refreshRepoView(repo, repo_view);
+				
 				
 				//reinitialiser les controlleurs
 				setup_controllers();
 				
-				try {
-					repo.getAttributes();
-				} catch (JDOMException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 			
 			return;
@@ -177,6 +171,7 @@ public class MenuController extends RepoController implements ActionListener
 		
 		//menu "Annuler" recherche
 		{
+			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
 		}
 	}

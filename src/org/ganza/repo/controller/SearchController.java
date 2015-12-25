@@ -40,7 +40,7 @@ public class SearchController extends RepoController implements ActionListener{
 			if(search_view.editorEmpty()) return;
 			
 			//passer la requete a Repo
-			repo.setRequest(search_view.getEditor(), attributes);
+			repo.setSearchRequest(search_view.getEditor(), attributes);
 			
 			//reinitilaiser la vue
 			refreshRepoView(repo, repo_view);
