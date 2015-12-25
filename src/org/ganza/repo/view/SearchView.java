@@ -17,16 +17,26 @@ import javax.swing.JTextArea;
 import org.ganza.repo.controller.CloseDialogController;
 import org.ganza.repo.controller.SearchController;
 
+/**
+ * SearchView est un dialog qui
+ * gére les parametres de la recherche
+ * Controlée par SearchController
+ * @author Ganza Mykhailo
+ */
 public class SearchView extends JFrame{
 
 	private static final long serialVersionUID = 5346803320843425078L;
 	
-	private JPanel main_panel;
+	private JPanel main_panel; //panneau principale
 	
-	private JTextArea editor;
-	private JButton button_search;
-	private ArrayList<JCheckBox> boxes;
+	private JTextArea editor; //editor pour la chaîne des caracters à rechercher
+	private JButton button_search; //bouton pour lancer la recherche
+	private ArrayList<JCheckBox> boxes; //les checkbox avec toutes les attributes
+	//xml où il faut chercher
 	
+	/**
+	 * Constructeur principale
+	 */
 	public SearchView()
 	{
         //panneau principal
@@ -40,6 +50,12 @@ public class SearchView extends JFrame{
 		button_search = new JButton("Chercher");
 	}
 	
+	/**
+	 * Mit à jour la vue SearchView
+	 * à partire des attributes xml
+	 * où il faut réaliser la recherche
+	 * @param attributes attributes xml de recherche
+	 */
 	public void show(ArrayList<String> attributes)
 	{
 		GridBagConstraints c = new GridBagConstraints();
@@ -79,6 +95,10 @@ public class SearchView extends JFrame{
 		setVisible(true);
 	}
 	
+	/**
+	 * Défini le controlleur
+	 * @param search_controller contrlleur de la vue de recherche
+	 */
 	public void setSearchController(SearchController search_controller)
 	{
 		button_search.addActionListener(search_controller);
@@ -89,16 +109,31 @@ public class SearchView extends JFrame{
 		}
 	}
 	
+	/**
+	 * Défini le controlleur
+	 * Besoion de cela pour 
+	 * reactiver la vue principale 
+	 * à la fermeture de dialog
+	 * @param dialog_controller controlleur de drag&drop
+	 */
 	public void setCloseDialogController(CloseDialogController dialog_controller)
 	{
 		addWindowListener(dialog_controller);
 	}
 	
+	/**
+	 * Vérifie si l'editor est vide
+	 * @return l'état d'editor
+	 */
 	public boolean editorEmpty(){
 		
 		return editor.getText().length() == 0;
 	}
 	
+	/**
+	 * Renvoi le texte de l'editor
+	 * @return texte de l'editor
+	 */
 	public String getEditor()
 	{
 		return editor.getText();

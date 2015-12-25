@@ -1,11 +1,9 @@
 package org.ganza.repo.view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,19 +14,26 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
 import org.ganza.repo.controller.EditorController;
-import org.ganza.repo.model.RepoFile;
 
+/**
+ * EditorView est un dialog
+ * d'edition des attributs xµl
+ * Controlé par EditorController
+ * @author Ganza Mykhailo
+ */
 public class EditorView extends JFrame{
 
 	private static final long serialVersionUID = 380295441672869172L;
 	
-	private JPanel main_panel;
+	private JPanel main_panel; //panneu principal
 	
-	private JTextArea editor;
-	private JButton button;
-	private JList<String> list;
+	private JTextArea editor; //champ pour editer la valeur d'une balise
+	private JButton button; //boutone des sauvegargde
+	private JList<String> list; //list des attributes (balises xml)
 	
-	
+	/*
+	 * Constructeur principale
+	 */
 	public EditorView()
 	{
         //pnneau principal
@@ -43,6 +48,10 @@ public class EditorView extends JFrame{
 		button = new JButton("Sauvegarder");
 	}
 	
+	/**
+	 * Défini le controlleur
+	 * @param editor_controller controlleur
+	 */
 	public void setEditorController(EditorController editor_controller)
 	{	
 		editor_controller.setList(list);
@@ -50,10 +59,16 @@ public class EditorView extends JFrame{
 		list.addListSelectionListener(editor_controller);
 		button.addActionListener(editor_controller);
 		
-		list.setSelectedIndex(0);//choisir par defaut
+		list.setSelectedIndex(0);//element choisi par defaut
 		
 	}
 	
+	/**
+	 * Mit à jour de la vue
+	 * à partir de la liste 
+	 * des attributes xml
+	 * @param attributes
+	 */
 	public void show(String[] attributes)
 	{
 		GridBagConstraints c = new GridBagConstraints();
@@ -92,16 +107,34 @@ public class EditorView extends JFrame{
 		setVisible(true);
 	}
 	
+	/**
+	 * Afficher value dans 
+	 * l'editor
+	 * @param value valeur de l'attribut xml
+	 * dans l'editor
+	 */
 	public void showValue(String value)
 	{
 		editor.setText(value);
 	}
 	
+	/**
+	 * Renovoi le texte dans l'editor
+	 * @return texte dans l'editor
+	 */
 	public String getValue()
 	{
 		return editor.getText();
 	}
 	
+	/**
+	 * Activation/desactionvation
+	 * de l'editor
+	 * Utilisé pour ne pas pouvoir 
+	 * modifier la balise "name" de fichier 
+	 * RepoFile
+	 * @param state activer ou pas l'editor
+	 */
 	public void setEditorEditable(boolean state)
 	{
 		editor.setEditable(state);

@@ -10,7 +10,8 @@ import org.ganza.repo.view.RepoView;
  * des dialogs SearchView et FilterView
  * 
  * Sert à réactiver la vue principale
- * RepoView
+ * RepoView à la fermeture de dialog
+ * FilterView, SearchView et EditorView
  * @author Ganza Mykhailo
  */
 public class CloseDialogController extends WindowAdapter

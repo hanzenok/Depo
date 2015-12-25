@@ -2,7 +2,6 @@ package org.ganza.repo.view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.io.File;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
@@ -11,18 +10,28 @@ import javax.swing.filechooser.FileSystemView;
 
 import org.ganza.repo.model.RepoFile;
 
+/**
+ * Rendeur de la JList des RepoFile's
+ * de la vue principale RepoView
+ * Utilise les icones de la Systeme
+ * @author Ganza Mykhailo
+ */
 public class FileListCellRenderer extends DefaultListCellRenderer
 {
-    private static final long serialVersionUID = 1L;
-    private FileSystemView fileSystemView;
-    private JLabel label;
+ 
+	private static final long serialVersionUID = -8792995735838787400L;
+
+	private FileSystemView fileSystemView; //pour reccuperer les icones systeme
+    private JLabel label; //nom de fichier
     
-//    private Color textSelectionColor = Color.BLACK;
+    //couleurs
     private Color backgroundSelectionColor = Color.GRAY;
-//    private Color textNonSelectionColor = Color.BLACK;
     private Color backgroundNonSelectionColor = Color.WHITE;
     
-    FileListCellRenderer()
+    /**
+     * Constructeur principale
+     */
+    public FileListCellRenderer()
     {
         label = new JLabel();
         label.setOpaque(true);

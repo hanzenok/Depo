@@ -18,18 +18,28 @@ import javax.swing.ListSelectionModel;
 import org.ganza.repo.controller.CloseDialogController;
 import org.ganza.repo.controller.FilterController;
 
+/**
+ * FilterView est un dialog
+ * de modification des options
+ * de filtrage
+ * Controlée par FilterController
+ * @author Ganza Mykhailo
+ */
 public class FilterView extends JFrame{
 
 	private static final long serialVersionUID = -7411493893110513171L;
 
-	private JPanel main_panel;
+	private JPanel main_panel; //panneau principale
 	
-	private JList<String> list;
-	private JButton button_add;
-	private JButton button_delete;
-	private JTextArea editor;
-	private JCheckBox allow;
+	private JList<String> list; //list des extensions acceptables
+	private JButton button_add; //bouton d'ajout d'une nouvelle extension
+	private JButton button_delete; //bouton de suppression d'extension
+	private JTextArea editor; //pour ajouter le nom d'extension
+	private JCheckBox allow; //checkbox pour autoriser ou pas les fichiers avec toutes les extensions
 	
+	/**
+	 * Constructeur principale
+	 */
 	public FilterView()
 	{
         //panneau principal
@@ -45,6 +55,12 @@ public class FilterView extends JFrame{
 		allow = new JCheckBox("autoriser tout");
 	}
 	
+	/**
+	 * Mit à jour la vue FilterView
+	 * à partir de la liste des extensions
+	 * acceptées
+	 * @param extensions liste des extensions
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void show(ArrayList<String> extensions)
 	{	
@@ -92,7 +108,11 @@ public class FilterView extends JFrame{
 		pack();
 		setVisible(true);
 	}
-	
+	/**
+	 * Défini le controlleur
+	 * @param filter_controller controlleur de la vue 
+	 * de filtrage
+	 */
 	public void setFilterController(FilterController filter_controller)
 	{
 		filter_controller.setList(list);
@@ -100,34 +120,63 @@ public class FilterView extends JFrame{
 		button_add.addActionListener(filter_controller);
 		button_delete.addActionListener(filter_controller);
 		allow.addActionListener(filter_controller);
-
 	}
 	
+	/**
+	 * Défini le controlleur
+	 * Besoion de cela pour 
+	 * reactiver la vue principale 
+	 * à la fermeture de dialog
+	 * @param dialog_controller controlleur de drag&drop
+	 */
 	public void setCloseDialogController(CloseDialogController dialog_controller)
 	{
 		addWindowListener(dialog_controller);
 	}
 	
+	/**
+	 * Vérifie si l'editor
+	 * est vide ou ps
+	 * @return l'état d'editor
+	 */
 	public boolean editorEmpty(){
 		
 		return editor.getText().length() == 0;
 	}
 	
+	/**
+	 * Renvoi le texte de l'editor
+	 * @return texte de l'editor
+	 */
 	public String getEditor()
 	{
 		return editor.getText();
 	}	
 	
+	/**
+	 * Setter d'un editor
+	 * @param str texte à ajouter 
+	 * dans l'editor
+	 */
 	public void setEditor(String str)
 	{
 		editor.setText(str);
 	}
 	
+	/**
+	 * Défini l'état de checkbox
+	 * @param state l'état de checkbox
+	 */
 	public void setCheckBox(boolean state)
 	{
 		allow.setSelected(state);
 	}
 	
+	/**
+	 * Renvoi la liste container 
+	 * des extensions
+	 * @return liste avec les extensions accatées
+	 */
 	public JList<String> getList()
 	{
 		return list;

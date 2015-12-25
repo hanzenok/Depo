@@ -1,28 +1,11 @@
 package org.ganza.repo.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -30,25 +13,26 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.TransferHandler;
-import javax.swing.TransferHandler.TransferSupport;
-import javax.swing.filechooser.FileSystemView;
 
 import org.ganza.repo.controller.ClickController;
 import org.ganza.repo.controller.DragController;
 import org.ganza.repo.controller.ExitController;
 import org.ganza.repo.controller.MenuController;
 import org.ganza.repo.controller.PopupController;
-import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
 
+/**
+ * RepoView est une vue principale
+ * de la programme
+ * @author Ganza Mykhailo
+ */
 public class RepoView extends JFrame {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6665797925474960011L;
 
-	private JPanel main_panel;
+	private JPanel main_panel; //panneau principale
 	
+	//les menus
 	private JMenuBar menubar;
 	private JMenuItem new_menu;
 	private JMenuItem open_menu;
@@ -59,14 +43,20 @@ public class RepoView extends JFrame {
 	private JMenuItem cancel_menu;
 	private JMenuItem author_menu;
 	
+	//les popup menus
 	private JPopupMenu popup_menu;
 	private JMenuItem showxml_menu;
 	private JMenuItem editxml_menu;
 	private JMenuItem delete_menu;
 	
-	private JList<RepoFile> list;
-	private DefaultListModel<RepoFile> listModel;
+	private JList<RepoFile> list; //liste container des RepoFile's
+	private DefaultListModel<RepoFile> listModel; //LisModes associé
 	
+	/**
+	 * Constructeur principale
+	 * Initialise toutes le élements
+	 * de l'interface
+	 */
 	public RepoView(){
 		
 		//menu
@@ -123,6 +113,11 @@ public class RepoView extends JFrame {
 		setVisible(true);
 	}
 	
+	/**
+	 * Active/desactvie certains
+	 * éléments de la vue
+	 * @param enabled activer ou pas
+	 */
 	public void setReady(boolean enabled)
 	{
 		save_menu.setEnabled(enabled);
@@ -133,16 +128,29 @@ public class RepoView extends JFrame {
 		author_menu.setEnabled(enabled);
 	}
 	
+	/**
+	 * Faire des sorte que 
+	 * le drag&drop soit réalisable
+	 * @param dragable état
+	 */
 	public void setDragable(boolean dragable)
 	{
 		list.setDragEnabled(dragable);
 	}
 	
+	/**
+	 * Défini le controlleur
+	 * @param drag_controller controlleur de drag&drop
+	 */
 	public void setDragController(DragController drag_controller)
 	{			
 		list.setTransferHandler(drag_controller);
 	}
 	
+	/**
+	 * Défini le controlleur 
+	 * @param menu_controller controlleur des menus
+	 */
 	public void setMenuController(MenuController menu_controller)
 	{	
 		new_menu.addActionListener(menu_controller);
@@ -155,17 +163,30 @@ public class RepoView extends JFrame {
 		author_menu.addActionListener(menu_controller);
 	}
 	
+	/**
+	 * Défini le controlleur
+	 * @param exit_controller controlleur de sortie
+	 */
 	public void setExitController(ExitController exit_controller)
 	{	
 		addWindowListener(exit_controller);
 	}
 	
+	/**
+	 * Défini le controlleur
+	 * @param click_controller controlleur de clique sur la
+	 * la liste des RepoFile's
+	 */
 	public void setClickController(ClickController click_controller)
 	{	
 		click_controller.setList(list);
 		list.addMouseListener(click_controller);
 	}
 	
+	/**
+	 * Défini le controlleur
+	 * @param popup_controller controlleur des menus popup
+	 */
 	public void setPopupController(PopupController popup_controller)
 	{	
 		showxml_menu.addActionListener(popup_controller);
@@ -173,6 +194,10 @@ public class RepoView extends JFrame {
 		delete_menu.addActionListener(popup_controller);
 	}
 	
+	/**
+	 * Reinitialise la vue
+	 * @param title titre de la vue
+	 */
 	public void initialize(String title){
 		
 		setTitle(title);
@@ -199,23 +224,38 @@ public class RepoView extends JFrame {
 		setVisible(true);
 	}
 	
+	/**
+	 * Reinitialise la vue
+	 */
 	public void initialize()
 	{
 		initialize("Depôt");
 	}
 	
+	/**
+	 * Renvoi le ListModel de la JList list
+	 * @return ListModel associé à list
+	 */
 	public DefaultListModel<RepoFile> getListModel()
 	{
 		return listModel;
 	}
 	
+	/**
+	 * Défini le ListModel de la JList list
+	 * @param listModel à définir
+	 */
 	public void setListModel(DefaultListModel<RepoFile> listModel)
 	{
 		this.listModel = listModel;
 		list.setModel(this.listModel);
 	}
 	
-	
+	/**
+	 * Affiche le popup à
+	 * a la clique droite sur 
+	 * un des éléments de la JList list
+	 */
 	public void showPopup(MouseEvent e)
 	{
 		popup_menu.show(e.getComponent(), e.getX(), e.getY());
