@@ -120,4 +120,9 @@ public class FilterView extends JFrame{
 	{
 		allow.setSelected(state);
 	}
+	
+	public JList<String> getList()
+	{
+		return list;
+	}
 }

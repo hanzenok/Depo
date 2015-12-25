@@ -46,11 +46,14 @@ public class FilterController extends RepoController implements ActionListener{
 			int index = list.getSelectedIndex();
 			if (index < 0) return;
 			
+			//supprimer
 			repo.removeExtension(index);
+			
+			//remettre a jour la vue
 			filter_view.show(repo.getAcceptedExtensions());
+			setList(filter_view.getList());
 			
 			//appliquer les changements
-			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
 			
 			return;
@@ -61,13 +64,15 @@ public class FilterController extends RepoController implements ActionListener{
 			
 			if(filter_view.editorEmpty()) return;
 			
+			//ajouter l'extension dans Repo
 			repo.addExtension(filter_view.getEditor());
 			
+			//remettre a jour la vue
 			filter_view.show(repo.getAcceptedExtensions());
+			setList(filter_view.getList());
 			filter_view.setEditor("");
 			
 			//appliquer les changements
-			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
 			
 			return;
@@ -81,7 +86,6 @@ public class FilterController extends RepoController implements ActionListener{
 			repo.setAcceptance(checked);
 			
 			//appliquer les changements
-			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
 			
 			return;
