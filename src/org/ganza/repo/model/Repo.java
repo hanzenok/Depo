@@ -415,10 +415,8 @@ public class Repo
 						{	
 							repo_files.add(repo_file);
 						}
-					}
-						
+					}		
 				}
-				System.out.println();
 			}
 		}
 		

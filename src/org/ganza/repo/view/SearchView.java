@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.ganza.repo.controller.CloseDialogController;
 import org.ganza.repo.controller.SearchController;
 
 public class SearchView extends JFrame{
@@ -86,6 +87,11 @@ public class SearchView extends JFrame{
 		{
 			box.addActionListener(search_controller);
 		}
+	}
+	
+	public void setCloseDialogController(CloseDialogController dialog_controller)
+	{
+		addWindowListener(dialog_controller);
 	}
 	
 	public boolean editorEmpty(){

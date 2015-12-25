@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+import org.ganza.repo.controller.CloseDialogController;
 import org.ganza.repo.controller.FilterController;
 
 public class FilterView extends JFrame{
@@ -99,6 +100,12 @@ public class FilterView extends JFrame{
 		button_add.addActionListener(filter_controller);
 		button_delete.addActionListener(filter_controller);
 		allow.addActionListener(filter_controller);
+
+	}
+	
+	public void setCloseDialogController(CloseDialogController dialog_controller)
+	{
+		addWindowListener(dialog_controller);
 	}
 	
 	public boolean editorEmpty(){

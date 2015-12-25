@@ -29,6 +29,7 @@ public class MenuController extends RepoController implements ActionListener
 	private ClickController click_controller;
 	private ExitController exit_controller;
 	private PopupController popup_controller;
+	private CloseDialogController dialog_controller;
 	
 	public MenuController(RepoView repo_view)
 	{
@@ -41,6 +42,8 @@ public class MenuController extends RepoController implements ActionListener
 		
 		exit_controller = new ExitController(repo);
 		repo_view.setExitController(exit_controller);
+		
+		dialog_controller = new CloseDialogController(this.repo_view);
 	}
 	
 	@Override
@@ -156,6 +159,10 @@ public class MenuController extends RepoController implements ActionListener
 			filter_view.show(repo.getAcceptedExtensions());
 			
 			filter_view.setFilterController(filter_controller);
+			filter_view.setCloseDialogController(dialog_controller);
+			
+			//desactiver la vue principale
+			repo_view.setEnabled(false);
 			
 			return;
 		}
@@ -170,6 +177,10 @@ public class MenuController extends RepoController implements ActionListener
 			catch (JDOMException | IOException e1) {e1.printStackTrace();}
 			
 			search_view.setSearchController(search_controller);
+			search_view.setCloseDialogController(dialog_controller);
+			
+			//desactiver la vue principale
+			repo_view.setEnabled(false);
 			
 			return;
 		}
@@ -211,6 +222,8 @@ public class MenuController extends RepoController implements ActionListener
 		popup_controller.setRepo(repo);
 		popup_controller.setClickController(click_controller);
 		popup_controller.setDragController(drag_controller);
+		
+		dialog_controller = new CloseDialogController(repo_view);
 
 	}
 
