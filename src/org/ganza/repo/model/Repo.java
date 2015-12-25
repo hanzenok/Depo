@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
@@ -39,6 +41,8 @@ public class Repo
 	private boolean accept_all_files;
 	
 	private RepoSearchRequest request; //represente la requete de recherche
+	private RepoFileComparator comparator;
+	
 	
 	/**
      * Constructeur principal
@@ -65,6 +69,7 @@ public class Repo
 		accept_all_files = true;
 		
 		request = null;
+		comparator = new RepoFileComparator();
 	}
 	
 	
@@ -362,17 +367,13 @@ public class Repo
 	
 	public boolean exists(RepoFile repo_file)
 	throws JDOMException, IOException
-	{
-		boolean file_exists = false;
+	{	
+		int index = Collections.binarySearch(repofiles, repo_file, comparator);
 		
-		for(RepoFile repofile : repofiles)
-		{
-			if(repofile.getName().equals(repo_file.getName()))
-				
-				return true;
-		}
+		if (index > -1)
+			return true;
 		
-		return file_exists;
+		return false;
 	}
 	
 	public boolean exists(){
@@ -396,19 +397,28 @@ public class Repo
 			repo_files = new ArrayList<RepoFile>();
 			
 			for(RepoFile repo_file : repofiles)
-			{
+			{	
 				ArrayList<String> repofile_attributes = repo_file.getAttributes();
 				
 				for(String attribute : request.attributes)
-				{
+				{	
 					//recherche de l'attribut
 					int index = repofile_attributes.indexOf(attribute);
 					if(index == -1) continue;
 					
 					//recherce de mot cle
 					if(repo_file.getAttributeValue(index).contains(request.target))
-						repo_files.add(repo_file);
+					{	
+						//ajouter dans la liste des fichiers trouvee si n'existe pas
+						int index2 = Collections.binarySearch(repo_files, repo_file, comparator);
+						if(index2 < 0)
+						{	
+							repo_files.add(repo_file);
+						}
+					}
+						
 				}
+				System.out.println();
 			}
 		}
 		

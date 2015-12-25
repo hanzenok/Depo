@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -53,6 +54,7 @@ public class SearchView extends JFrame{
 		c.gridy = 1;
 		boxes = new ArrayList<JCheckBox>();
 		JPanel boxes_panel = new JPanel(new FlowLayout());
+		boxes_panel.add(new JLabel("(OR)"));
 		
 		for(String attribut : attributes)
 		{	
