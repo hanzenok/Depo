@@ -11,14 +11,27 @@ import org.ganza.repo.model.Repo;
 import org.ganza.repo.view.RepoView;
 import org.ganza.repo.view.SearchView;
 
+/**
+ * SearchController gére 
+ * le SearchView de recherche
+ * des fichiers dans le depôt
+ * @author Ganza Mykhailo
+ */
 public class SearchController extends RepoController implements ActionListener{
 	
-	private Repo repo;
-	private RepoView repo_view;
-	private SearchView search_view;
+	private Repo repo; //depôt
+	private RepoView repo_view; //la vue principale
+	private SearchView search_view; //la vue de recherche
 	
-	private ArrayList<String> attributes;
+	private ArrayList<String> attributes; //liste des attributes xml 
 	
+	/**
+	 * Constructeur principale
+	 * 
+	 * @param repo depôt
+	 * @param repo_view la vue principale
+	 * @param search_view la vue de recherche
+	 */
 	public SearchController(Repo repo, RepoView repo_view, SearchView search_view)
 	{
 		this.repo = repo;
@@ -29,6 +42,13 @@ public class SearchController extends RepoController implements ActionListener{
 		
 	}
 	
+	/**
+	 * Passe la requête de 
+	 * recherche à model
+	 * et remit à jour la vue
+	 * Gérer le bouton et les 
+	 * checkbox
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{

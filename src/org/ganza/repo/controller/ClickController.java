@@ -14,13 +14,21 @@ import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.RepoView;
 import org.jdom2.JDOMException;
 
+/**
+ * ClickController gére les 
+ * événements de click de la JList
+ * @author Ganza Mykhailo
+ */
 public class ClickController extends MouseAdapter
 {	
-	private JList<RepoFile> list;
-	private Repo repo;
-	private RepoView repo_view;
+	private JList<RepoFile> list; //list de la vue, conteneur des RepoFile's
+	private Repo repo; //depôt
+	private RepoView repo_view; //la vue
 	private int index;//index de l'element de JList choisi
 	
+	/**
+	 * Constructeur principle
+	 */
 	public ClickController(Repo repo, RepoView repo_view)
 	{
 		this.repo = repo;
@@ -29,21 +37,42 @@ public class ClickController extends MouseAdapter
 		index = -1;
 	}
 	
+	/**
+	 * Définit de la liste de la vue
+	 * 
+	 * @param list liste 
+	 */
 	public void setList(JList<RepoFile> list)
 	{
 		this.list = list;
 	}
 	
+	/**
+	 * Renvoi l'index de 
+	 * élement de la liste cliquée
+	 * 
+	 * @return index
+	 */
 	public int getIndex()
 	{
 		return index;
 	}
 	
+	/**
+	 * Renvoi le nom de fichier
+	 * de la liste cliquée
+	 * 
+	 * @return nom de fichier
+	 */
 	public String getFileName()
 	{
 		return list.getSelectedValue().getName();
 	}
 	
+	/**
+	 * Fonction qui gére le double 
+	 * cliaques et clique droit
+	 */
     public void mouseClicked(MouseEvent e) 
     {   
     	//click droit
@@ -52,7 +81,7 @@ public class ClickController extends MouseAdapter
         	index = list.locationToIndex(e.getPoint());
             list.setSelectedIndex(index);
         	
-            //dire a controleur de popup quel element de list a ete choisi
+            //afficher le popup
             repo_view.showPopup(e);
           
             return;

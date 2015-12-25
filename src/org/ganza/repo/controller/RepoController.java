@@ -10,8 +10,22 @@ import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.RepoView;
 import org.jdom2.JDOMException;
 
+/**
+ * RepoControlleur est un
+ * superclasse hérite par cerains
+ * controlleurs
+ * Réalise la mise à jour de la vue
+ * à partir de depôt
+ * @author Ganza Mykhailo
+ */
 public class RepoController {
 	
+	/**
+	 * Remit à jour la vue repo_view
+	 * à partire de repo
+	 * @param repo depôt
+	 * @param repo_view la vue principale
+	 */
 	public void refreshRepoView(Repo repo, RepoView repo_view)
 	{	
 		//list model

@@ -4,15 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import org.ganza.repo.model.Repo;
-import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.FilterView;
 import org.ganza.repo.view.RepoView;
 import org.ganza.repo.view.SearchView;
@@ -20,17 +17,32 @@ import org.jdom2.JDOMException;
 
 import net.lingala.zip4j.exception.ZipException;
 
+/**
+ * MenuController est un contrôler
+ * principalde de la vue RepoView
+ * Gérer les événements de menu
+ * @author Ganza Mykhailo
+ */
 public class MenuController extends RepoController implements ActionListener
 {	
-	private RepoView repo_view;
-	private Repo repo;
+	private RepoView repo_view; //la vue principale
+	private Repo repo; //depôt
 	
+	//autres controlleurs
+	//pour les reattacher à la vue si elle change
 	private DragController drag_controller;
 	private ClickController click_controller;
 	private ExitController exit_controller;
 	private PopupController popup_controller;
 	private CloseDialogController dialog_controller;
 	
+	/**
+	 * Constructeur principale
+	 * 
+	 * Initiqlise les contrôlers
+	 * 
+	 * @param repo_view la vue principale
+	 */
 	public MenuController(RepoView repo_view)
 	{
 		this.repo_view = repo_view;
@@ -46,6 +58,10 @@ public class MenuController extends RepoController implements ActionListener
 		dialog_controller = new CloseDialogController(this.repo_view);
 	}
 	
+	/**
+	 * Gérer les évenements des 
+	 * toutes les menus
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -127,12 +143,9 @@ public class MenuController extends RepoController implements ActionListener
 				repo.setNoSearching();
 				refreshRepoView(repo, repo_view);
 				
-				
 				//reinitialiser les controlleurs
 				setup_controllers();
 			}
-			
-			String str = new String("Imagine Dragons - Radioactive.mp3");
 			
 			return;
 		}
@@ -153,12 +166,13 @@ public class MenuController extends RepoController implements ActionListener
 		
 		//menu "Appliquer" filtre
 		if(item_name.equals("Appliquer"))
-		{
+		{	
+			//la vue
 			FilterView filter_view = new FilterView();
 			
+			//controlleurs
 			FilterController filter_controller = new FilterController(repo, repo_view, filter_view);
 			filter_view.show(repo.getAcceptedExtensions());
-			
 			filter_view.setFilterController(filter_controller);
 			filter_view.setCloseDialogController(dialog_controller);
 			
@@ -170,9 +184,11 @@ public class MenuController extends RepoController implements ActionListener
 		
 		//menu "Lancer" recherche
 		if(item_name.equals("Lancer"))
-		{
+		{	
+			//la vue
 			SearchView search_view = new SearchView();
 			
+			//controlleurs
 			SearchController search_controller = new SearchController(repo, repo_view, search_view);
 			try { search_view.show(repo.getAttributes()); } 
 			catch (JDOMException | IOException e1) {e1.printStackTrace();}
@@ -188,7 +204,8 @@ public class MenuController extends RepoController implements ActionListener
 		
 		//menu "Annuler" recherche
 		if(item_name.equals("Annuler"))
-		{
+		{	
+			//recherche est désactivé
 			repo.setNoSearching();
 			refreshRepoView(repo, repo_view);
 			
@@ -197,14 +214,20 @@ public class MenuController extends RepoController implements ActionListener
 		
 		//menu "Définir l'auteur"
 		if(item_name.equals("Définir l'auteur"))
-		{
+		{	
+			//dialog
 			String author = JOptionPane.showInputDialog(repo_view, "Auteur: ", "Définir l'auteur", JOptionPane.QUESTION_MESSAGE);
 			
+			//appliquer
 			try { repo.setAuthor(author); } 
 			catch (JDOMException | IOException e1) {e1.printStackTrace();}
 		}
 	}
 	
+	/**
+	 * Reattache toutes
+	 * les controlleurs
+	 */
 	public void setup_controllers()
 	{
 		//controlleur de drag&drop

@@ -2,39 +2,66 @@ package org.ganza.repo.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
-import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
 
 import org.ganza.repo.model.Repo;
-import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.FilterView;
 import org.ganza.repo.view.RepoView;
 
+/**
+ * FiltreController controle 
+ * la vue FiltreView avec les 
+ * options de filtrage
+ * Ecoute les événements des boutons et 
+ * un checkbox
+ * Agit sur la modele et la vue 
+ * principles
+ * @author Ganza Mykhailo
+ */
 public class FilterController extends RepoController implements ActionListener{
+	 
+	private Repo repo; // depôt
+	private RepoView repo_view; // vue principale
+	private FilterView  filter_view; //vue de filtrage
+	private JList<String> list; //liste avec filtres
 	
-	private Repo repo;
-	private RepoView repo_view;
-	private FilterView  filter_view;
-	private JList<String> list;
-	
+	/**
+	 * Constructeur principale
+	 * 
+	 * @param repo depôt
+	 * @param repo_view	la vue principle
+	 * @param filter_view la vue de filtrage
+	 */
 	public FilterController(Repo repo, RepoView repo_view, FilterView filter_view)
 	{
 		this.repo = repo;
 		this.repo_view = repo_view;
 		this.filter_view = filter_view;
 		
+		//checkbox est initialisé à l'état d'acceptance de la modele Repo
 		this.filter_view.setCheckBox(repo.getAcceptance());
 	}
 	
+	/**
+	 * Définit de la liste de la vue
+	 * 
+	 * @param list liste 
+	 */
 	public void setList(JList<String> list)
 	{
 		this.list = list;
 	}
-
+	
+	/**
+	 * Gérer les événements 
+	 * des boutones d'ajout et 
+	 * suppression des attributs xml
+	 * Et un checkbox pour autorisation
+	 * des toutes les fichiers ou pas
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -81,8 +108,8 @@ public class FilterController extends RepoController implements ActionListener{
 		//checkbox
 		if(item_name.equals("autoriser tout"))
 		{
+			//changer l'état d'acceptance
 			boolean checked = ((JCheckBox)e.getSource()).isSelected();
-			
 			repo.setAcceptance(checked);
 			
 			//appliquer les changements
