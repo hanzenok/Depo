@@ -14,6 +14,7 @@ import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.FilterView;
 import org.ganza.repo.view.RepoView;
+import org.ganza.repo.view.SearchView;
 import org.jdom2.JDOMException;
 
 import net.lingala.zip4j.exception.ZipException;
@@ -160,6 +161,23 @@ public class MenuController extends RepoController implements ActionListener
 			filter_view.show(repo.getAcceptedExtensions());
 			
 			filter_view.setFilterController(filter_controller);
+		}
+		
+		//menu "Lancer" recherche
+		if(item_name.equals("Lancer"))
+		{
+			SearchView search_view = new SearchView();
+			
+			SearchController search_controller = new SearchController(repo, repo_view, search_view);
+			try { search_view.show(repo.getAttributes()); } 
+			catch (JDOMException | IOException e1) {e1.printStackTrace();}
+			
+			search_view.setSearchController(search_controller);
+		}
+		
+		//menu "Annuler" recherche
+		{
+			refreshRepoView(repo, repo_view);
 		}
 	}
 	

@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.RepoView;
+import org.jdom2.JDOMException;
 
 public class ClickController extends MouseAdapter
 {	
@@ -63,10 +64,13 @@ public class ClickController extends MouseAdapter
     		//reccuperation de l'indexe
     		index = list.locationToIndex(e.getPoint());
             
-    		//ouvrir le fichier dans systeme
-    		File file = repo.getRFiles().get(index).getFile();    		
-    		try { Desktop.getDesktop().open(file); } 
-    		catch (IOException e1) { e1.printStackTrace();}
+    		//ouvrir le fichier dans systeme   		
+    		try { 
+    				File file = repo.getRFiles().get(index).getFile(); 
+    				Desktop.getDesktop().open(file); 
+    			} 
+    		catch (IOException e1) {e1.printStackTrace();} 
+    		catch (JDOMException e1) {e1.printStackTrace();}
     		
     		return;
          }

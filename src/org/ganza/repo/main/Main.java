@@ -19,8 +19,8 @@ public class Main
 	throws ZipException, FileNotFoundException, IOException, JDOMException
 	{	
 		
-//		RepoView repo_view = new RepoView();
-//		MenuController mc = new MenuController(repo_view);
+		RepoView repo_view = new RepoView();
+		MenuController mc = new MenuController(repo_view);
 		
 //		EditorView rv = new EditorView();
 		
@@ -34,16 +34,16 @@ public class Main
 //		
 //		fv.setFilterController(fc);
 		
-		ArrayList<String> attrs = new ArrayList<String>();
-		attrs.add("author"); attrs.add("genre");
-
-		
-		SearchView search_view = new SearchView();
-		
-		SearchController search_controller = new SearchController(null, null, search_view);
-		
-		search_view.show(attrs);
-		search_view.setSearchController(search_controller);
+//		ArrayList<String> attrs = new ArrayList<String>();
+//		attrs.add("author"); attrs.add("genre");
+//
+//		
+//		SearchView search_view = new SearchView();
+//		
+//		SearchController search_controller = new SearchController(null, null, search_view);
+//		
+//		search_view.show(attrs);
+//		search_view.setSearchController(search_controller);
 		
 	}
 	

@@ -46,7 +46,10 @@ public class PopupController extends RepoController implements ActionListener
 		//popup menu "Reinsegner XML"
 		if(item_name.equals("Reinsegner XML"))
 		{	
-			RepoFile repo_file = repo.getRFiles().get(click_controller.getIndex());
+			RepoFile repo_file = null;
+			try { repo_file = repo.getRFiles().get(click_controller.getIndex()); } 
+			catch (JDOMException | IOException e2) { e2.printStackTrace(); }
+			
 			
 			EditorView editor_view = new EditorView();
 			EditorController editor_controller = new EditorController(repo_file, editor_view);
@@ -66,7 +69,9 @@ public class PopupController extends RepoController implements ActionListener
 		if(item_name.equals("Modifier XML"))
 		{
     		//reccuperer le fichier xml
-    		File xml_file = repo.getRFiles().get(click_controller.getIndex()).getMetaFile();
+    		File xml_file = null;
+			try { xml_file = repo.getRFiles().get(click_controller.getIndex()).getMetaFile(); } 
+			catch (JDOMException | IOException e2) { e2.printStackTrace(); }
     		
     		//ouvrir dans la systeme
     		try { Desktop.getDesktop().open(xml_file); } 

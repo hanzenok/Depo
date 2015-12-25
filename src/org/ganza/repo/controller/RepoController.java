@@ -1,5 +1,6 @@
 package org.ganza.repo.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -7,6 +8,7 @@ import javax.swing.DefaultListModel;
 import org.ganza.repo.model.Repo;
 import org.ganza.repo.model.RepoFile;
 import org.ganza.repo.view.RepoView;
+import org.jdom2.JDOMException;
 
 public class RepoController {
 	
@@ -14,10 +16,14 @@ public class RepoController {
 	{	
 		//list model
 		DefaultListModel<RepoFile> listModel = new DefaultListModel<RepoFile>();
-		ArrayList<RepoFile> repofiles = repo.getRFiles();
+		
+		//fichiers
+		ArrayList<RepoFile> repofiles = null;
+		try { repofiles = repo.getRFiles(); } 
+		catch (JDOMException | IOException e) {e.printStackTrace();}
 		
 		//chargement
-		int i, n = repofiles.size(); System.out.println("Size: " + n);
+		int i, n = repofiles.size();
 		for(i=0; i<n; i++){
 			
 			listModel.addElement(repofiles.get(i));

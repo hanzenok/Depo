@@ -59,9 +59,9 @@ public class Repo
 		rx = new RepoXML(metafile_path);
 		
 		accepted_files = new ArrayList<String>();
-//		accepted_files.add("pdf");
-//		accepted_files.add("mp3");
-//		accepted_files.add("jpg");
+		accepted_files.add("pdf");
+		accepted_files.add("mp3");
+		accepted_files.add("jpg");
 		accept_all_files = true;
 		
 		request = null;
@@ -368,7 +368,7 @@ public class Repo
 	public ArrayList<RepoFile> getRFiles() 
 	throws JDOMException, IOException
 	{
-		ArrayList<RepoFile> repo_files = new ArrayList<RepoFile>();
+		ArrayList<RepoFile> repo_files = null;
 		
 		//RECHERCHE=======================
 		//si pas de recherche demndee
@@ -377,7 +377,9 @@ public class Repo
 		
 		//recherche
 		else
-		{
+		{	
+			repo_files = new ArrayList<RepoFile>();
+			
 			for(RepoFile repo_file : repofiles)
 			{
 				ArrayList<String> repofile_attributes = repo_file.getAttributes();
@@ -389,10 +391,13 @@ public class Repo
 					if(index == -1) continue;
 					
 					//recherce de mot cle
-					if(repo_file.getAttributeValue(index).contains(request.target));
+					if(repo_file.getAttributeValue(index).contains(request.target))
 						repo_files.add(repo_file);
 				}
 			}
+			
+			//desactiver la request
+			request = null;
 		}
 		
 		//FILTRAGE===========================
@@ -471,7 +476,6 @@ public class Repo
 				if(!repo_attributes.contains(attribut))
 				{
 					repo_attributes.add(attribut);
-					System.out.println(attribut);
 				}
 			}
 		}

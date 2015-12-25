@@ -72,7 +72,7 @@ public class DragController extends TransferHandler {
 		catch (JDOMException e) {return false;}
 	}
 	
-	public void refreshRepoView()
+	public void refreshRepoView() 
 	{	
 		//normalement DragController doir heriter le RepoController
 		//mais il ne peux pas
