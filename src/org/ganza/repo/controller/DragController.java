@@ -15,7 +15,7 @@ import org.ganza.repo.view.RepoView;
 import org.jdom2.JDOMException;
 
 /**
- * Gérer le drag&drop
+ * Gére le drag&drop
  * @author Ganza Mykhailo
  */
 public class DragController extends TransferHandler {

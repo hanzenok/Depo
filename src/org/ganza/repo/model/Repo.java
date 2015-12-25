@@ -2,50 +2,50 @@ package org.ganza.repo.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import net.lingala.zip4j.exception.ZipException;
 
 /**
- * Repo répresent un dêpot
+ * Repo est une modele
+ * elle répresent un dêpot
+ * 
+ * Compose d'un ensemble des RepoFile
+ * et un fichier avec metadonnées
  * @author Ganza Mykhailo
  */
 public class Repo 
 {	
-	private String repo_name;
-	private final String metafile_name;
+	private String repo_name; //nom de depôt, géneré automatiquement
+	private final String metafie_name; //constante avec le nom de fichier des metadonnées
 	private static boolean exist = false; //si le dossier d'un depot a ete cree ou pas
-	private String metafile_path;
-	private String folder_path;
+	private String metafile_path; //path vers le fichier de metadonées
+	private String folder_path; //path vers un dossier associé
 	private String tmp_path; //dossier temporel de systeme
 	
-	private ArrayList<RepoFile> repofiles;
+	private ArrayList<RepoFile> repofiles; // liste des RepoFile
 	private RepoNamer rn; //generateur de nom aleatoire
 	
 	private RepoXML rx; //gestionnaire de xml
 	
-	private ArrayList<String> accepted_files;
-	private boolean accept_all_files;
+	private ArrayList<String> accepted_files; //liste des extension des fichiers acceptées
+	private boolean accept_all_files; //accepter toutes les extensions ou pas
 	
 	private RepoSearchRequest request; //represente la requete de recherche
-	private RepoFileComparator comparator;
+	private RepoFileComparator comparator; //comparateur des RepoFile
 	
 	
 	/**
      * Constructeur principal
+     * Génere le nom, défini les paths
+     * Initialisation des champs
      */
 	public Repo()
 	{	
@@ -55,8 +55,8 @@ public class Repo
 		tmp_path = System.getProperty("java.io.tmpdir");
 		folder_path = new String(tmp_path + File.separator + repo_name);
 		
-		metafile_name = new String(".repo_meta.xml");
-		metafile_path = new String(folder_path + File.separator + metafile_name);
+		metafie_name = new String(".repo_meta.xml");
+		metafile_path = new String(folder_path + File.separator + metafie_name);
 		
 		repofiles = new ArrayList<RepoFile>();
 		
@@ -76,8 +76,7 @@ public class Repo
 	/**
      * Défini le nom de depôt
      * 
-     * @param name
-     * 			le nom de depôt
+     * @param name le nom de depôt
      */
 	public void setName(String name)
 	{	
@@ -109,6 +108,14 @@ public class Repo
 		return read(folder_path);
 	}
 	
+	/**
+	 * Charge le depôt 
+	 * à partir de dossier
+	 * @param path chemin vers le dossier
+	 * @return si le chargement est reussi
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public boolean read(String path) 
 	throws JDOMException, IOException
 	{	
@@ -117,15 +124,17 @@ public class Repo
 		JFileChooser chooser = new JFileChooser();
 		FileSystemView view = chooser.getFileSystemView();
 		
+		//lecture des fichiers
 		File[] listOfFiles = view.getFiles(new File(path), true); //que des fichiers visibles
 		
 		//vérifie si dossier contient un fichier avec les metadonnées
-		File metafile = new File(path + File.separator + metafile_name);
+		File metafile = new File(path + File.separator + metafie_name);
 		if(metafile.exists())
 		{ 				
 			is_repo = true;
 		}
 		
+		//chargement
 		for (File file : listOfFiles)
 		{	
 			if(is_repo)
@@ -159,28 +168,16 @@ public class Repo
 		exist = true;
 	}
 	
-	//if xml associated to the file does not exist
-	//it creates it
-	public void write() 
-	throws IOException, JDOMException
-	{	
-		int i, n = size();
-		
-		for(i=0; i<n; i++){
-			
-			RepoFile rp = repofiles.get(i);
-			rp.transfer(folder_path);
-			
-			if(!rp.hasMeta())
-			{
-				rp.createMeta(folder_path);
-			}
-		}
-	}
-	
+	/**
+	 * Sauvegarde le depôt
+	 * dans un fichier zip zipfile
+	 * @param zipfile
+	 * @throws ZipException
+	 */
 	public void save(File zipfile) 
 	throws ZipException
 	{	
+		//zippeur
 		RepoZipper zipper = new RepoZipper(zipfile.getAbsolutePath());
 		
 		//archivage d'un fichier meta
@@ -194,6 +191,16 @@ public class Repo
 		}
 	}
 	
+	/**
+	 * Restoration de depôt 
+	 * à partir d'un archive
+	 * précisé pr zipfile_path
+	 * 
+	 * @param zipfile_path chemin vers l'archive
+	 * @throws ZipException
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public void load(String zipfile_path) 
 	throws ZipException, JDOMException, IOException
 	{	
@@ -201,16 +208,16 @@ public class Repo
 		RepoZipper zipper = new RepoZipper(zipfile_path);
 		
 		//extraire un seul fichier meta de depot
-		zipper.extractFile(tmp_path, metafile_name); //desarchivage
+		zipper.extractFile(tmp_path, metafie_name); //desarchivage
 		
 		//repointer le rx vers cet fichier
-		rx.setMetafilePath(tmp_path + File.separator + metafile_name);
+		rx.setMetafilePath(tmp_path + File.separator + metafie_name);
 		
 		//reccuperer le nom de depot
 		String reponame = rx.getAttributeValue("name");
 		
 		//supprimer le fichier
-		File tmp = new File(tmp_path + File.separator + metafile_name);
+		File tmp = new File(tmp_path + File.separator + metafie_name);
 		tmp.delete();
 		
 		//changer le nom et path de depot
@@ -284,17 +291,26 @@ public class Repo
 	
 	/**
      * Défini le chemin
-     * vers un dossier avec le depoôt
+     * vers un dossier avec le depôt
      * 
-     * @param path
-     * 			le chemin
+     * @param path le chemin
      */
 	public void setPath(String path){
 		
 		folder_path = path;
-		metafile_path = new String(folder_path + File.separator + metafile_name);
+		metafile_path = new String(folder_path + File.separator + metafie_name);
 	}
 	
+	/**
+	 * Ajout de RepoFile dans
+	 * le depôt
+	 * Utilisé par drag&drop
+	 * Réalise le transfer de fichier
+	 * vers un dossier de depôt
+	 * @param repo_file
+	 * @throws IOException
+	 * @throws JDOMException
+	 */
 	public void addRFile(RepoFile repo_file) 
 	throws IOException, JDOMException
 	{	
@@ -308,11 +324,11 @@ public class Repo
 		repo_file.createMeta(folder_path);
 	}
 	
-//	public RepoFile getRFile(int index)
-//	{
-//		return repofiles.get(index);
-//	}
-	
+	/**
+	 * Suppresion de RepoFile
+	 * de depôt par le nom
+	 * @param filename nom de RepoFile à retirer
+	 */
 	public void removeRFile(String filename)
 	{	
 		//recherche
@@ -334,6 +350,11 @@ public class Repo
 		repofiles.remove(index);	
 	}
 	
+	/**
+	 * Fermeture de depôt
+	 * Vidage de la liste et 
+	 * suppresion de dossir associé
+	 */
 	public void close(){
 		
 		//supprimer les fichiers et retirer de la liste
@@ -365,6 +386,14 @@ public class Repo
 		return repofiles.size();
 	}
 	
+	/**
+	 * Vérifie si le RepoFile
+	 * existe dans le depôt
+	 * @param repo_file fichier à vérifier
+	 * @return
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public boolean exists(RepoFile repo_file)
 	throws JDOMException, IOException
 	{	
@@ -376,11 +405,24 @@ public class Repo
 		return false;
 	}
 	
+	/**
+	 * Vérifier le dossier
+	 * avec le depôt est crée
+	 * @return si le dossier existe ou pas
+	 */
 	public boolean exists(){
 		
 		return exist;
 	}
 	
+	/**
+	 * Renvoi un ArrayList avec les RepoFiles
+	 * de la base
+	 * Applique le filtre et recherche
+	 * @return arraylist avec les fichiers
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public ArrayList<RepoFile> getRFiles() 
 	throws JDOMException, IOException
 	{
@@ -437,6 +479,12 @@ public class Repo
 		return accepted;
 	}
 	
+	/**
+	 * Vérifie si l'extension d'un
+	 * ficher est accpetée par filtre
+	 * @param repo_file fichier à vérifier
+	 * @return si accepté ou pas
+	 */
 	public boolean isAccepted(RepoFile repo_file)
 	{
 		String extension = repo_file.getExtenstion();
@@ -447,26 +495,52 @@ public class Repo
 		return false;
 	}
 	
+	/**
+	 * Définier est-ce qu'il faut
+	 * accepter toutes les éxtensions ou pas
+	 * @param state accepter ou pas
+	 */
 	public void setAcceptance(boolean state)
 	{
 		accept_all_files = state;
 	}
 	
+	/**
+	 * Vérifier si toutes les 
+	 * extensions sont acceptées our pas
+	 * @return si toutes les fichiers sont acceptées
+	 */
 	public boolean getAcceptance()
 	{
 		return accept_all_files;
 	}
 	
+	/**
+	 * Renvoi les extension acceptées
+	 * @return extensions acceptées
+	 */
 	public ArrayList<String> getAcceptedExtensions()
 	{
 		return accepted_files;
 	}
 	
+	/**
+	 * Supprime une extension
+	 * de la liste des extensions
+	 * acceptés accepted_files
+	 * @param index indice d'extension
+	 */
 	public void removeExtension(int index)
 	{
 		accepted_files.remove(index);
 	}
 	
+	/**
+	 * Ajoute un nouvelle extension
+	 * dans la liste des extensions
+	 * acceptées accepted_files
+	 * @param extension nouvelle extension
+	 */
 	public void addExtension(String extension)
 	{
 		if(!accepted_files.contains(extension))
@@ -474,7 +548,14 @@ public class Repo
 			accepted_files.add(extension);
 	}
 	
-	//all attributes of all files
+	/**
+	 * Renvoi la liste des toutes
+	 * les attributes xml des toutes
+	 * les fichiers de depôt 
+	 * @return toutes les attibuts xml
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public ArrayList<String> getAttributes() 
 	throws JDOMException, IOException
 	{
@@ -483,7 +564,7 @@ public class Repo
 		
 		//fichiers de la base
 		//on travail pas directement avec repofiles
-		//car getRFiles() retourna la liste filtree
+		//car getRFiles() retourne la liste filtree
 		ArrayList<RepoFile> repo_files = getRFiles();
 		
 		//parcour
@@ -503,16 +584,31 @@ public class Repo
 		return repo_attributes;
 	}
 	
+	/**
+	 * Défini la requête de recherche
+	 * @param target chaîne des caracters à chercher
+	 * @param attributes liste des attributs (balise xml) où il faut chercher
+	 */
 	public void setSearchRequest(String target, ArrayList<String> attributes)
 	{
 		request = new RepoSearchRequest(target, attributes);
 	}
 	
+	/**
+	 * Ne pas réliser la recherche
+	 */
 	public void setNoSearching()
 	{
 		request = null;
 	}
 	
+	/**
+	 * Definir la balise <author>
+	 * de chaque fichier de depôt
+	 * @param author valeur à définir
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public void setAuthor(String author) 
 	throws JDOMException, IOException
 	{	

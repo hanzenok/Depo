@@ -14,22 +14,45 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+/**
+ * Gestionnare des lecture
+ * et chargement des fichiers xml
+ * @author Ganza Mykhailo
+ */
 public class RepoXML 
 {
-	String metafile_path;
+	String metafile_path; //chemin vers fichier xml
 	
+	/**
+	 * Constructeur simple
+	 */
 	public RepoXML(){}
 	
+	/**
+	 * Constructeur principale
+	 * @param metafile_path chemin ver le fichier xml
+	 */
 	public RepoXML(String metafile_path)
 	{
 		this.metafile_path = metafile_path;
 	}
 	
+	/**
+	 * Setter de chemin vers fichier xml
+	 * @param metafile_path chemin vers fichier xml
+	 */
 	public void setMetafilePath(String metafile_path)
 	{
 		this.metafile_path = metafile_path;
 	}
 	
+	/**
+	 * Création de fichier xml des metadonnées
+	 * de depôt Repo
+	 * @param repo_name nom de dep
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void createRepoMeta(String repo_name) 
 	throws FileNotFoundException, IOException
 	{				
@@ -37,6 +60,7 @@ public class RepoXML
 			Element root = new Element("repo");
 			Document document = new Document(root);
 			
+			//ajout d'un attribut
 			Element name = new Element("name");
 			name.setText(repo_name);
 			root.addContent(name);
@@ -46,6 +70,13 @@ public class RepoXML
 		    sortie.output(document, new FileOutputStream(metafile_path));
 	}
 	
+	/**
+	 * Création de fichier xml des metadonnées
+	 * d'un fichier RepoFile
+	 * @param filename nom de RepoFile
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void createMeta(String filename) 
 	throws FileNotFoundException, IOException
 	{				
@@ -53,6 +84,7 @@ public class RepoXML
 			Element root = new Element("repofile");
 			Document document = new Document(root);
 			
+			//ajout d'un attribut
 			Element name = new Element("name");
 			name.setText(filename);
 			root.addContent(name);
@@ -62,9 +94,18 @@ public class RepoXML
 		    out.output(document, new FileOutputStream(metafile_path));
 	}
 	
+	/**
+	 * Renvoi une valleur d'un attribut
+	 * précise par elemnt_name
+	 * @param element_name nom de l'attribut
+	 * @return valeur associé
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public String getAttributeValue(String element_name) 
 	throws JDOMException, IOException
-	{
+	{	
+		//lecture de fichier
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = sxb.build(new File(metafile_path));
 		Element root = document.getRootElement();
@@ -72,14 +113,23 @@ public class RepoXML
 		return root.getChild(element_name).getText();
 	}
 	
+	/**
+	 * Renvoi une valleur d'un attribut
+	 * précise par sont indice
+	 * @param index l'indice de l'attribut
+	 * @return valeur associé
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public String getAttributeValue(int index)
 	throws JDOMException, IOException
 	{
+		//lecture de fichier
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = sxb.build(new File(metafile_path));
 		Element root = document.getRootElement();
 		
-		//reccuperer les toutes les elements
+		//reccuperer toutes les elements
 		List<Element> list = root.getChildren();
 		
 		if(index < 0 || index > list.size()) return null;
@@ -87,9 +137,18 @@ public class RepoXML
 		return list.get(index).getText();
 	}
 	
+	/**
+	 * Défini une valeur de l'attribut xml
+	 * précisé par element_name
+	 * @param element_name l'attrbut xml
+	 * @param value valeur associé à définir
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public void setAttributeValue(String element_name, String value) 
 	throws JDOMException, IOException
-	{
+	{	
+		//lecture de fichier
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = sxb.build(new File(metafile_path));
 		Element root = document.getRootElement();
@@ -101,9 +160,18 @@ public class RepoXML
 	    sortie.output(document, new FileOutputStream(metafile_path));
 	}
 	
+	/**
+	 * Ajoute un nouveau attribut
+	 * dans le fichier xml
+	 * @param element_name nom de l'attribut
+	 * @param value valeur associé
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public void addAttribute(String element_name, String value) 
 	throws JDOMException, IOException
-	{
+	{	
+		//lecture de fichier
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = sxb.build(new File(metafile_path));
 		Element root = document.getRootElement();
@@ -118,18 +186,26 @@ public class RepoXML
 	    sortie.output(document, new FileOutputStream(metafile_path));
 	}
 	
+	/**
+	 * Renvoi la liste des 
+	 * toutes les attributes
+	 * de fichier xml
+	 * @return toutes les attributes
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public ArrayList<String> getAttributes()
 	throws JDOMException, IOException
 	{
+		//lire le fichier
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = sxb.build(new File(metafile_path));
 		Element root = document.getRootElement();
 		
 		//reccuperer les toutes les elements
 		List<Element> list = root.getChildren();
-		int i=0, n = list.size();
-		ArrayList<String> attributes = new ArrayList<>();
 		
+		ArrayList<String> attributes = new ArrayList<>();
 		for(Element el: list)
 		{	
 			attributes.add(el.getName());
