@@ -72,9 +72,9 @@ public class FilterController extends RepoController implements ActionListener{
 		//checkbox
 		if(item_name.equals("autoriser tout"))
 		{
-			boolean state = ((JCheckBox)e.getSource()).isSelected();
+			boolean checked = ((JCheckBox)e.getSource()).isSelected();
 			
-			repo.setAcceptance(state);
+			repo.setAcceptance(checked);
 			
 			//appliquer les changements
 			refreshRepoView(repo, repo_view);

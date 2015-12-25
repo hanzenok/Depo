@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.ganza.repo.controller.MenuController;
+import org.ganza.repo.controller.SearchController;
 import org.ganza.repo.view.RepoView;
 import org.ganza.repo.view.SearchView;
 import org.jdom2.JDOMException;
@@ -35,11 +36,14 @@ public class Main
 		
 		ArrayList<String> attrs = new ArrayList<String>();
 		attrs.add("author"); attrs.add("genre");
-		attrs.add("author"); attrs.add("genre");
-		attrs.add("author"); attrs.add("genre");
+
 		
 		SearchView search_view = new SearchView();
+		
+		SearchController search_controller = new SearchController(null, null, search_view);
+		
 		search_view.show(attrs);
+		search_view.setSearchController(search_controller);
 		
 	}
 	

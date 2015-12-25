@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.ganza.repo.controller.SearchController;
+
 public class SearchView extends JFrame{
 
 	private static final long serialVersionUID = 5346803320843425078L;
@@ -21,6 +23,7 @@ public class SearchView extends JFrame{
 	
 	private JTextArea editor;
 	private JButton button_search;
+	private ArrayList<JCheckBox> boxes;
 	
 	public SearchView()
 	{
@@ -32,7 +35,7 @@ public class SearchView extends JFrame{
 		setLocationByPlatform(true);
 		
 		editor = new JTextArea(3, 8);
-		button_search = new JButton("Rechercher");
+		button_search = new JButton("Chercher");
 	}
 	
 	public void show(ArrayList<String> attributes)
@@ -48,13 +51,13 @@ public class SearchView extends JFrame{
 		
 		//checkboxes
 		c.gridy = 1;
-		JCheckBox box;
+		boxes = new ArrayList<JCheckBox>();
 		JPanel boxes_panel = new JPanel(new FlowLayout());
 		
 		for(String attribut : attributes)
 		{	
-			box = new JCheckBox(attribut);
-			boxes_panel.add(box);
+			boxes.add(new JCheckBox(attribut));
+			boxes_panel.add(boxes.get(boxes.size() - 1));
 		}
 		
 		JScrollPane scroll = new JScrollPane(boxes_panel);
@@ -72,5 +75,25 @@ public class SearchView extends JFrame{
 		pack();
 		setVisible(true);
 	}
+	
+	public void setSearchController(SearchController search_controller)
+	{
+		button_search.addActionListener(search_controller);
+		
+		for(JCheckBox box : boxes)
+		{
+			box.addActionListener(search_controller);
+		}
+	}
+	
+	public boolean editorEmpty(){
+		
+		return editor.getText().length() == 0;
+	}
+	
+	public String getEditor()
+	{
+		return editor.getText();
+	}	
 
 }
