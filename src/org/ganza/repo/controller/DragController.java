@@ -59,7 +59,8 @@ public class DragController extends TransferHandler {
 	        	RepoFile repofile = new RepoFile(file);
 	        	
 	        	//ajout
-	        	repo.addRFile(repofile);
+	        	if(!repo.exists(repofile))
+	        		repo.addRFile(repofile);
 	        }
 	        
 	        //reinitialisaiton de la vue

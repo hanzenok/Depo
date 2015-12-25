@@ -360,6 +360,21 @@ public class Repo
 		return repofiles.size();
 	}
 	
+	public boolean exists(RepoFile repo_file)
+	throws JDOMException, IOException
+	{
+		boolean file_exists = false;
+		
+		for(RepoFile repofile : repofiles)
+		{
+			if(repofile.getName().equals(repo_file.getName()))
+				
+				return true;
+		}
+		
+		return file_exists;
+	}
+	
 	public boolean exists(){
 		
 		return exist;
