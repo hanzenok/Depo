@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 import org.jdom2.JDOMException;
 
@@ -141,7 +142,7 @@ public class RepoFile
 		rx.setAttributeValue(element_name, value);
 	}
 	
-	public String[] getAttributes() 
+	public ArrayList<String> getAttributes() 
 	throws JDOMException, IOException
 	{
 		return rx.getAttributes();

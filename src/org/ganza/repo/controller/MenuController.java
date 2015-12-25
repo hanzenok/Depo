@@ -125,6 +125,13 @@ public class MenuController extends RepoController implements ActionListener
 				
 				//reinitialiser les controlleurs
 				setup_controllers();
+				
+				try {
+					repo.getAttributes();
+				} catch (JDOMException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			
 			return;

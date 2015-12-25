@@ -113,16 +113,7 @@ public class Repo
 		//vérifie si dossier contient un fichier avec les metadonnées
 		File metafile = new File(path + File.separator + metafile_name);
 		if(metafile.exists())
-		{ 	
-//			//redefinir le chemin vers dossier
-//			setPath(path);
-//			
-//			//redefinir le chemin vers meta fichier
-//			metafile_path = folder_path + File.separator + metafile_name;
-//			
-//			//et le nom de repo
-//			setName(rx.getAttributeValue("name"));
-			
+		{ 				
 			is_repo = true;
 		}
 		
@@ -306,8 +297,6 @@ public class Repo
 		
 		//generer fichier meta
 		repo_file.createMeta(folder_path);
-		
-		System.out.println("Extension:" + repo_file.getExtenstion());
 	}
 	
 //	public RepoFile getRFile(int index)
@@ -424,5 +413,35 @@ public class Repo
 		if(!accepted_files.contains(extension))
 			
 			accepted_files.add(extension);
+	}
+	
+	//all attributes of all files
+	public ArrayList<String> getAttributes() 
+	throws JDOMException, IOException
+	{
+		//conteneur des toutes les attributes de depot
+		ArrayList<String> repo_attributes = new ArrayList<String>();
+		
+		//fichiers de la base
+		//on travail pas directement avec repofiles
+		//car getRFiles() retourna la liste filtree
+		ArrayList<RepoFile> repo_files = getRFiles();
+		
+		//parcour
+		for(RepoFile repo_file : repo_files)
+		{
+			ArrayList<String> attributes = repo_file.getAttributes();
+			
+			for(String attribut : attributes)
+			{
+				if(!repo_attributes.contains(attribut))
+				{
+					repo_attributes.add(attribut);
+					System.out.println(attribut);
+				}
+			}
+		}
+		
+		return repo_attributes;
 	}
 }

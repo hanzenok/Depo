@@ -51,7 +51,10 @@ public class PopupController extends RepoController implements ActionListener
 			EditorView editor_view = new EditorView();
 			EditorController editor_controller = new EditorController(repo_file, editor_view);
 			
-			try { editor_view.show(repo_file.getAttributes()); } 
+			try {
+				ArrayList<String> l = repo_file.getAttributes();
+				editor_view.show(l.toArray(new String[l.size()])); 
+				} 
 			catch (JDOMException | IOException e1) { e1.printStackTrace(); }
 			
 			editor_view.setEditorController(editor_controller);

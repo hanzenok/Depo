@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -117,22 +118,21 @@ public class RepoXML
 	    sortie.output(document, new FileOutputStream(metafile_path));
 	}
 	
-	public String[] getAttributes()
+	public ArrayList<String> getAttributes()
 	throws JDOMException, IOException
 	{
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = sxb.build(new File(metafile_path));
-		System.out.println(metafile_path);
 		Element root = document.getRootElement();
 		
 		//reccuperer les toutes les elements
 		List<Element> list = root.getChildren();
 		int i=0, n = list.size();
-		String[] attributes = new String[n];
+		ArrayList<String> attributes = new ArrayList<>();
 		
 		for(Element el: list)
 		{	
-			attributes[i++] = el.getName();
+			attributes.add(el.getName());
 		}
 		
 		return attributes;

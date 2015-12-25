@@ -55,6 +55,8 @@ public class RepoView extends JFrame {
 	private JMenuItem save_menu;
 	private JMenuItem close_menu;
 	private JMenuItem addfilter_menu;
+	private JMenuItem launch_menu;
+	private JMenuItem cancel_menu;
 	
 	private JPopupMenu popup_menu;
 	private JMenuItem showxml_menu;
@@ -76,16 +78,21 @@ public class RepoView extends JFrame {
         open_menu = new JMenuItem("Ouvrir"); open_menu.setToolTipText("Ouvrir un depôt existante");
         close_menu = new JMenuItem("Fermer"); close_menu.setToolTipText("Ferm le depôt"); 
         
-        repo_menu.add(new_menu); repo_menu.add(new JSeparator()); 
+        repo_menu.add(new_menu); repo_menu.addSeparator(); 
         repo_menu.add(save_menu); repo_menu.add(open_menu); 
-        repo_menu.add(new JSeparator()); repo_menu.add(close_menu);
+        repo_menu.addSeparator(); repo_menu.add(close_menu);
         
         JMenu filter_menu = new JMenu("Filtre");
         addfilter_menu = new JMenuItem("Appliquer"); addfilter_menu.setToolTipText("Ajouter des filtres");
         filter_menu.add(addfilter_menu);
         
+        JMenu search_menu = new JMenu("Recherche");
+        launch_menu = new JMenuItem("Lancer"); launch_menu.setToolTipText("Lancer la recherche");
+        cancel_menu = new JMenuItem("Annuler"); cancel_menu.setToolTipText("Annuler la recherche");
+        search_menu.add(launch_menu); search_menu.addSeparator(); search_menu.add(cancel_menu);
+        
         menubar.add(repo_menu); menubar.add(filter_menu);
-		
+        menubar.add(search_menu);
         
         //menu popup
         popup_menu = new JPopupMenu();
@@ -116,6 +123,8 @@ public class RepoView extends JFrame {
 		save_menu.setEnabled(enabled);
 		close_menu.setEnabled(enabled);
 		addfilter_menu.setEnabled(enabled);
+		launch_menu.setEnabled(enabled);
+		cancel_menu.setEnabled(enabled);
 	}
 	
 	public void setDragable(boolean dragable)
@@ -135,6 +144,8 @@ public class RepoView extends JFrame {
 		open_menu.addActionListener(menu_controller);
 		close_menu.addActionListener(menu_controller);
 		addfilter_menu.addActionListener(menu_controller);
+		launch_menu.addActionListener(menu_controller);
+		cancel_menu.addActionListener(menu_controller);
 	}
 	
 	public void setExitController(ExitController exit_controller)
